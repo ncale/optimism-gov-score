@@ -15,13 +15,13 @@ export default function Header() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4 tracking-wide" justify="center">
         <NavbarItem className="text-xl">
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/">
             Thesis
           </Link>
         </NavbarItem>
 				<NavbarItem className="text-xl">|</NavbarItem>
         <NavbarItem isActive className="text-xl">
-          <Link href="#" aria-current="page">
+          <Link href="/delegates" aria-current="page">
             Delegates
           </Link>
         </NavbarItem>
