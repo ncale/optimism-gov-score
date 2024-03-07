@@ -33,3 +33,15 @@
 .thesis-page span {
 	font-weight: 700;
 }
+
+.delegate-recommendation {
+	text-align: center;
+}
+
+.main .table-row:nth-child(-n + 1) {
+	height: 6rem;
+}
+
+.delegate-button {
+	
+}
