@@ -12,24 +12,24 @@
 	font-size: medium;
 }
 
-.main > h2 {
+.thesis-page > h2 {
 	font-weight: 700;
 	font-size: large;
 }
 
-.main > p {
+.thesis-page > p {
 	text-indent: 2rem;
 }
 
-.main ul {
+.thesis-page ul {
 	list-style-type: disc;
 	margin-left: 2rem;
 }
 
-.main ul li:nth-child(-n + 2) {
+.thesis-page ul li:nth-child(-n + 2) {
 	margin-bottom: 1rem;
 }
 
-.main span {
+.thesis-page span {
 	font-weight: 700;
 }

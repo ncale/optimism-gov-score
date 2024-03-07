@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-		<main className="main">
+		<main className="main thesis-page">
 			<h2>Thesis</h2>
 			<p>
 				In the world of DAO governance and leadership, three key pillars stand out as 
