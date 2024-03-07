@@ -1,8 +1,23 @@
 "use client"
 
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Spinner } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Spinner, User, Button } from "@nextui-org/react";
 import { useState, useCallback, Key } from "react";
 import { type Delegate, rows, columns } from "@/data";
+
+function formatBigNumber(num: number) {
+	const formattedNum = new Intl.NumberFormat().format(num);
+	return formattedNum
+}
+
+function formatPercentValue(num: number) {
+	const formattedNum = new Intl.NumberFormat().format(num);
+	return formattedNum.split(".", 2)[1].substring(0,2).concat('%')
+}
+
+function getColor(value: number){
+	var hue=((1-((10-value)/10))*120).toString(10);
+	return ["hsl(",hue,",60%,50%)"].join("");
+}
 
 export default function DelegateTable() {
   
@@ -11,54 +26,58 @@ export default function DelegateTable() {
 	const renderCell = useCallback((delegate: Delegate, columnKey: Key) => {
     const cellValue = delegate[columnKey as keyof Delegate];
     switch (columnKey) {
-      case "key":
-        return (
-          <>{cellValue}</>
-        );
 			case "is_current_delegate":
 				return (
-					<>{cellValue}</>
-				);
-			case "rank":
-				return (
-					<>{cellValue}</>
+					cellValue ? <small>Current Delegate</small> : null
 				);
 			case "delegate":
 				return (
-					<>{cellValue}</>
+					<User
+						name={cellValue}
+						avatarProps={{src: delegate.pfpLink}}
+						/>
 				);
 			case "voting_power":
-        return (
-          <>{cellValue}</>
+				if (typeof cellValue !== "number") return <></>
+				const formattedBigNum = formatBigNumber(cellValue)
+				return (
+          <span>{`${formattedBigNum} OP`}</span>
         );
 			case "percent_delegated_supply":
-        return (
-          <>{cellValue}</>
+        if (typeof cellValue !== "number") return <></>
+				const formattedDelegatePercent = formatPercentValue(cellValue)
+				return (
+          <span>{formattedDelegatePercent}</span>
         );
 			case "percent_participation":
+				if (typeof cellValue !== "number") return <></>
+				const formattedParticipationPercent = formatPercentValue(cellValue)
 				return (
-					<>{cellValue}</>
+					<span>{formattedParticipationPercent}</span>
 				);
 			case "gov_score":
+				if (typeof cellValue !== "number") return <></>
+				const col = getColor(cellValue)
 				return (
-					<>{cellValue}</>
+					<span style={{color: col}}>{`${cellValue}/10`}</span>
 				);
 			case "delegate_button":
         return (
-          <>{cellValue}</>
+          <Button size="sm" className="delegate-button" color="primary">delegate</Button>
         );
       default:
         return cellValue;
     }
   }, []);
 
-	const rowsPerPage = 10;
+	const rowsPerPage = 11;
 	const pages = 3; // placeholder for when data fetching is implemented
 	const loadingState = "idle"; // placeholder for when data fetching is implemented
 
   return (
     <Table
-      bottomContent={
+			isCompact
+			bottomContent={
         pages > 0 ? (
           <div className="flex w-full justify-center">
             <Pagination
@@ -73,23 +92,27 @@ export default function DelegateTable() {
           </div>
         ) : null
       }
+			bottomContentPlacement="outside"
     >
       <TableHeader columns={columns}>
-				{(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+				{(column) => (
+					<TableColumn 
+						key={column.key}
+						align="center"
+						hideHeader={column.hideHeader ?? false}
+					>
+						{column.label}
+					</TableColumn>
+				)}
       </TableHeader>
       <TableBody
         items={rows ?? []}
         loadingContent={<Spinner />}
         loadingState={loadingState}
       >
-
-				{/* User's current delegate */}
-
-				{/* Spacer */}
-
 				{/* Delegate list */}
         {(item) => (
-          <TableRow key={item.key}>
+          <TableRow key={item.key} className="table-row">
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}
