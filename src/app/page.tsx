@@ -16,7 +16,7 @@ export default function Home() {
 					a delegated 5M governance tokens, how likely are you to recognize that address later? This is the second part of the
 					transparency problem: the human element. Delegates should have a minimum of a pseudonymous identity to allow outside
 					parties to understand who is voting and how. For this reason, in our model, having an associated ens address and pfp ranks
-					into a given delegate's governance score.
+					into a given delegate&apos;s governance score.
 				</p></li>
 				<li><p>
 					<span>Consistency</span> is another vital aspect in delegation practices. Delegates have a responsibility to the protocol 
