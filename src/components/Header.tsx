@@ -1,6 +1,7 @@
 "use client";
 
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, Image } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Image } from "@nextui-org/react";
+import ConnectButton from "./ConnectButton";
 import { usePathname } from "next/navigation";
 
 export default function Header() {
@@ -34,9 +35,7 @@ export default function Header() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Connect Wallet
-          </Button>
+          <ConnectButton />
         </NavbarItem>
       </NavbarContent>
 		</Navbar>
