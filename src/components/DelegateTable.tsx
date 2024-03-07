@@ -3,7 +3,6 @@
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Spinner, User, Button } from "@nextui-org/react";
 import { useState, useCallback, Key } from "react";
 import { type Delegate, rows, columns } from "@/data";
-import { render } from "react-dom";
 
 function formatBigNumber(num: number) {
 	const formattedNum = new Intl.NumberFormat().format(num);
