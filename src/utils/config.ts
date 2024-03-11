@@ -3,4 +3,4 @@
 export const DUNE_API_KEY = process.env.DUNE_API_KEY || ''
 
 // configure global variables
-export const DUNE_QUERY_ID = 123 // dummy query id
+export const DUNE_DELEGATE_QUERY_ID = 123 // dummy query id
