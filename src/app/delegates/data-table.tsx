@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
 			{/* Search */}
-			<div className="flex items-center py-4">
+			<div className="flex items-center justify-center py-4">
         <Input
           placeholder="Filter delegates..."
           value={(table.getColumn("username")?.getFilterValue() as string) ?? ""}
