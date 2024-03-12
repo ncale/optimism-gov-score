@@ -1,18 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-
-export type Delegate = {
-	rank: number
-	address: string
-	username: string
-	pfpLink?: string
-	voting_power: number
-	pct_voting_power: number
-	pct_participation?: number
-	gov_score?: number
-	is_current_delegate?: boolean
-}
+import { Delegate } from "@/types/tableTypes";
 
 function formatBigNumber(num: number) {
 	const formattedNum = new Intl.NumberFormat().format(num);

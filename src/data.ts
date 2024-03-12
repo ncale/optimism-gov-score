@@ -1,4 +1,4 @@
-import { Delegate } from "./app/delegates/columns";
+import { Delegate } from "./types/tableTypes";
 
 export const rows: Delegate[] = [
   {
