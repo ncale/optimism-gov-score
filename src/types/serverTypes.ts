@@ -1,5 +1,3 @@
-
-
 export interface DuneDelegateQuery {
 	delegate_rank: number
 	delegate: string

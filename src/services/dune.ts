@@ -7,4 +7,3 @@ export async function fetchDuneData() {
 	const res = await dune.results<DuneDelegateQuery>(DUNE_DELEGATE_QUERY_ID)
 	if (res.result) return res.result.rows
 }
-
