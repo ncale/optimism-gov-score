@@ -35,6 +35,10 @@ export const columns: ColumnDef<DelegateTableRow>[] = [
 	{
     accessorKey: "pct_participation",
     header: "% Participation",
+		cell: ({ row }) => {
+			const num = formatPercentValue(row.getValue('pct_participation'))
+			return <div>{num}</div>
+		}
   },
 	{
     accessorKey: "gov_score",
