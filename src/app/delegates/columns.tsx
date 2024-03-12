@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { DelegateTableRow } from "@/types/tableTypes";
 import { formatBigNumber, formatPercentValue } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export const columns: ColumnDef<DelegateTableRow>[] = [
   {
@@ -48,6 +49,6 @@ export const columns: ColumnDef<DelegateTableRow>[] = [
 	{
 		accessorKey: "is_current_delegate",
 		header: () => <div className="text-center">Delegate?</div>,
-		cell: ({ row }) => row.getValue('is_current_delegate') ? <div className="text-center">current delegate</div> : <div className="text-center">delegate</div>
+		cell: ({ row }) => row.getValue('is_current_delegate') ? <div className="text-center">current delegate</div> : <div className="text-center"><Button size='xs'>delegate</Button></div>
   },
 ]
