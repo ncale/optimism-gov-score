@@ -2,17 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { DelegateTableRow } from "@/types/tableTypes";
-
-function formatBigNumber(num: number) {
-	const formattedNum = new Intl.NumberFormat().format(num);
-	return formattedNum
-}
-
-function formatPercentValue(num: number) {
-	const formattedNum = new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2 }).format(num);
-	if (formattedNum === '0.00%') return '<0.01%'
-	return formattedNum
-}
+import { formatBigNumber, formatPercentValue } from "@/lib/utils";
 
 export const columns: ColumnDef<DelegateTableRow>[] = [
   {
