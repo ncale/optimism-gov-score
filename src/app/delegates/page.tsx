@@ -1,10 +1,7 @@
-// import DelegateTable from "@/components/DelegateTable";
-// import { rows } from "@/data";
 import { getDelegates } from "@/services/getDelegates";
 import type { DelegateTableRow } from "@/types/tableTypes";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-
 
 async function getData() {
 	const delegateData = await getDelegates();
