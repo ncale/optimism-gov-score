@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { fetchDuneData } from "@/services/dune";
+import type { FormattedDelegate } from "@/types/serverTypes";
 
 export async function GET() {
 	const delegates = await getDelegates();
@@ -19,12 +20,4 @@ async function getDelegates() {
 		} as FormattedDelegate
 	})
 	return formattedDelegateData
-}
-
-interface FormattedDelegate {
-	rank: number
-	address: string
-	username: string
-	voting_power: number
-	pct_voting_power: number
 }
