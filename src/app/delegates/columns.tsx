@@ -1,17 +1,20 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Delegate } from "@/types/tableTypes";
+import { DelegateTableRow } from "@/types/tableTypes";
 
 function formatBigNumber(num: number) {
 	const formattedNum = new Intl.NumberFormat().format(num);
 	return formattedNum
 }
 
-export const columns: ColumnDef<Delegate>[] = [
+export const columns: ColumnDef<DelegateTableRow>[] = [
   {
     accessorKey: "rank",
-    header: "Rank",
+    header: () => <div className="text-center">Rank</div>,
+		cell: ({ row }) => {
+			return <div className="text-center">{row.getValue('rank')}</div>
+		}
   },
   {
     accessorKey: "username",
