@@ -6,7 +6,7 @@ export async function GET() {
 	return NextResponse.json(delegates)
 }
 
-export async function getDelegates() {
+async function getDelegates() {
 	const duneData = await fetchDuneData()
 	if (!duneData) return
 	const formattedDelegateData = duneData.map((delegate) => {
