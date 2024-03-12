@@ -8,6 +8,12 @@ function formatBigNumber(num: number) {
 	return formattedNum
 }
 
+function formatPercentValue(num: number) {
+	const formattedNum = new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 2 }).format(num);
+	if (formattedNum === '0.00%') return '<0.01%'
+	return formattedNum
+}
+
 export const columns: ColumnDef<DelegateTableRow>[] = [
   {
     accessorKey: "rank",
@@ -31,6 +37,10 @@ export const columns: ColumnDef<DelegateTableRow>[] = [
 	{
     accessorKey: "pct_voting_power",
     header: "% of Voting Power",
+		cell: ({ row }) => {
+			const num = formatPercentValue(row.getValue('pct_voting_power'))
+			return <div>{num}</div>
+		}
   },
 	{
     accessorKey: "pct_participation",
