@@ -18,34 +18,36 @@ export const columns: ColumnDef<DelegateTableRow>[] = [
   },
   {
     accessorKey: "voting_power",
-    header: "Voting Power",
+		header: () => <div className="text-center">Voting Power</div>,
 		cell: ({ row }) => {
 			const num = formatBigNumber(row.getValue('voting_power'))
-			return <div>{`${num} OP`}</div>
+			return <div className="text-center">{`${num} OP`}</div>
 		}
   },
 	{
     accessorKey: "pct_voting_power",
-    header: "% of Voting Power",
+		header: () => <div className="text-center">% of Voting Power</div>,
 		cell: ({ row }) => {
 			const num = formatPercentValue(row.getValue('pct_voting_power'))
-			return <div>{num}</div>
+			return <div className="text-center">{num}</div>
 		}
   },
 	{
     accessorKey: "pct_participation",
-    header: "% Participation",
+    header: () => <div className="text-center">% Participation</div>,
 		cell: ({ row }) => {
 			const num = formatPercentValue(row.getValue('pct_participation'))
-			return <div>{num}</div>
+			return <div className="text-center">{num}</div>
 		}
   },
 	{
     accessorKey: "gov_score",
-    header: "GovScore",
+    header: () => <div className="text-center">GovScore</div>,
+		cell: ({ row }) => <div className="text-center">{row.getValue('gov_score')}</div>
   },
 	{
 		accessorKey: "is_current_delegate",
-    header: "Delegate?",
+		header: () => <div className="text-center">Delegate?</div>,
+		cell: ({ row }) => row.getValue('is_current_delegate') ? <div className="text-center">current delegate</div> : <div className="text-center">delegate</div>
   },
 ]
