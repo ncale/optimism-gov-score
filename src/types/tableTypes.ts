@@ -1,4 +1,4 @@
-export type Delegate = {
+export type DelegateTableRow = {
 	rank: number
 	address: string
 	username: string
