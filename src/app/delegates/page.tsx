@@ -2,6 +2,7 @@ import { getDelegates } from "@/services/getDelegates";
 import type { DelegateTableRow } from "@/types/tableTypes";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import Message from "./message";
 
 async function getData() {
 	const delegateData = await getDelegates();
@@ -30,7 +31,7 @@ export default async function Home() {
 	
 	return (
 		<main className="main">
-			<p className="delegate-recommendation">Your delegate has a GovScore of 6/10. Consider re-delegating</p>
+			<Message />
 			{data ? <DataTable columns={columns} data={data} /> : undefined}
 		</main>
 	);
