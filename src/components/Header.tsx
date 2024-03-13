@@ -1,8 +1,9 @@
 "use client";
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Image } from "@nextui-org/react";
-import ConnectButton from "./ConnectButton";
+// import ConnectButton from "./ConnectButton";
 import { usePathname } from "next/navigation";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Header() {
 	
@@ -35,7 +36,7 @@ export default function Header() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <ConnectButton />
+          <ConnectButton showBalance={false} />
         </NavbarItem>
       </NavbarContent>
 		</Navbar>
