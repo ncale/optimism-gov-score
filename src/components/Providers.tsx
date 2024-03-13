@@ -4,14 +4,14 @@ import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WC_PROJECT_ID } from '@/config/config';
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { WagmiProvider } from 'wagmi';
-import { optimism } from 'wagmi/chains';
+import { mainnet, optimism } from 'wagmi/chains';
 import { NextUIProvider } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 
 const config = getDefaultConfig({
   appName: 'GovScore',
   projectId: WC_PROJECT_ID,
-  chains: [optimism],
+  chains: [mainnet, optimism],
   ssr: true,
 });
 const queryClient = new QueryClient();

@@ -35,7 +35,7 @@ export default function Header() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <ConnectButton showBalance={false} />
+          <ConnectButton chainStatus="none" showBalance={false} />
         </NavbarItem>
       </NavbarContent>
 		</Navbar>
