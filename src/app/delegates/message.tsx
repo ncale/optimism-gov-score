@@ -1,12 +1,23 @@
 'use client';
 
-import { useAccount } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
+import { opContractAbi } from "@/config/op-contract-abi";
+import { OP_CONTRACT_ADDRESS } from "@/config/config";
 
 export default function Message() {
 	
 	const { address } = useAccount()
-	
-	const message = address ? "Your delegate has a GovScore of 6/10. Consider re-delegating... ".concat(address) : "Connect your wallet"
+	const { data } = useReadContract({
+		address: OP_CONTRACT_ADDRESS,
+		abi: opContractAbi,
+		functionName: "delegates",
+		args: [address ?? "0x"]
+	})
+
+	if (!address) return <p className="delegate-recommendation">Connect your wallet to see your delegate</p>
+	if (!data) return <p className="delegate-recommendation">No data found...</p>
+
+	const message = `Your delegate has a GovScore of ${9}/10. ${9>7 ? "Awesome" : "Consider re-delegating..."}` // dummy data
 
 	return (
 		<p className="delegate-recommendation">{message}</p>
