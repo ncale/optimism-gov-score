@@ -1,6 +1,7 @@
 'use client'
 
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { WC_PROJECT_ID } from '@/config/config';
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { WagmiProvider } from 'wagmi';
 import { optimism } from 'wagmi/chains';
@@ -9,9 +10,9 @@ import { useRouter } from 'next/navigation'
 
 const config = getDefaultConfig({
   appName: 'GovScore',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: WC_PROJECT_ID,
   chains: [optimism],
-  ssr: true, // If your dApp uses server side rendering (SSR)
+  ssr: true,
 });
 const queryClient = new QueryClient();
 
