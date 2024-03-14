@@ -31,7 +31,7 @@ export default async function Home() {
 	
 	return (
 		<main className="main">
-			<Message />
+			{/* <Message /> */}
 			{data ? <DataTable columns={columns} data={data} /> : undefined}
 		</main>
 	);
