@@ -21,15 +21,15 @@ export function calcGovScore({ isEnsNameSet, isEnsAvatarSet, isFcAcctAttached, r
 	// init scores variable
 	let scores: {
 		ensName: number // out of 1
-		ensAvatar: number // out of 0.5
-		fcAcct: number // out of 0.5
+		ensAvatar: number // out of 0.5 (temporarily out of 1)
+		fcAcct: number // out of 0.5 (temporarily out of 0)
 		recentParticipation: number // out of 5
 		pctDelegation: number // out of 3
 	} = {ensName: 0, ensAvatar: 0, fcAcct: 0, recentParticipation: 0, pctDelegation: 0}
 	// add transparency criteria
 	if (isEnsNameSet) scores.ensName++
-	if (isEnsAvatarSet) scores.ensAvatar += 0.5
-	if (isFcAcctAttached) scores.fcAcct += 0.5
+	if (isEnsAvatarSet) scores.ensAvatar += 1 // 0.5 (temp out of 1)
+	if (isFcAcctAttached) scores.fcAcct += 0 // 0.5 (temp out of 0)
 	// add consistency criteria
 	scores.recentParticipation += (recentParticipation * 0.5)
 	// add power balance criteria

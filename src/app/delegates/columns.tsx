@@ -123,10 +123,10 @@ export const columns = [
 									<ScoreCircle num={scores.ensAvatar} />
 									{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set
 								</div>
-								<div className="tooltip-text">
+								{/* <div className="tooltip-text">
 									<ScoreCircle num={scores.fcAcct} />
 									[WIP] {govScoreConfig.isFcAcctAttached ? "" : "No "} Detected Farcaster Account
-								</div>
+								</div> */}
 								<div className="tooltip-text">
 									<ScoreCircle num={scores.recentParticipation} />
 									Voted in {voteCount} of last 10 onchain proposals
