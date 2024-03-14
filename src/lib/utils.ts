@@ -17,7 +17,7 @@ export function formatPercentValue(num: number) {
 	return formattedNum
 }
 
-export function calcGovScore({ isEnsNameSet, isEnsAvatarSet, isFcAcctAttached, recentParticipationRatio, pctDelegation }: GovScoreConfig) {
+export function calcGovScore({ isEnsNameSet, isEnsAvatarSet, isFcAcctAttached, recentParticipation, pctDelegation }: GovScoreConfig) {
 	// init scores variable
 	let scores: {
 		ensName: number // out of 1
@@ -31,7 +31,7 @@ export function calcGovScore({ isEnsNameSet, isEnsAvatarSet, isFcAcctAttached, r
 	if (isEnsAvatarSet) scores.ensAvatar += 0.5
 	if (isFcAcctAttached) scores.fcAcct += 0.5
 	// add consistency criteria
-	scores.recentParticipation += (recentParticipationRatio * 0.5)
+	scores.recentParticipation += (recentParticipation * 0.5)
 	// add power balance criteria
 	if (pctDelegation < 0.005) {
 		scores.pctDelegation += 3

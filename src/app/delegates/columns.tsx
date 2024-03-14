@@ -9,6 +9,7 @@ import { normalize } from "viem/ens";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip } from "@nextui-org/react";
 import ScoreCircle from "./score-circle";
+import CountParticipationCell, { countParticipation } from "./count-participation-cell";
 
 const columnHelper = createColumnHelper<DelegateTableRow>()
 
@@ -63,12 +64,9 @@ export const columns = [
 			return <div className="cell">{num}</div>
 		}
 	}),
-	columnHelper.accessor('pct_participation', {
-		header: () => <div className="head">% Participation</div>,
-		cell: ({ row }) => {
-			const num = formatPercentValue(row.getValue('pct_participation'))
-			return <div className="cell">{num}</div>
-		}
+	columnHelper.accessor('count_participation', {
+		header: () => <div className="head">Recent Participation</div>,
+		cell: ({ row }) => <CountParticipationCell row={row} />
 	}),
 	columnHelper.accessor('gov_score', {
 		header: () => <div className="head">GovScore</div>,
@@ -82,11 +80,13 @@ export const columns = [
 				chainId: 1
 			})
 
+			const voteCount = countParticipation(row.original.address)
+
 			const govScoreConfig = {
 				isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0), // poor way to test this; allows false positives
 				isEnsAvatarSet: (typeof ensAvatar === 'string' && ensAvatar.length > 0), // poor way to test this; allows false positives
 				isFcAcctAttached: false, // dummy data
-				recentParticipationRatio: 0, // dummy data
+				recentParticipation: voteCount, // dummy data
 				pctDelegation: row.original.pct_voting_power,
 			}
 
@@ -127,7 +127,7 @@ export const columns = [
 								</div>
 								<div className="tooltip-text">
 									<ScoreCircle num={scores.recentParticipation} />
-									[WIP] Voted in {} of last 10 onchain proposals
+									Voted in {voteCount} of last 10 onchain proposals
 								</div>
 								<div className="tooltip-text">
 									<ScoreCircle num={scores.pctDelegation} />
