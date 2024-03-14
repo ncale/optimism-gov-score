@@ -85,10 +85,10 @@ export const columns = [
 			const voteCount = countParticipation(row.original.address)
 
 			const govScoreConfig = {
-				isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0), // poor way to test this; allows false positives
-				isEnsAvatarSet: (typeof ensAvatar === 'string' && ensAvatar.length > 0), // poor way to test this; allows false positives
+				isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0),
+				isEnsAvatarSet: (typeof ensAvatar === 'string' && ensAvatar.length > 0),
 				isFcAcctAttached: false, // dummy data
-				recentParticipation: voteCount, // dummy data
+				recentParticipation: voteCount,
 				pctDelegation: row.original.pct_voting_power,
 			}
 
