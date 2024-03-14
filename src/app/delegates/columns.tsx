@@ -150,4 +150,4 @@ export const columns = [
 			<div className="cell"><DelegateButton delegateeAddr={row.original.address} /></div>
 		)
 	}),
-]
+] as ColumnDef<DelegateTableRow>[]
