@@ -15,7 +15,7 @@ async function getData() {
 				pfpLink: '', // temporary hard-coded value
 				voting_power: row.voting_power,
 				pct_voting_power: row.pct_voting_power,
-				pct_participation: 0, // temporary hard-coded value
+				count_participation: row.count_participation,
 				gov_score: 0, // temporary hard-coded value
 				is_current_delegate: false, // temporary hard-coded value
 			} as DelegateTableRow

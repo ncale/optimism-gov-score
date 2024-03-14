@@ -1,6 +1,6 @@
 export interface DuneDelegateQuery {
 	delegate_rank: number
-	delegate: string
+	delegate: `0x${string}`
 	delegate_name_raw: string
 	dt_voting_power: number
 	pct_voting_power: number
