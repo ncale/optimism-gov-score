@@ -2,11 +2,13 @@
 
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { DelegateTableRow } from "@/types/tableTypes";
-import { formatBigNumber, formatPercentValue } from "@/lib/utils";
+import { calcGovScore, formatBigNumber, formatPercentValue } from "@/lib/utils";
 import DelegateButton from "./delegate-button";
 import { useEnsAvatar, useEnsName } from "wagmi";
 import { normalize } from "viem/ens";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tooltip } from "@nextui-org/react";
+import ScoreCircle from "./score-circle";
 
 const columnHelper = createColumnHelper<DelegateTableRow>()
 
@@ -70,7 +72,75 @@ export const columns = [
 	}),
 	columnHelper.accessor('gov_score', {
 		header: () => <div className="head">GovScore</div>,
-		cell: ({ row }) => <div className="cell">{row.getValue('gov_score')}</div>
+		cell: ({ row }) => {
+			const { data: ensName } = useEnsName({
+				address: row.original.address,
+				chainId: 1
+			})
+			const { data: ensAvatar } = useEnsAvatar({
+				name: normalize(ensName?.toString() ?? ''),
+				chainId: 1
+			})
+
+			const govScoreConfig = {
+				isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0), // poor way to test this; allows false positives
+				isEnsAvatarSet: (typeof ensAvatar === 'string' && ensAvatar.length > 0), // poor way to test this; allows false positives
+				isFcAcctAttached: false, // dummy data
+				recentParticipationRatio: 0, // dummy data
+				pctDelegation: row.original.pct_voting_power,
+			}
+
+			const { scores } = calcGovScore(govScoreConfig)
+			const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
+
+			function getPctDelegationText(score: number) {
+				switch (score) {
+					case 0:
+						return "More than 1.5%"
+					case 1: 
+						return "Less than 1.5%"
+					case 2:
+						return "Less than 1.0%"
+					case 3:
+						return "Less than 0.5%"
+				}
+			}
+			const pctDelegationText = getPctDelegationText(scores.pctDelegation)
+
+			return (
+				<div className="cell">
+					<Tooltip 
+						placement="right"
+						content={
+							<div>
+								<div className="tooltip-text">
+									<ScoreCircle num={scores.ensName} />
+									{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set
+								</div>
+								<div className="tooltip-text">
+									<ScoreCircle num={scores.ensAvatar} />
+									{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set
+								</div>
+								<div className="tooltip-text">
+									<ScoreCircle num={scores.fcAcct} />
+									[WIP] {govScoreConfig.isFcAcctAttached ? "" : "No "} Detected Farcaster Account
+								</div>
+								<div className="tooltip-text">
+									<ScoreCircle num={scores.recentParticipation} />
+									[WIP] Voted in {} of last 10 onchain proposals
+								</div>
+								<div className="tooltip-text">
+									<ScoreCircle num={scores.pctDelegation} />
+									{pctDelegationText} of total delegated OP
+								</div>
+							</div>
+						}
+					>
+						<span>{govScore}</span>
+					</Tooltip>
+				</div>
+			)
+		}
 	}),
 	columnHelper.accessor('is_current_delegate', {
 		header: () => <div className="head">Delegate?</div>,

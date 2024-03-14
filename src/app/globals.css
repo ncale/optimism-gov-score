@@ -125,3 +125,8 @@
 .delegate-button {
 	
 }
+
+.tooltip-text {
+	line-height: 1.2;
+	display: flex;
+}

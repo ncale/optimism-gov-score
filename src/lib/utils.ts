@@ -1,3 +1,4 @@
+import { GovScoreConfig } from "@/types/utilsTypes";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -16,27 +17,28 @@ export function formatPercentValue(num: number) {
 	return formattedNum
 }
 
-export function calcGovScore(
-	isEnsNameSet: boolean, 
-	isEnsAvatarSet: boolean, 
-	isFcAcctAttached: boolean,
-	recentParticipationRatio: number,
-	pctDelegation: number,
-) {
-	let govScore = 0
+export function calcGovScore({ isEnsNameSet, isEnsAvatarSet, isFcAcctAttached, recentParticipationRatio, pctDelegation }: GovScoreConfig) {
+	// init scores variable
+	let scores: {
+		ensName: number // out of 1
+		ensAvatar: number // out of 0.5
+		fcAcct: number // out of 0.5
+		recentParticipation: number // out of 5
+		pctDelegation: number // out of 3
+	} = {ensName: 0, ensAvatar: 0, fcAcct: 0, recentParticipation: 0, pctDelegation: 0}
 	// add transparency criteria
-	if (isEnsNameSet) govScore++
-	if (isEnsAvatarSet) govScore += 0.5
-	if (isFcAcctAttached) govScore += 0.5
+	if (isEnsNameSet) scores.ensName++
+	if (isEnsAvatarSet) scores.ensAvatar += 0.5
+	if (isFcAcctAttached) scores.fcAcct += 0.5
 	// add consistency criteria
-	govScore += (recentParticipationRatio * 0.5)
+	scores.recentParticipation += (recentParticipationRatio * 0.5)
 	// add power balance criteria
 	if (pctDelegation < 0.005) {
-		govScore += 3
+		scores.pctDelegation += 3
 	} else if (pctDelegation < 0.01) {
-		govScore += 2
+		scores.pctDelegation += 2
 	} else if (pctDelegation < 0.015) {
-		govScore += 1
+		scores.pctDelegation += 1
 	}
-	return govScore
+	return { scores }
 }
