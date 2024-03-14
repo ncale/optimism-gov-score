@@ -33,20 +33,22 @@ export const columns = [
 			const [addr, username] = props.getValue().split(' - ')
 			const shortAddr = `${addr.slice(0, 5)}...${addr.slice(-4)}`
 			return (
-				<div className="cell col-delegate flex">
-					<Avatar>
-						<AvatarImage src={ensAvatar ? String(ensAvatar) : "/def_avatar.png"} />
-						<AvatarFallback>...</AvatarFallback>
-					</Avatar>
-					<div className="flex flex-col ml-2 items-start justify-center">
-						<h3 className="">{ensName ? ensName : shortAddr}</h3>
-						{(addr === username) ? (
-							<></>
-						) : (
-							<p className="">a.k.a. {username}</p>
-						)}
+				<a href={`https://vote.optimism.io/delegates/${props.row.original.address}`} target="_blank">
+					<div className="cell col-delegate flex">
+						<Avatar>
+							<AvatarImage src={ensAvatar ? String(ensAvatar) : "/def_avatar.png"} />
+							<AvatarFallback>...</AvatarFallback>
+						</Avatar>
+						<div className="flex flex-col ml-2 items-start justify-center">
+							<h3 className="">{ensName ? ensName : shortAddr}</h3>
+							{(addr === username) ? (
+								<></>
+							) : (
+								<p className="">a.k.a. {username}</p>
+							)}
+						</div>
 					</div>
-				</div>
+				</a>
 			)
 		}
 	}),
