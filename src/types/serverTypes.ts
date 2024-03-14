@@ -8,7 +8,7 @@ export interface DuneDelegateQuery {
 
 export interface FormattedDelegate {
 	rank: number
-	address: string
+	address: `0x${string}`
 	username: string
 	voting_power: number
 	pct_voting_power: number

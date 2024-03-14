@@ -1,6 +1,6 @@
 export type DelegateTableRow = {
 	rank: number
-	address: string
+	address: `0x${string}`
 	username: string
 	pfpLink?: string
 	voting_power: number
