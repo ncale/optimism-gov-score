@@ -8,6 +8,15 @@
     "start": "next start",
     "lint": "next lint"
   },
+	"browserslist": {
+    "production": [
+      ">0.2%",
+      "not ie <= 99",
+      "not android <= 4.4.4",
+      "not dead",
+      "not op_mini all"
+    ]
+  },
   "dependencies": {
     "@nextui-org/react": "^2.2.10",
     "@radix-ui/react-avatar": "^1.0.4",
