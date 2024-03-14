@@ -26,8 +26,8 @@ export function calcGovScore(
 	let govScore = 0
 	// add transparency criteria
 	if (isEnsNameSet) govScore++
-	if (isEnsAvatarSet) govScore++
-	if (isFcAcctAttached) govScore++
+	if (isEnsAvatarSet) govScore += 0.5
+	if (isFcAcctAttached) govScore += 0.5
 	// add consistency criteria
 	govScore += (recentParticipationRatio * 0.5)
 	// add power balance criteria
