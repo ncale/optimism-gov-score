@@ -4,7 +4,7 @@ import { opVotingAbi } from "@/config/op-voting-abi";
 import { type Row } from "@tanstack/react-table";
 import { type DelegateTableRow } from "@/types/tableTypes";
 
-export function countParticipation(address: `0x${string}`) {
+export function useCountParticipation(address: `0x${string}`) {
 	const { data: hasVoted1 } = useReadContract({
 		address: OP_VOTING_ADDRESS,
 		abi: opVotingAbi,
@@ -80,6 +80,6 @@ export function countParticipation(address: `0x${string}`) {
 }
 
 export default function CountParticipationCell({ row }: { row: Row<DelegateTableRow>}) {
-	const voteCount = countParticipation(row.original.address)
+	const voteCount = useCountParticipation(row.original.address)
 	return <div className="cell">{`${voteCount}/10`}</div>
 }
