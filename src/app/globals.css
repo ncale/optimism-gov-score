@@ -95,10 +95,38 @@
 	text-align: center;
 }
 
-.main .table-row:nth-child(-n + 1) {
-	height: 6rem;
+.table {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.table div {
+	text-align: center;
+}
+
+.head {
+	font-size: medium;
+	font-weight: 400;
+}
+
+.cell {
+	font-size: medium;
+	line-height: 1;
+}
+
+.col-delegate {
+	min-width: 350px;
+}
+
+.col-delegate > div > p {
+	font-size: small;
 }
 
 .delegate-button {
 	
+}
+
+.tooltip-text {
+	line-height: 1.2;
+	display: flex;
 }

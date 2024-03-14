@@ -6,7 +6,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { Providers } from "@/components/Providers";
 import Header from "@/components/Header";
 
-const font = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
+const font = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 export const metadata: Metadata = {
   title: "GovScore",

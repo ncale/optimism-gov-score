@@ -1,54 +1,53 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { DelegateTableRow } from "@/types/tableTypes";
 import { formatBigNumber, formatPercentValue } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import DelegateButton from "./delegate-button";
+import CountParticipationCell, { useCountParticipation } from "./count-participation-cell";
+import DelegateCell from "./delegate-cell";
+import GovScoreCell from "./gov-score-cell";
 
-export const columns: ColumnDef<DelegateTableRow>[] = [
-  {
-    accessorKey: "rank",
-    header: () => <div className="text-center">Rank</div>,
+const columnHelper = createColumnHelper<DelegateTableRow>()
+
+export const columns = [
+	columnHelper.accessor('rank', {
+		header: () => <div className="head col-rank">Rank</div>,
+		cell: ({ row }) => <div className="cell col-rank">{row.getValue('rank')}</div>,
+	}),
+	columnHelper.accessor((delegate) => `${delegate.address} - ${delegate.username}`, {
+		id: 'address',
+		header: () => <div className="head col-delegate">Delegate</div>,
+		cell: (props) => <DelegateCell props={props} />
+	}),
+	columnHelper.accessor('voting_power', {
+		header: () => <div className="head">Voting Power</div>,
 		cell: ({ row }) => {
-			return <div className="text-center">{row.getValue('rank')}</div>
+			const num = formatBigNumber(row.getValue('voting_power')).split('.')[0]
+			return <div className="cell">{`${num} OP`}</div>
 		}
-  },
-  {
-    accessorKey: "username",
-    header: "Delegate",
-  },
-  {
-    accessorKey: "voting_power",
-		header: () => <div className="text-center">Voting Power</div>,
-		cell: ({ row }) => {
-			const num = formatBigNumber(row.getValue('voting_power'))
-			return <div className="text-center">{`${num} OP`}</div>
-		}
-  },
-	{
-    accessorKey: "pct_voting_power",
-		header: () => <div className="text-center">% of Voting Power</div>,
+	}),
+	columnHelper.accessor('pct_voting_power', {
+		header: () => <div className="head">% of Voting Power</div>,
 		cell: ({ row }) => {
 			const num = formatPercentValue(row.getValue('pct_voting_power'))
-			return <div className="text-center">{num}</div>
+			return <div className="cell">{num}</div>
 		}
-  },
-	{
-    accessorKey: "pct_participation",
-    header: () => <div className="text-center">% Participation</div>,
-		cell: ({ row }) => {
-			const num = formatPercentValue(row.getValue('pct_participation'))
-			return <div className="text-center">{num}</div>
-		}
-  },
-	{
-    accessorKey: "gov_score",
-    header: () => <div className="text-center">GovScore</div>,
-		cell: ({ row }) => <div className="text-center">{row.getValue('gov_score')}</div>
-  },
-	{
-		accessorKey: "is_current_delegate",
-		header: () => <div className="text-center">Delegate?</div>,
-		cell: ({ row }) => row.getValue('is_current_delegate') ? <div className="text-center">current delegate</div> : <div className="text-center"><Button size='xs'>delegate</Button></div>
-  },
-]
+	}),
+	columnHelper.accessor('count_participation', {
+		header: () => <div className="head">Recent Participation</div>,
+		cell: ({ row }) => <CountParticipationCell row={row} />
+	}),
+	columnHelper.accessor('gov_score', {
+		header: () => <div className="head">GovScore</div>,
+		cell: ({ row }) => <GovScoreCell row={row} />
+	}),
+	columnHelper.accessor('is_current_delegate', {
+		header: () => <div className="head">Delegate?</div>,
+		cell: ({ row }) => row.getValue('is_current_delegate') ? (
+			<div className="cell">current delegate</div>
+		) : (
+			<div className="cell"><DelegateButton delegateeAddr={row.original.address} /></div>
+		)
+	}),
+] as ColumnDef<DelegateTableRow>[]
