@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/ui/button";
 import { useAccount, useWriteContract } from "wagmi";
-import { opContractAbi } from "@/config/op-contract-abi";
-import { OP_CONTRACT_ADDRESS } from "@/config/config";
+import { opTokenAbi } from "@/config/op-token-abi";
+import { OP_TOKEN_ADDRESS } from "@/config/config";
 
 export default function DelegateButton({ delegateeAddr }: { delegateeAddr: `0x${string}` }) {
 	
@@ -12,8 +12,8 @@ export default function DelegateButton({ delegateeAddr }: { delegateeAddr: `0x${
 
 	function handleClick() {
 		// writeContract({
-		// 	abi: opContractAbi,
-		// 	address: OP_CONTRACT_ADDRESS,
+		// 	abi: opTokenAbi,
+		// 	address: OP_TOKEN_ADDRESS,
 		// 	functionName: 'delegate',
 		// 	account: address,
 		// 	args: [delegateeAddr ?? "0x"],
