@@ -129,4 +129,10 @@
 .tooltip-text {
 	line-height: 1.2;
 	display: flex;
+	align-items: center;
+	background-color: var(--primary);
+}
+
+.tooltip-text > span {
+	margin-left: 0.25rem;
 }

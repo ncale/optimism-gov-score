@@ -6,6 +6,10 @@ import { Tooltip } from "@nextui-org/react";
 import ScoreCircle from "./score-circle";
 import { type Row } from "@tanstack/react-table";
 import { type DelegateTableRow } from "@/types/tableTypes";
+// Icons
+import { FaRegCircleCheck } from "react-icons/fa6";
+import { FaRegCircle } from "react-icons/fa6";
+import { FaRegCircleXmark } from "react-icons/fa6";
 
 export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	const { data: ensName } = useEnsName({
@@ -51,24 +55,24 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 				content={
 					<div>
 						<div className="tooltip-text">
-							<ScoreCircle num={scores.ensName} />
-							{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set
+							{scores.ensName === 1 ? <FaRegCircleCheck /> : <FaRegCircleXmark />}
+							<span>{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set</span>
 						</div>
 						<div className="tooltip-text">
-							<ScoreCircle num={scores.ensAvatar} />
-							{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set
+							{scores.ensAvatar === 1 ? <FaRegCircleCheck /> : <FaRegCircleXmark />}
+							<span>{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
 						</div>
 						{/* <div className="tooltip-text">
 							<ScoreCircle num={scores.fcAcct} />
 							[WIP] {govScoreConfig.isFcAcctAttached ? "" : "No "} Detected Farcaster Account
 						</div> */}
 						<div className="tooltip-text">
-							<ScoreCircle num={scores.recentParticipation} />
-							Voted in {voteCount} of last 10 onchain proposals
+							{scores.recentParticipation > 3.5 ? <FaRegCircleCheck /> : (scores.recentParticipation > 1.5 ? <FaRegCircle /> : <FaRegCircleXmark />)}
+							<span>Voted in {voteCount} of last 10 onchain proposals</span>
 						</div>
 						<div className="tooltip-text">
-							<ScoreCircle num={scores.pctDelegation} />
-							{pctDelegationText} of total delegated OP
+							{scores.pctDelegation === 3 ? <FaRegCircleCheck /> : (scores.pctDelegation > 0 ? <FaRegCircle /> : <FaRegCircleXmark />)}
+							<span>{pctDelegationText} of total delegated OP</span>
 						</div>
 					</div>
 				}
