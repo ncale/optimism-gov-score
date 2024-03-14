@@ -12,4 +12,5 @@ export interface FormattedDelegate {
 	username: string
 	voting_power: number
 	pct_voting_power: number
+	count_participation: number
 }

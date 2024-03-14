@@ -5,7 +5,7 @@ export type DelegateTableRow = {
 	pfpLink?: string
 	voting_power: number
 	pct_voting_power: number
-	pct_participation?: number
+	count_participation: number
 	gov_score?: number
 	is_current_delegate?: boolean
 }
