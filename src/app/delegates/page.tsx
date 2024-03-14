@@ -3,6 +3,7 @@ import type { DelegateTableRow } from "@/types/tableTypes";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import Message from "./message";
+import { ColumnDef } from "@tanstack/react-table";
 
 async function getData() {
 	const delegateData = await getDelegates();
@@ -32,7 +33,7 @@ export default async function Home() {
 	return (
 		<main className="main">
 			<Message />
-			{data ? <DataTable columns={columns} data={data} /> : undefined}
+			{data ? <DataTable columns={columns as ColumnDef<DelegateTableRow>[]} data={data} /> : undefined}
 		</main>
 	);
 }
