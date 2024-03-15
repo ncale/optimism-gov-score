@@ -68,7 +68,7 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 						</div> */}
 						<div className="tooltip-text">
 							{scores.recentParticipation > 3.5 ? <FaRegCircleCheck /> : (scores.recentParticipation > 1.5 ? <FaRegCircle /> : <FaRegCircleXmark />)}
-							<span className="line">Voted in <span className="special">{voteCount}</span> of last <span className="special">10</span> onchain proposals</span>
+							<span className="line line-through text-slate-400">Voted in <span className="special">{voteCount}</span> of last <span className="special">10</span> onchain proposals</span>
 						</div>
 						<div className="tooltip-text">
 							{scores.pctDelegation === 3 ? <FaRegCircleCheck /> : (scores.pctDelegation > 0 ? <FaRegCircle /> : <FaRegCircleXmark />)}

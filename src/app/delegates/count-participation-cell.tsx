@@ -81,5 +81,5 @@ export function useCountParticipation(address: `0x${string}`) {
 
 export default function CountParticipationCell({ row }: { row: Row<DelegateTableRow>}) {
 	const voteCount = useCountParticipation(row.original.address)
-	return <div className="cell">{`${voteCount}/10`}</div>
+	return <div className="cell line-through text-slate-400">{`${voteCount}/10`}</div>
 }
