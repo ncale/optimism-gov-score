@@ -82,7 +82,7 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 					</div>
 				}
 			>
-				<span>{govScore}</span>
+				<span>{`${govScore}/5`}</span>
 			</Tooltip>
 		</div>
 	)
