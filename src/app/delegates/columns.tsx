@@ -20,6 +20,10 @@ export const columns = [
 		header: () => <div className="head col-delegate">Delegate</div>,
 		cell: (props) => <DelegateCell props={props} />
 	}),
+	columnHelper.accessor('gov_score', {
+		header: () => <div className="head col-gov-score">GovScore</div>,
+		cell: ({ row }) => <GovScoreCell row={row} />
+	}),
 	columnHelper.accessor('voting_power', {
 		header: () => <div className="head">Voting Power</div>,
 		cell: ({ row }) => {
@@ -37,10 +41,6 @@ export const columns = [
 	columnHelper.accessor('count_participation', {
 		header: () => <div className="head">Recent Participation</div>,
 		cell: ({ row }) => <CountParticipationCell row={row} />
-	}),
-	columnHelper.accessor('gov_score', {
-		header: () => <div className="head">GovScore</div>,
-		cell: ({ row }) => <GovScoreCell row={row} />
 	}),
 	columnHelper.accessor('is_current_delegate', {
 		header: () => <div className="head">Delegate?</div>,

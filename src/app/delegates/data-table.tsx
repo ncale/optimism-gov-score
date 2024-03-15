@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
 			{/* Search */}
-			<div className="flex items-center justify-center py-4">
+			<div className="flex items-center py-4">
         <Input
           placeholder="Filter delegates..."
           value={(table.getColumn("address")?.getFilterValue() as string) ?? ""}
@@ -109,9 +109,11 @@ export function DataTable<TData, TValue>({
 			</div>
 
 			{/* Pagination */}
-			<div className="flex items-center justify-center space-x-2 py-4">
+			<div className="flex justify-center pt-4 pb-1 text-sm">{table.getState().pagination.pageIndex + 1} of {table.getPageCount().toLocaleString()}</div>
+			<div className="flex items-center justify-center space-x-2 pb-4">
         <Button
           size="sm"
+					variant="outline"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
@@ -119,6 +121,7 @@ export function DataTable<TData, TValue>({
         </Button>
         <Button
           size="sm"
+					variant="outline"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >

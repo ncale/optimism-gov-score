@@ -114,8 +114,12 @@
 	line-height: 1;
 }
 
+.col-gov-score {
+	min-width: 100px;
+}
+
 .col-delegate {
-	min-width: 350px;
+	min-width: 300px;
 }
 
 .col-delegate > div > p {
@@ -131,10 +135,11 @@
 	display: flex;
 	align-items: center;
 	background-color: var(--primary);
+	gap: 0.2rem;
 }
 
 .tooltip-text .line {
-	margin-left: 0.25rem;
+	
 }
 
 .tooltip-text .special {

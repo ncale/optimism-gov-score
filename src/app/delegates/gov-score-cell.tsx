@@ -3,13 +3,14 @@ import { normalize } from "viem/ens";
 import { useCountParticipation } from "./count-participation-cell";
 import { calcGovScore } from "@/lib/utils";
 import { Tooltip } from "@nextui-org/react";
-import ScoreCircle from "./score-circle";
+import ScoreCircle from "./score-pill";
 import { type Row } from "@tanstack/react-table";
 import { type DelegateTableRow } from "@/types/tableTypes";
 // Icons
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaRegCircle } from "react-icons/fa6";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import ScorePill from "./score-pill";
 
 export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	const { data: ensName } = useEnsName({
@@ -49,17 +50,19 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	const pctDelegationText = getPctDelegationText(scores.pctDelegation)
 
 	return (
-		<div className="cell">
+		<div className="cell col-gov-score">
 			<Tooltip 
 				placement="right"
 				content={
 					<div>
 						<div className="tooltip-text">
 							{scores.ensName === 1 ? <FaRegCircleCheck /> : <FaRegCircleXmark />}
+							<ScorePill score={scores.ensName} />
 							<span className="line">{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set</span>
 						</div>
 						<div className="tooltip-text">
 							{scores.ensAvatar === 1 ? <FaRegCircleCheck /> : <FaRegCircleXmark />}
+							<ScorePill score={scores.ensAvatar} />
 							<span className="line">{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
 						</div>
 						{/* <div className="tooltip-text">
@@ -68,16 +71,18 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 						</div> */}
 						<div className="tooltip-text">
 							{scores.recentParticipation > 3.5 ? <FaRegCircleCheck /> : (scores.recentParticipation > 1.5 ? <FaRegCircle /> : <FaRegCircleXmark />)}
+							<ScorePill score={scores.recentParticipation} />
 							<span className="line line-through text-slate-400">Voted in <span className="special">{voteCount}</span> of last <span className="special">10</span> onchain proposals</span>
 						</div>
 						<div className="tooltip-text">
 							{scores.pctDelegation === 3 ? <FaRegCircleCheck /> : (scores.pctDelegation > 0 ? <FaRegCircle /> : <FaRegCircleXmark />)}
+							<ScorePill score={scores.pctDelegation} />
 							<span className="line">{pctDelegationText} of total delegated OP</span>
 						</div>
 					</div>
 				}
 			>
-				<span>{govScore}</span>
+				<span>{`${govScore}/5`}</span>
 			</Tooltip>
 		</div>
 	)
