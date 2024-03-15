@@ -21,7 +21,7 @@ export const columns = [
 		cell: (props) => <DelegateCell props={props} />
 	}),
 	columnHelper.accessor('gov_score', {
-		header: () => <div className="head">GovScore</div>,
+		header: () => <div className="head col-gov-score">GovScore</div>,
 		cell: ({ row }) => <GovScoreCell row={row} />
 	}),
 	columnHelper.accessor('voting_power', {

@@ -50,7 +50,7 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	const pctDelegationText = getPctDelegationText(scores.pctDelegation)
 
 	return (
-		<div className="cell">
+		<div className="cell col-gov-score">
 			<Tooltip 
 				placement="right"
 				content={
