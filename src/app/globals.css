@@ -131,10 +131,11 @@
 	display: flex;
 	align-items: center;
 	background-color: var(--primary);
+	gap: 0.2rem;
 }
 
 .tooltip-text .line {
-	margin-left: 0.25rem;
+	
 }
 
 .tooltip-text .special {
