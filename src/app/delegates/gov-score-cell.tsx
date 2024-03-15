@@ -56,11 +56,11 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 					<div>
 						<div className="tooltip-text">
 							{scores.ensName === 1 ? <FaRegCircleCheck /> : <FaRegCircleXmark />}
-							<span>{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set</span>
+							<span className="line">{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set</span>
 						</div>
 						<div className="tooltip-text">
 							{scores.ensAvatar === 1 ? <FaRegCircleCheck /> : <FaRegCircleXmark />}
-							<span>{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
+							<span className="line">{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
 						</div>
 						{/* <div className="tooltip-text">
 							<ScoreCircle num={scores.fcAcct} />
@@ -68,11 +68,11 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 						</div> */}
 						<div className="tooltip-text">
 							{scores.recentParticipation > 3.5 ? <FaRegCircleCheck /> : (scores.recentParticipation > 1.5 ? <FaRegCircle /> : <FaRegCircleXmark />)}
-							<span>Voted in {voteCount} of last 10 onchain proposals</span>
+							<span className="line">Voted in <span className="special">{voteCount}</span> of last <span className="special">10</span> onchain proposals</span>
 						</div>
 						<div className="tooltip-text">
 							{scores.pctDelegation === 3 ? <FaRegCircleCheck /> : (scores.pctDelegation > 0 ? <FaRegCircle /> : <FaRegCircleXmark />)}
-							<span>{pctDelegationText} of total delegated OP</span>
+							<span className="line">{pctDelegationText} of total delegated OP</span>
 						</div>
 					</div>
 				}

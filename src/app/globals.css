@@ -133,6 +133,10 @@
 	background-color: var(--primary);
 }
 
-.tooltip-text > span {
+.tooltip-text .line {
 	margin-left: 0.25rem;
+}
+
+.tooltip-text .special {
+	text-decoration: underline;
 }
