@@ -129,4 +129,14 @@
 .tooltip-text {
 	line-height: 1.2;
 	display: flex;
+	align-items: center;
+	background-color: var(--primary);
+}
+
+.tooltip-text .line {
+	margin-left: 0.25rem;
+}
+
+.tooltip-text .special {
+	text-decoration: underline;
 }
