@@ -19,7 +19,7 @@ export default function DelegateCell({ props }: { props: CellContext<DelegateTab
 		<a href={`https://vote.optimism.io/delegates/${props.row.original.address}`} target="_blank">
 			<div className="cell col-delegate flex">
 				<Avatar>
-					<AvatarImage src={ensAvatar ? String(ensAvatar) : "/def_avatar.png"} />
+					<AvatarImage src={ensAvatar ? String(ensAvatar) : "/def-avatar.jpg"} />
 					<AvatarFallback>...</AvatarFallback>
 				</Avatar>
 				<div className="flex flex-col ml-2 items-start justify-center">
