@@ -1,22 +1,55 @@
-import { PREV_TEN_PROPOSAL_IDS, OP_VOTING_ADDRESS } from "@/config/config";
-import { opVotingAbi } from "@/config/op-voting-abi";
-import { readContract } from 'wagmi/actions';
+import { PONDER_API_URL } from "@/config/config";
 
-export async function fetchVotes() {
-	let voteCount = 0
-	const prop1 = [PREV_TEN_PROPOSAL_IDS[0]]
-
-	
-
-	prop1.forEach(async (propId) => {
-		// // const { data: hasVoted } = await readContract(config, {
-		// // 	address: OP_VOTING_ADDRESS,
-		// // 	abi: opVotingAbi,
-		// // 	functionName: "hasVoted",
-		// // 	args: [propId, address],
-		// // 	chainId: 10
-		// // })
-		// if (hasVoted) voteCount++
+export async function fetchVotes(endCursor: string = '') {
+	const query = `
+	query MyQuery {
+		delegates${endCursor ? `(after: "${endCursor}")` : ''} {
+			items {
+				votes {
+					items {
+						proposalId
+						blockNum
+					}
+				}
+				address
+			}
+			pageInfo {
+				hasNextPage
+				endCursor
+			}
+		}
+	}
+	`
+	const data = await fetch(PONDER_API_URL, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ query })
 	})
-	return voteCount
+	const res = (await data.json()) as QueryResponse
+	return res.data.delegates
+}
+
+// Response types
+interface QueryResponse {
+	data: {
+		delegates: {
+			items: Delegate[]
+			pageInfo: {
+				hasNextPage: boolean
+				endCursor: string
+			}
+		}
+	}
+}
+interface Delegate {
+	address: `0x${string}`
+	votes: {
+		items: Vote[]
+	}
+}
+interface Vote {
+	proposalId: string
+	blockNum: string
 }
