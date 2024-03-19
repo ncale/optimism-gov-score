@@ -1,15 +1,15 @@
+"use client";
+
 import { useEnsName, useEnsAvatar } from "wagmi";
 import { normalize } from "viem/ens";
 import { calcGovScore } from "@/lib/utils";
 import { Tooltip } from "@nextui-org/react";
-import ScoreCircle from "./score-pill";
-import { type Row } from "@tanstack/react-table";
-import { type DelegateTableRow } from "@/types/tableTypes";
+import type { Row } from "@tanstack/react-table";
+import type { DelegateTableRow } from "@/app/delegates/columns";
 // Icons
 import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaRegCircle } from "react-icons/fa6";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import ScorePill from "./score-pill";
 
 export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	const { data: ensName } = useEnsName({
@@ -86,3 +86,11 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 		</div>
 	)
 }
+
+function ScorePill({ score }: { score: number}) {
+	return (
+		<div className={`rounded-full text-xs text-center w-6 h-4 mr-1 bg-gray-600 text-white font-bold`}>
+			{score}
+		</div>
+	);
+};
