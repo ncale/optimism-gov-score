@@ -2,12 +2,12 @@
 // export environment variables
 export const WC_PROJECT_ID = process.env.WC_PROJECT_ID || 'PROJECT_ID'
 export const DUNE_API_KEY = process.env.DUNE_API_KEY || ''
-export const PONDER_API_URL = process.env.PONDER_API_URL || ''
 
 // configure global variables
 export const OP_TOKEN_ADDRESS = '0x4200000000000000000000000000000000000042'
 export const OP_VOTING_ADDRESS = '0xcDF27F107725988f2261Ce2256bDfCdE8B382B10'
 export const DUNE_DELEGATE_QUERY_ID = 3517653
+export const PONDER_API_URL = 'https://op-gov-ponder-api-production.up.railway.app/graphql'
 export const QUALIFYING_PROPOSAL_IDS = [
 	BigInt('47253113366919812831791422571513347073374828501432502648295761953879525315523'), // 1 (most recent)
 	BigInt('95119698597711750186734377984697814101707190887694311194110013874163880701970'), // 2

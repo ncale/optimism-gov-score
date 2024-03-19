@@ -20,7 +20,7 @@ export async function fetchVotes(endCursor: string = '') {
 		}
 	}
 	`
-	const data = await fetch(new URL(PONDER_API_URL), {
+	const data = await fetch(PONDER_API_URL, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
