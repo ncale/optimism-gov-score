@@ -1,5 +1,4 @@
 import { PONDER_API_URL } from "@/config/config";
-import fetch from 'node-fetch'
 
 export async function fetchVotes(endCursor: string = '') {
 	const query = `
