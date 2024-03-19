@@ -11,7 +11,7 @@ export async function getAllVotes() {
 	return allVotes	
 }
 
-export async function fetchVotes(endCursor: string = '') {
+async function fetchVotes(endCursor: string = '') {
 	const query = `
 	query MyQuery {
 		delegates${endCursor ? `(after: "${endCursor}")` : ''} {
@@ -34,7 +34,8 @@ export async function fetchVotes(endCursor: string = '') {
 	const data = await fetch(PONDER_API_URL, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
 		},
 		body: JSON.stringify({ query })
 	})
