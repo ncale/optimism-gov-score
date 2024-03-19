@@ -1,4 +1,3 @@
-import { GovScoreConfig } from "@/types/utilsTypes";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -17,7 +16,13 @@ export function formatPercentValue(num: number) {
 	return formattedNum
 }
 
-export function calcGovScore({ isEnsNameSet, isEnsAvatarSet, isFcAcctAttached, recentParticipation, pctDelegation }: GovScoreConfig) {
+export function calcGovScore({ 
+	isEnsNameSet, 
+	isEnsAvatarSet, 
+	isFcAcctAttached, 
+	recentParticipation, 
+	pctDelegation 
+}: GovScoreConfig) {
 	// init scores variable
 	let scores: {
 		ensName: number // out of 1
@@ -41,4 +46,11 @@ export function calcGovScore({ isEnsNameSet, isEnsAvatarSet, isFcAcctAttached, r
 		scores.pctDelegation += 1
 	}
 	return { scores }
+}
+type GovScoreConfig = {
+	isEnsNameSet: boolean
+	isEnsAvatarSet: boolean
+	isFcAcctAttached: boolean
+	recentParticipation: number
+	pctDelegation: number
 }

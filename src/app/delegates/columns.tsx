@@ -1,7 +1,6 @@
 "use client"
 
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
-import { DelegateTableRow } from "@/types/tableTypes";
 import { formatBigNumber, formatPercentValue } from "@/lib/utils";
 import DelegateButton from "./delegate-button";
 import DelegateCell from "./delegate-cell";
@@ -53,3 +52,15 @@ export const columns = [
 		)
 	}),
 ] as ColumnDef<DelegateTableRow>[]
+
+type DelegateTableRow = {
+	rank: number
+	address: `0x${string}`
+	username: string
+	pfpLink?: string
+	voting_power: number
+	pct_voting_power: number
+	count_participation: number
+	gov_score?: number
+	is_current_delegate?: boolean
+}
