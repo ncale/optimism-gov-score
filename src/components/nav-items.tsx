@@ -9,7 +9,7 @@ export function NavLinks() {
 	return (
 		<NavbarContent className="hidden sm:flex gap-4 tracking-wide" justify="center">
 			<NavbarItem className="text-xl">
-				<Link href="/" color="foreground" className={currentPath === "/" ? "font-bold" : ""}>
+				<Link href="/thesis" color="foreground" className={currentPath === "/thesis" ? "font-bold" : ""}>
 					Thesis
 				</Link>
 			</NavbarItem>
