@@ -3,8 +3,11 @@
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { formatBigNumber, formatPercentValue } from "@/lib/utils";
 import DelegateButton from "./delegate-button";
-import DelegateCell from "./delegate-cell";
 import GovScoreCell from "./gov-score-cell";
+import { useEnsName, useEnsAvatar } from "wagmi";
+import { normalize } from "viem/ens";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import type { CellContext } from "@tanstack/react-table";
 
 const columnHelper = createColumnHelper<DelegateTableRow>()
 
@@ -53,7 +56,7 @@ export const columns = [
 	}),
 ] as ColumnDef<DelegateTableRow>[]
 
-export type DelegateTableRow = {
+type DelegateTableRow = {
 	rank: number
 	address: `0x${string}`
 	username: string
@@ -63,4 +66,30 @@ export type DelegateTableRow = {
 	count_participation: number
 	gov_score?: number
 	is_current_delegate?: boolean
+}
+
+function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> }) {
+	const { data: ensName } = useEnsName({
+		address: props.getValue().split(' - ')[0] as `0x${string}`,
+		chainId: 1
+	})
+	const { data: ensAvatar } = useEnsAvatar({
+		name: normalize(ensName?.toString() ?? ''),
+		chainId: 1
+	})
+	const [addr, username] = props.getValue().split(' - ')
+	const shortAddr = `${addr.slice(0, 5)}...${addr.slice(-4)}`
+	return (
+		<a href={`https://vote.optimism.io/delegates/${props.row.original.address}`} target="_blank">
+			<div className="cell col-delegate flex">
+				<Avatar>
+					<AvatarImage src={ensAvatar ? String(ensAvatar) : "/def-avatar.jpg"} />
+					<AvatarFallback>...</AvatarFallback>
+				</Avatar>
+				<div className="flex flex-col ml-2 items-start justify-center">
+					<h3 className="">{ensName ? ensName : shortAddr}</h3>
+				</div>
+			</div>
+		</a>
+	)
 }
