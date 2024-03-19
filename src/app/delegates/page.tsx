@@ -32,7 +32,7 @@ export default async function Home() {
 	return (
 		<main className="main">
 			{/* <Message /> */}
-			{data ? <DataTable columns={columns} data={data} /> : undefined}
+			{data ? <DataTable columns={columns} data={data} /> : null}
 		</main>
 	);
 }

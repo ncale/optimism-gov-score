@@ -4,7 +4,6 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { DelegateTableRow } from "@/types/tableTypes";
 import { formatBigNumber, formatPercentValue } from "@/lib/utils";
 import DelegateButton from "./delegate-button";
-import CountParticipationCell, { useCountParticipation } from "./count-participation-cell";
 import DelegateCell from "./delegate-cell";
 import GovScoreCell from "./gov-score-cell";
 
@@ -40,7 +39,10 @@ export const columns = [
 	}),
 	columnHelper.accessor('count_participation', {
 		header: () => <div className="head">Recent Participation</div>,
-		cell: ({ row }) => <CountParticipationCell row={row} />
+		cell: ({ row }) => {
+			const voteCount = row.getValue('count_participation')
+			return <div className="cell">{`${voteCount}/10`}</div>
+		}
 	}),
 	columnHelper.accessor('is_current_delegate', {
 		header: () => <div className="head">Delegate?</div>,
