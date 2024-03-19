@@ -1,6 +1,5 @@
 import { useEnsName, useEnsAvatar } from "wagmi";
 import { normalize } from "viem/ens";
-import { useCountParticipation } from "./count-participation-cell";
 import { calcGovScore } from "@/lib/utils";
 import { Tooltip } from "@nextui-org/react";
 import ScoreCircle from "./score-pill";
@@ -22,7 +21,7 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 		chainId: 1
 	})
 
-	const voteCount = useCountParticipation(row.original.address)
+	const voteCount = (row.original.count_participation)
 
 	const govScoreConfig = {
 		isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0),
@@ -72,7 +71,7 @@ export default function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 						<div className="tooltip-text">
 							{scores.recentParticipation > 3.5 ? <FaRegCircleCheck /> : (scores.recentParticipation > 1.5 ? <FaRegCircle /> : <FaRegCircleXmark />)}
 							<ScorePill score={scores.recentParticipation} />
-							<span className="line line-through text-slate-400">Voted in <span className="special">{voteCount}</span> of last <span className="special">10</span> onchain proposals</span>
+							<span className="line">Voted in <span className="special">{voteCount}</span> of last <span className="special">10</span> onchain proposals</span>
 						</div>
 						<div className="tooltip-text">
 							{scores.pctDelegation === 3 ? <FaRegCircleCheck /> : (scores.pctDelegation > 0 ? <FaRegCircle /> : <FaRegCircleXmark />)}

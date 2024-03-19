@@ -4,7 +4,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { DelegateTableRow } from "@/types/tableTypes";
 import { formatBigNumber, formatPercentValue } from "@/lib/utils";
 import DelegateButton from "./delegate-button";
-import CountParticipationCell, { useCountParticipation } from "./count-participation-cell";
+import CountParticipationCell from "./count-participation-cell";
 import DelegateCell from "./delegate-cell";
 import GovScoreCell from "./gov-score-cell";
 
