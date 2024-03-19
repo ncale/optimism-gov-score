@@ -1,6 +1,5 @@
-import { fetchDuneData } from "@/services/fetchDuneData";
+import { fetchDuneData, type QueryResponse } from "@/services/fetchDuneData";
 import { getAllVotes } from "@/services/fetchVotes";
-import { DelegateResWithVotes, Vote } from "@/types/serverTypes";
 import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
 
 export async function getDelegates() {
@@ -16,7 +15,7 @@ export async function getDelegates() {
 				voteList = delegateVotes.votes.items
 			}
 		})
-		return { ...delegate, votes: voteList } as DelegateResWithVotes
+		return { ...delegate, votes: voteList } as DuneQueryResponseWithVotes
 	})
 	// Map to a formatted result
 	const formattedDelegateData = Promise.all(combinedData.map(async (delegate) => {
@@ -36,6 +35,14 @@ export async function getDelegates() {
 	return formattedDelegateData
 }
 
+// Type for pre-formatted combined data; extends Dune response type
+export interface DuneQueryResponseWithVotes extends QueryResponse {
+	votes: Vote[]
+}
+export interface Vote {
+	proposalId: string
+	blockNum: string
+}
 // Result type
 interface FormattedDelegate {
 	rank: number
