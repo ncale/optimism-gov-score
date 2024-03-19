@@ -3,7 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import '@rainbow-me/rainbowkit/styles.css';
 
-import { Providers } from "@/components/Providers";
+import Providers from "@/app/providers";
 import Header from "@/components/Header";
 
 const font = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
