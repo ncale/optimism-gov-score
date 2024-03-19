@@ -1,5 +1,5 @@
 import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
-import { fetchDuneData } from "@/services/dune";
+import { fetchDuneData } from "@/services/fetchDuneData";
 import { fetchVotes } from "@/services/fetchVotes";
 import { DelegateResWithVotes, Vote } from "@/types/serverTypes";
 
