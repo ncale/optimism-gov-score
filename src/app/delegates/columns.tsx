@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { formatBigNumber, formatPercentValue } from "@/lib/utils";
@@ -53,7 +53,7 @@ export const columns = [
 	}),
 ] as ColumnDef<DelegateTableRow>[]
 
-type DelegateTableRow = {
+export type DelegateTableRow = {
 	rank: number
 	address: `0x${string}`
 	username: string

@@ -1,7 +1,6 @@
 import { getDelegates } from "@/services/getDelegates";
-import type { DelegateTableRow } from "@/types/tableTypes";
-import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import { columns, type DelegateTableRow } from "./columns";
 import Message from "./message";
 
 async function getData() {
@@ -22,13 +21,10 @@ async function getData() {
 		})
 		return rows
 	}
-	return undefined
 }
 
 export default async function Home() {
-  
 	const data = await getData()
-	
 	return (
 		<main className="main">
 			{/* <Message /> */}
