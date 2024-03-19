@@ -1,6 +1,6 @@
 import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
 import { fetchDuneData } from "@/services/fetchDuneData";
-import { fetchVotes } from "@/services/fetchVotes";
+import { getAllVotes } from "@/services/fetchVotes";
 import { DelegateResWithVotes, Vote } from "@/types/serverTypes";
 
 export async function getDelegates() {
@@ -60,17 +60,4 @@ interface FormattedDelegate {
 	voting_power: number
 	pct_voting_power: number
 	count_participation: number
-}
-
-async function getAllVotes() {
-
-	const allVotes = []
-
-	let votesPage = await fetchVotes()
-	allVotes.push(...votesPage.items)
-	while (votesPage.pageInfo.hasNextPage ?? false) {
-		votesPage = await fetchVotes(votesPage.pageInfo.endCursor)
-		allVotes.push(...votesPage.items)
-	}
-	return allVotes	
 }
