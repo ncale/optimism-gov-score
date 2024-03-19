@@ -1,8 +1,8 @@
 import { useEnsName, useEnsAvatar } from "wagmi";
 import { normalize } from "viem/ens";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { type CellContext } from "@tanstack/react-table";
-import { type DelegateTableRow } from "@/types/tableTypes";
+import type { CellContext } from "@tanstack/react-table";
+import type { DelegateTableRow } from "@/app/delegates/columns";
 
 export default function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> }) {
 	const { data: ensName } = useEnsName({

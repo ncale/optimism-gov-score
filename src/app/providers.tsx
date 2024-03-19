@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
 import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import { WC_PROJECT_ID } from '@/config/config';
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { WagmiProvider } from 'wagmi';
 import { mainnet, optimism, optimismSepolia } from 'wagmi/chains';
-import { http } from '@wagmi/core'
-import { NextUIProvider } from '@nextui-org/react'
-import { useRouter } from 'next/navigation'
+import { http } from '@wagmi/core';
+import { NextUIProvider } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 
 const config = getDefaultConfig({
   appName: 'GovScore',
@@ -22,9 +22,8 @@ const config = getDefaultConfig({
 });
 const queryClient = new QueryClient();
 
-export function Providers({children}: { children: React.ReactNode }) {
+export default function Providers({children}: { children: React.ReactNode }) {
   const router = useRouter();
-	
 	return (
     <WagmiProvider config={config}>
 			<QueryClientProvider client={queryClient}>
@@ -35,5 +34,5 @@ export function Providers({children}: { children: React.ReactNode }) {
 				</RainbowKitProvider>
 			</QueryClientProvider>
 		</WagmiProvider>
-  )
-}
+  );
+};

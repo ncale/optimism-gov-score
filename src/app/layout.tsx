@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import '@rainbow-me/rainbowkit/styles.css';
-
-import { Providers } from "@/components/Providers";
-import Header from "@/components/Header";
+import Providers from "@/app/providers";
+import Header from "@/components/header";
 
 const font = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -24,8 +23,8 @@ export default function RootLayout({
 				<Providers>
 
 					<Header />
-
 					{children}
+					
 				</Providers>
 			</body>
     </html>

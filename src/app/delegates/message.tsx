@@ -4,11 +4,6 @@ import { useAccount, useReadContract, useEnsName, useEnsAvatar } from "wagmi";
 import { opTokenAbi } from "@/config/op-token-abi";
 import { OP_TOKEN_ADDRESS } from "@/config/config";
 import { normalize } from "viem/ens";
-import { OP_VOTING_ADDRESS } from "@/config/config";
-import { opVotingAbi } from "@/config/op-voting-abi";
-import { calcGovScore } from "@/lib/utils";
-import { GovScoreConfig } from "@/types/utilsTypes";
-// import { countParticipation } from "./count-participation-cell";
 
 export default function Message() {
 	

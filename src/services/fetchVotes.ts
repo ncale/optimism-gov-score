@@ -1,6 +1,17 @@
 import { PONDER_API_URL } from "@/config/config";
 
-export async function fetchVotes(endCursor: string = '') {
+export async function getAllVotes() {
+	const allVotes = []
+	let votesPage = await fetchVotes()
+	allVotes.push(...votesPage.items)
+	while (votesPage.pageInfo.hasNextPage ?? false) {
+		votesPage = await fetchVotes(votesPage.pageInfo.endCursor)
+		allVotes.push(...votesPage.items)
+	}
+	return allVotes	
+}
+
+async function fetchVotes(endCursor: string = '') {
 	const query = `
 	query MyQuery {
 		delegates${endCursor ? `(after: "${endCursor}")` : ''} {
@@ -20,10 +31,11 @@ export async function fetchVotes(endCursor: string = '') {
 		}
 	}
 	`
-	const data = await fetch(new URL(PONDER_API_URL), {
+	const data = await fetch(PONDER_API_URL, {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
 		},
 		body: JSON.stringify({ query })
 	})
