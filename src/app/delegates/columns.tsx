@@ -62,7 +62,7 @@ export const columns = [
 		cell: ({ row }) => row.getValue('is_current_delegate') ? (
 			<div className="cell">current delegate</div>
 		) : (
-			<div className="cell"><DelegateButton delegateeAddr={row.original.address} /></div>
+			<div className="cell w-16"><DelegateButton delegateeAddr={row.original.address} /></div>
 		),
 	}),
 ] as ColumnDef<DelegateTableRow>[]
@@ -92,7 +92,7 @@ function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> 
 	const shortAddr = `${addr.slice(0, 5)}...${addr.slice(-4)}`
 	return (
 		<a href={`https://vote.optimism.io/delegates/${props.row.original.address}`} target="_blank">
-			<div className="cell col-delegate flex">
+			<div className="cell col-delegate flex w-56">
 				<Avatar>
 					<AvatarImage src={ensAvatar ? String(ensAvatar) : "/def-avatar.jpg"} />
 					<AvatarFallback>...</AvatarFallback>
