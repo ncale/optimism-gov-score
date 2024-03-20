@@ -3,7 +3,7 @@ import { NavLinks, NavConnectButton } from "./nav-items";
 
 export default function Header() {
 	return (
-		<Navbar isBordered height="6rem">
+		<Navbar isBordered height="6rem" maxWidth="full">
 			<NavbarBrand className="flex flex-col items-start">
         <Image 
 					src={"/optimism-logo.png"} 
