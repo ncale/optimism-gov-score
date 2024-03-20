@@ -39,7 +39,7 @@ export default function Message({ data }: { data: DelegateTableRow[] | undefined
 	if (!delegateAddress || (burnAddress.test(delegateAddress))) return (
 		<div className="delegate-recommendation">
 			<div>
-				You haven't delegated any OP... <a href="https://www.coingecko.com/en/coins/optimism" className="special link">buy some?</a>
+				You haven&apos;t delegated any OP... <a href="https://www.coingecko.com/en/coins/optimism" className="special link">buy some?</a>
 			</div>
 		</div>
 	)
