@@ -73,7 +73,7 @@ export const columns = [
 		cell: ({ row }) => row.getValue('is_current_delegate') ? (
 			<div className="cell">current delegate</div>
 		) : (
-			<div className="cell w-16"><DelegateButton delegateeAddr={row.original.address} /></div>
+			<div className="cell w-20"><DelegateButton newDelegateeAddr={row.original.address}/></div>
 		),
 	}),
 ] as ColumnDef<DelegateTableRow>[]
