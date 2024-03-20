@@ -68,7 +68,7 @@ export default function Message({ data }: { data: DelegateTableRow[] | undefined
 				<div className="mr-2">Your delegate:</div>
 				<Avatar>
 					{ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
-					<AvatarFallback />
+					<AvatarFallback className="bg-ens-grad" />
 				</Avatar>
 				<div className="ml-2">
 					<h3 className="">{ensName ? ensName : shortAddr}</h3>
