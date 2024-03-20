@@ -30,17 +30,15 @@ export default function Message({ data }: { data: DelegateTableRow[] | undefined
 
 	if (!address) return (
 		<div className="delegate-recommendation">
-			<div>
 				Connect wallet to see your delegate
-			</div>
 		</div>
 	)
 	const burnAddress = new RegExp('0x0000000000')
 	if (!delegateAddress || (burnAddress.test(delegateAddress))) return (
 		<div className="delegate-recommendation">
-			<div>
-				You haven&apos;t delegated any OP... <a href="https://www.coingecko.com/en/coins/optimism" className="special link">buy some?</a>
-			</div>
+			You haven&apos;t delegated any OP... <a 
+				href="https://app.uniswap.org/explore/tokens/optimism/0x4200000000000000000000000000000000000042" 
+				className="special link">buy some?</a>
 		</div>
 	)
 
@@ -62,23 +60,21 @@ export default function Message({ data }: { data: DelegateTableRow[] | undefined
 	const shortAddr = `${delegateAddress.slice(0, 5)}...${delegateAddress.slice(-4)}`
 
 	return (
-		<div className="delegate-recommendation">
-			<p className="">{message}</p>
-			<a href={`https://vote.optimism.io/delegates/${delegateAddress}`} target="_blank">
-				<div className="flex w-56">
-					<Avatar>
-						{ensAvatar ? (
-							<AvatarImage src={ensAvatar} />
-						) : (
-							<AvatarImage src={ensName ? 'use fallback' : '/def-avatar.jpg'} />
-						)}
-						<AvatarFallback></AvatarFallback>
-					</Avatar>
-					<div className="flex flex-col ml-2 items-start justify-center">
-						<h3 className="">{ensName ? ensName : shortAddr}</h3>
-					</div>
+		<div className="delegate-recommendation flex flex-col items-center justify-center">
+			<a 
+				href={`https://vote.optimism.io/delegates/${delegateAddress}`} 
+				target="_blank"
+				className="flex items-center mb-1 text-xl font-bold">
+				<div className="mr-2">Your delegate:</div>
+				<Avatar>
+					{ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
+					<AvatarFallback />
+				</Avatar>
+				<div className="ml-2">
+					<h3 className="">{ensName ? ensName : shortAddr}</h3>
 				</div>
 			</a>
+			<p className="">{message}</p>
 		</div>
 	)
 }
