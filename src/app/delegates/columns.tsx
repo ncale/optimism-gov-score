@@ -128,7 +128,7 @@ function GovScoreHeader() {
 				<div>
 					<div className="info-tooltip">
 						<span className="line mb-1">An opinionated score of delegate quality. </span> 
-						<span className="line mb-1">A high govscore means a delegate <span className="special">votes consistently</span>, has a <span className="special">transparent onchain identity</span>, and is not a <span className="special">current top delegate</span>. </span>
+						<span className="line mb-1">A high govscore means a delegate <span className="special">votes consistently</span>, has a <span className="special">transparent onchain identity</span>, and is not <span className="special">too powerful</span>. </span>
 						<Link href='/thesis' className="special text-blue-500">read more</Link>
 					</div>
 				</div>
