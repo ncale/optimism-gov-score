@@ -72,20 +72,16 @@
 	font-weight: 700;
 	font-size: large;
 }
-
 .thesis-page > p {
 	
 }
-
 .thesis-page ul {
 	list-style-type: disc;
 	margin-left: 2rem;
 }
-
 .thesis-page ul li:nth-child(-n + 2) {
 	margin-bottom: 1rem;
 }
-
 .thesis-page span {
 	font-weight: 700;
 }
@@ -98,49 +94,40 @@
 	text-align: center;
 	margin: 0 auto;
 }
-
 .table div {
 	text-align: center;
 }
-
 .head {
 	font-size: medium;
 	font-weight: 400;
 }
-
 .cell {
 	font-size: medium;
 	line-height: 1;
 }
 
-.col-gov-score {
-	min-width: 100px;
-}
-
-.col-delegate {
-	min-width: 200px;
-}
-
-.col-delegate > div > p {
-	font-size: small;
-}
-
-.delegate-button {
-	
-}
-
 .tooltip-text {
-	line-height: 1.25;
 	display: flex;
 	align-items: center;
 	background-color: var(--primary);
 	gap: 0.25rem;
 }
-
 .tooltip-text .line {
-	
+	line-height: 1.25;
 }
-
-.tooltip-text .special {
+.special {
 	text-decoration: underline;
+}
+.info-tooltip {
+	line-height: 1.2;
+	width: 18rem;
+}
+.info-tooltip br {
+	border: 1px solid;
+}
+.info-tooltip .line {
+	display: block;
+}
+.info-tooltip .special {
+	font-weight: 500;
 }

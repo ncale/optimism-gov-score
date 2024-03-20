@@ -14,9 +14,11 @@ import { normalize } from "viem/ens";
 import type { CellContext, Row } from "@tanstack/react-table";
 // Icons
 import { IconContext } from "react-icons/lib";
+import { LuHelpCircle } from "react-icons/lu";
 import { LuCheckCircle2 } from "react-icons/lu";
 import { LuMinusCircle } from "react-icons/lu";
 import { LuXCircle } from "react-icons/lu";
+import Link from "next/link";
 
 const columnHelper = createColumnHelper<DelegateTableRow>()
 
@@ -31,7 +33,7 @@ export const columns = [
 		cell: (props) => <DelegateCell props={props} />
 	}),
 	columnHelper.accessor('gov_score', {
-		header: () => <div className="head col-gov-score">GovScore</div>,
+		header: () => <GovScoreHeader />,
 		cell: ({ row }) => <GovScoreCell row={row} />
 	}),
 	columnHelper.accessor('voting_power', {
@@ -42,26 +44,26 @@ export const columns = [
 		}
 	}),
 	columnHelper.accessor('pct_voting_power', {
-		header: () => <div className="head">% of Voting Power</div>,
+		header: () => <div className="head col-pct-votes">% of Voting Power</div>,
 		cell: ({ row }) => {
 			const num = formatPercentValue(row.getValue('pct_voting_power'))
-			return <div className="cell">{num}</div>
+			return <div className="cell col-pct-votes">{num}</div>
 		}
 	}),
 	columnHelper.accessor('count_participation', {
-		header: () => <div className="head">Recent Participation</div>,
+		header: () => <div className="head col-participation">Recent Participation</div>,
 		cell: ({ row }) => {
 			const voteCount = row.getValue('count_participation')
-			return <div className="cell">{`${voteCount}/10 votes`}</div>
+			return <div className="cell col-participation">{`${voteCount}/10 votes`}</div>
 		}
 	}),
 	columnHelper.accessor('is_current_delegate', {
-		header: () => <div className="head">Delegate?</div>,
+		header: () => <></>,
 		cell: ({ row }) => row.getValue('is_current_delegate') ? (
 			<div className="cell">current delegate</div>
 		) : (
 			<div className="cell"><DelegateButton delegateeAddr={row.original.address} /></div>
-		)
+		),
 	}),
 ] as ColumnDef<DelegateTableRow>[]
 
@@ -100,6 +102,25 @@ function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> 
 				</div>
 			</div>
 		</a>
+	)
+}
+
+function GovScoreHeader() {
+	return (
+		<div className="head col-gov-score flex items-center">
+			<div className="mr-1">GovScore</div>
+			<Tooltip content={
+				<div>
+					<div className="info-tooltip">
+						<span className="line mb-1">An opinionated score of delegate quality. </span> 
+						<span className="line mb-1">A high govscore means a delegate <span className="special">votes consistently</span>, has a <span className="special">transparent onchain identity</span>, and is not a <span className="special">current top delegate</span>. </span>
+						<Link href='/thesis' className="special line text-blue-500">read more</Link>
+					</div>
+				</div>
+			}>
+				<span><LuHelpCircle /></span>
+			</Tooltip>
+		</div>
 	)
 }
 
