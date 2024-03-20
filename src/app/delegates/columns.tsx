@@ -94,8 +94,12 @@ function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> 
 		<a href={`https://vote.optimism.io/delegates/${props.row.original.address}`} target="_blank">
 			<div className="cell col-delegate flex w-56">
 				<Avatar>
-					<AvatarImage src={ensAvatar ? String(ensAvatar) : "/def-avatar.jpg"} />
-					<AvatarFallback>...</AvatarFallback>
+					{ensAvatar ? (
+						<AvatarImage src={ensAvatar} />
+					) : (
+						<AvatarImage src={ensName ? 'use fallback' : '/def-avatar.jpg'} />
+					)}
+					<AvatarFallback></AvatarFallback>
 				</Avatar>
 				<div className="flex flex-col ml-2 items-start justify-center">
 					<h3 className="">{ensName ? ensName : shortAddr}</h3>
