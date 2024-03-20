@@ -6,8 +6,17 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatBigNumber(num: number) {
-	const formattedNum = new Intl.NumberFormat().format(num);
-	return formattedNum
+	const int = Math.round(num)
+	const formattedNum = new Intl.NumberFormat('en-US').format(int);
+	const valList = formattedNum.split(',')
+	if (valList.length === 1) {
+		return valList[0]
+	} else if (valList.length === 2) {
+		return `${valList[0]}.${valList[1].slice(0,2)}k`
+	} else if (valList.length === 3) {
+		return `${valList[0]}.${valList[1].slice(0,2)}M`
+	}
+	return 'error'
 }
 
 export function formatPercentValue(num: number) {

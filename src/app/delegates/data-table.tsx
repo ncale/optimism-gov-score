@@ -3,11 +3,13 @@
 import { useState } from "react"
 import {
   ColumnDef,
+	SortingState,
 	ColumnFiltersState,
   flexRender,
   getCoreRowModel,
 	getFilteredRowModel,
 	getPaginationRowModel,
+	getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -32,6 +34,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+	const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
     []
   )
@@ -41,17 +44,20 @@ export function DataTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
+		onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
 		onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
 		state: {
-      columnFilters,
+      sorting,
+			columnFilters,
     },
   })
 
   return (
     <div>
 			{/* Search */}
-			<div className="flex items-center py-4">
+			<div className="flex items-center justify-center pb-4">
         <Input
           placeholder="Filter delegates..."
           value={(table.getColumn("address")?.getFilterValue() as string) ?? ""}
@@ -109,7 +115,11 @@ export function DataTable<TData, TValue>({
 			</div>
 
 			{/* Pagination */}
-			<div className="flex justify-center pt-4 pb-1 text-sm">{table.getState().pagination.pageIndex + 1} of {table.getPageCount().toLocaleString()}</div>
+			<div className="flex justify-center pt-4 pb-2 text-sm">
+				<div className="page-bg">
+					{table.getState().pagination.pageIndex + 1} of {table.getPageCount().toLocaleString()}
+				</div>
+			</div>
 			<div className="flex items-center justify-center space-x-2 pb-4">
         <Button
           size="sm"
