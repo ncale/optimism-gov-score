@@ -39,7 +39,7 @@ export const columns = [
 	columnHelper.accessor('voting_power', {
 		header: () => <div className="head">Voting Power</div>,
 		cell: ({ row }) => {
-			const num = formatBigNumber(row.getValue('voting_power')).split('.')[0]
+			const num = formatBigNumber(row.getValue('voting_power'))
 			return <div className="cell">{`${num} OP`}</div>
 		}
 	}),
