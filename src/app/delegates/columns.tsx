@@ -3,6 +3,7 @@
 // Components
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Tooltip } from "@nextui-org/react";
 import DelegateButton from "./delegate-button";
 // Hooks
@@ -14,6 +15,7 @@ import { normalize } from "viem/ens";
 import type { CellContext, Row } from "@tanstack/react-table";
 // Icons
 import { IconContext } from "react-icons/lib";
+import { LuArrowUpDown } from "react-icons/lu";
 import { LuHelpCircle } from "react-icons/lu";
 import { LuCheckCircle2 } from "react-icons/lu";
 import { LuMinusCircle } from "react-icons/lu";
@@ -24,7 +26,16 @@ const columnHelper = createColumnHelper<DelegateTableRow>()
 
 export const columns = [
 	columnHelper.accessor('rank', {
-		header: () => <div className="head col-rank">Rank</div>,
+		header: ({ column }) => {
+			return (
+				<Button
+					variant='ghost'
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					<div className="head col-rank mr-1">Rank</div>
+					<FilterIcon />
+				</Button>
+			)
+		},
 		cell: ({ row }) => <div className="cell col-rank">{row.getValue('rank')}</div>,
 	}),
 	columnHelper.accessor((delegate) => `${delegate.address} - ${delegate.username}`, {
@@ -111,8 +122,8 @@ function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> 
 
 function GovScoreHeader() {
 	return (
-		<div className="head col-gov-score flex items-center">
-			<div className="mr-1">GovScore</div>
+		<div className="head col-gov-score flex items-center gap-1 mr-1">
+			<div>GovScore</div>
 			<Tooltip content={
 				<div>
 					<div className="info-tooltip">
@@ -122,7 +133,7 @@ function GovScoreHeader() {
 					</div>
 				</div>
 			}>
-				<span><LuHelpCircle /></span>
+				<span><HelpIcon /></span>
 			</Tooltip>
 		</div>
 	)
@@ -199,6 +210,20 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	)
 }
 
+function FilterIcon() {
+	return (
+		<IconContext.Provider value={{ size: '1.15em'}}>
+			<LuArrowUpDown />
+		</IconContext.Provider>
+	)
+}
+function HelpIcon() {
+	return (
+		<IconContext.Provider value={{ size: '0.9em'}}>
+			<LuHelpCircle />
+		</IconContext.Provider>
+	)
+}
 function CheckIcon() {
 	return (
 		<IconContext.Provider value={{ color: "green", size: "1.15em" }}>
