@@ -133,7 +133,7 @@ function GovScoreHeader() {
 					</div>
 				</div>
 			}>
-				<span><HelpIcon /></span>
+				<span className="cursor-pointer"><HelpIcon /></span>
 			</Tooltip>
 		</div>
 	)
@@ -204,7 +204,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 					</div>
 				}
 			>
-				<span>{`${govScore}/10`}</span>
+				<span className="cursor-pointer">{`${govScore}/10`}</span>
 			</Tooltip>
 		</div>
 	)
