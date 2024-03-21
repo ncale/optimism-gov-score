@@ -64,8 +64,9 @@ export const columns = [
 	columnHelper.accessor('count_participation', {
 		header: () => <div className="head col-participation">Recent Participation</div>,
 		cell: ({ row }) => {
+			const isUser = (new RegExp('0x').test(row.original.address.toLowerCase()))
 			const voteCount = row.getValue('count_participation')
-			return <div className="cell col-participation">{`${voteCount}/10 votes`}</div>
+			return isUser ? <div className="cell col-participation">{`${voteCount}/10 votes`}</div> : <div className="cell col-participation">n/a</div>
 		}
 	}),
 	columnHelper.accessor('is_current_delegate', {
@@ -100,19 +101,28 @@ function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> 
 		chainId: 1
 	})
 	const [addr, username] = props.getValue().split(' - ')
-	const shortAddr = `${addr.slice(0, 5)}...${addr.slice(-4)}`
+	const isUser = (new RegExp('0x').test(addr.toLowerCase()))
+	const abbrevAddress = `${addr.slice(0, 5)}...${addr.slice(-4)}`
 	return (
-		<a href={`https://vote.optimism.io/delegates/${props.row.original.address}`} target="_blank">
-			<div className="cell col-delegate flex w-56">
-				<Avatar>
-					{ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
-					<AvatarFallback className="bg-ens-grad" />
-				</Avatar>
-				<div className="flex flex-col ml-2 items-start justify-center">
-					<h3 className="">{ensName ? ensName : shortAddr}</h3>
+		<>
+			{isUser ? (
+			<a href={`https://vote.optimism.io/delegates/${props.row.original.address}`} target="_blank">
+				<div className="cell col-delegate flex w-56">
+					<Avatar>
+						{ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
+						<AvatarFallback className="bg-ens-grad" />
+					</Avatar>
+					<div className="flex flex-col ml-2 items-start justify-center">
+						<h3 className="">{ensName ? ensName : abbrevAddress}</h3>
+					</div>
 				</div>
-			</div>
-		</a>
+			</a>
+			) : (
+				<div className="cell col-delegate flex flex-col ml-2 items-start justify-center">
+					<h3 className="">{addr}</h3>
+				</div>
+			)}
+		</>
 	)
 }
 
@@ -169,6 +179,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	const pctDelegationText = getPctDelegationText(scores.pctDelegation)
 	return (
 		<div className="cell col-gov-score">
+			{(new RegExp('0x').test(row.original.address)) ? (
 			<Tooltip 
 				placement="right"
 				content={
@@ -201,7 +212,9 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 				}
 			>
 				<span className="cursor-pointer">{`${govScore}/10`}</span>
-			</Tooltip>
+			</Tooltip>) : (
+				<span>n/a</span>
+			)}
 		</div>
 	)
 }
