@@ -169,9 +169,9 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 			case 0:
 				return "More than 1.5%"
 			case 1: 
-				return "Less than 1.5%"
+				return "More than 1.0%"
 			case 2:
-				return "Less than 1.0%"
+				return "More than 0.5%"
 			case 3:
 				return "Less than 0.5%"
 		}
