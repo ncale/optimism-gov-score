@@ -9,7 +9,7 @@ import { CheckIcon, DelegateTableRow, EmptyIcon, ScorePill, XMarkIcon } from "./
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip } from "@nextui-org/react";
 
-export default function Message({ data }: { data: DelegateTableRow[] | undefined }) {
+export default function Message({ delegateData }: { delegateData: DelegateTableRow[] | undefined }) {
 	
 	const { address } = useAccount()
 	const { data: delegateAddress } = useReadContract({
@@ -34,6 +34,7 @@ export default function Message({ data }: { data: DelegateTableRow[] | undefined
 				Connect wallet to see your delegate
 		</div>
 	)
+
 	const burnAddress = new RegExp('0x0000000000')
 	if (!delegateAddress || (burnAddress.test(delegateAddress))) return (
 		<div className="delegate-recommendation">
@@ -43,27 +44,35 @@ export default function Message({ data }: { data: DelegateTableRow[] | undefined
 		</div>
 	)
 
-	let govScore = 0
-	if (!data) return <></>
+	if (!delegateData) return <pre>Error... Missing Data</pre>
 
-	const delegate = data.find((delegate) => delegate.address === delegateAddress)
+	const delegate = delegateData.find((delegate) => delegate.address.toLowerCase() === delegateAddress.toLowerCase())
+
+	if (!delegate) return (
+		<div className="delegate-recommendation">
+			uh oh... your delegate isn&apos;t here. This is unexpected, but we&apos;ll do our best to fix it. 
+			Please send your feedback to ncale.eth, and we&apos;ll get working on it asap. Your feedback 
+			is extremely valued as we iron out the kinks in this new site, and we appreciate your
+			patience as we get off the ground. Thanks!</div>
+	)
+
 	const govScoreConfig = {
 		isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0),
 		isEnsAvatarSet: (typeof ensAvatar === 'string' && ensAvatar.length > 0),
 		isFcAcctAttached: false, // dummy data
-		recentParticipation: delegate?.count_participation ?? 0,
-		pctDelegation: delegate?.pct_voting_power ?? 0,
+		recentParticipation: delegate.count_participation,
+		pctDelegation: delegate.pct_voting_power,
 	}
 	const { scores } = calcGovScore(govScoreConfig)
-	govScore = Object.values(scores).reduce((a, b) => a + b, 0);
+	const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
 	function getPctDelegationText(score: number) {
 		switch (score) {
 			case 0:
 				return "More than 1.5%"
 			case 1: 
-				return "Less than 1.5%"
+				return "More than 1.0%"
 			case 2:
-				return "Less than 1.0%"
+				return "More than 0.5%"
 			case 3:
 				return "Less than 0.5%"
 		}
