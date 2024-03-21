@@ -56,6 +56,8 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 			patience as we get off the ground. Thanks!</div>
 	)
 
+	const delegate = data.find((delegate) => delegate.address === delegateAddress)
+
 	const govScoreConfig = {
 		isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0),
 		isEnsAvatarSet: (typeof ensAvatar === 'string' && ensAvatar.length > 0),
