@@ -206,42 +206,42 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	)
 }
 
-function FilterIcon() {
+export function FilterIcon() {
 	return (
 		<IconContext.Provider value={{ size: '1.15em'}}>
 			<LuArrowUpDown />
 		</IconContext.Provider>
 	)
 }
-function HelpIcon() {
+export function HelpIcon() {
 	return (
 		<IconContext.Provider value={{ size: '0.9em'}}>
 			<LuHelpCircle />
 		</IconContext.Provider>
 	)
 }
-function CheckIcon() {
+export function CheckIcon() {
 	return (
 		<IconContext.Provider value={{ color: "green", size: "1.15em" }}>
 			<LuCheckCircle2 />
 		</IconContext.Provider>
 	)
 }
-function EmptyIcon() {
+export function EmptyIcon() {
 	return (
 		<IconContext.Provider value={{ color: "orange", size: "1.15em" }}>
 			<LuMinusCircle />
 		</IconContext.Provider>
 	)
 }
-function XMarkIcon() {
+export function XMarkIcon() {
 	return (
 		<IconContext.Provider value={{ color: "red", size: "1.15em" }}>
 			<LuXCircle />
 		</IconContext.Provider>
 	)
 }
-function ScorePill({ score }: { score: number}) {
+export function ScorePill({ score }: { score: number}) {
 	return (
 		<div className={`rounded-full text-xs text-center w-6 h-4 bg-gray-600 text-white font-bold`}>
 			{score}
