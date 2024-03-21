@@ -50,8 +50,8 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 
 	if (!delegate) return (
 		<div className="delegate-recommendation">
-			uh oh... your delegate isn't here. This is unexpected, but we'll do our best to fix it. 
-			Please send your feedback to ncale.eth, and we'll get working on it asap. Your feedback 
+			uh oh... your delegate isn&apos;t here. This is unexpected, but we&apos;ll do our best to fix it. 
+			Please send your feedback to ncale.eth, and we&apos;ll get working on it asap. Your feedback 
 			is extremely valued as we iron out the kinks in this new site, and we appreciate your
 			patience as we get off the ground. Thanks!</div>
 	)
