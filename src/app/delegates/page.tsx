@@ -27,7 +27,7 @@ export default async function Home() {
 	const data = await getData()
 	return (
 		<main className="main">
-			<Message data={data} />
+			<Message delegateData={data} />
 			{data ? <DataTable columns={columns} data={data} /> : null}
 		</main>
 	);
