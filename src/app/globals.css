@@ -59,11 +59,17 @@
 }
 
 .main {
-	width: 75%;
+	width: 98%;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
 	font-size: medium;
+}
+
+@media (min-width: 768px) {
+  .main {
+		width: 75%;
+	}
 }
 
 .thesis-page > h2 {
@@ -90,20 +96,7 @@
 	margin: 0.5rem auto;
 }
 
-.delegate-recommendation {
-	background-color: theme('colors.muted.DEFAULT');
-	border-radius: 0.375rem;
-	width: 50%;
-	margin: 2rem auto;
-	padding: 1rem;
-	text-align: center;
-}
-
-.table {
-	text-align: center;
-	margin: 0 auto;
-}
-.table div {
+Table div {
 	text-align: center;
 }
 .head {

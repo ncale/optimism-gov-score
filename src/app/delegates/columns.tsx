@@ -31,42 +31,42 @@ export const columns = [
 				<Button
 					variant='ghost'
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					<div className="head col-rank mr-1">Rank</div>
+					<div className="head mr-1">Rank</div>
 					<FilterIcon />
 				</Button>
 			)
 		},
-		cell: ({ row }) => <div className="cell col-rank">{row.getValue('rank')}</div>,
+		cell: ({ row }) => <div className="cell">{row.getValue('rank')}</div>,
 	}),
 	columnHelper.accessor((delegate) => `${delegate.address} - ${delegate.username}`, {
 		id: 'address',
 		header: () => <div className="head col-delegate">Delegate</div>,
-		cell: (props) => <DelegateCell props={props} />
+		cell: (props) => <DelegateCell props={props} />,
 	}),
 	columnHelper.accessor('gov_score', {
 		header: () => <GovScoreHeader />,
-		cell: ({ row }) => <GovScoreCell row={row} />
+		cell: ({ row }) => <GovScoreCell row={row} />,
 	}),
 	columnHelper.accessor('voting_power', {
 		header: () => <div className="head">Voting Power</div>,
 		cell: ({ row }) => {
 			const num = formatBigNumber(row.getValue('voting_power'))
-			return <div className="cell">{`${num} OP`}</div>
+			return <div className="cell w-28">{`${num} OP`}</div>
 		}
 	}),
 	columnHelper.accessor('pct_voting_power', {
-		header: () => <div className="head col-pct-votes">% of Voting Power</div>,
+		header: () => <div className="head">% of Voting Power</div>,
 		cell: ({ row }) => {
 			const num = formatPercentValue(row.getValue('pct_voting_power'))
-			return <div className="cell col-pct-votes">{num}</div>
+			return <div className="cell w-28">{num}</div>
 		}
 	}),
 	columnHelper.accessor('count_participation', {
-		header: () => <div className="head col-participation">Recent Participation</div>,
+		header: () => <div className="head">Recent Participation</div>,
 		cell: ({ row }) => {
 			const isUser = (new RegExp('0x').test(row.original.address.toLowerCase()))
 			const voteCount = row.getValue('count_participation')
-			return isUser ? <div className="cell col-participation">{`${voteCount}/10 votes`}</div> : <div className="cell col-participation">n/a</div>
+			return isUser ? <div className="cell">{`${voteCount}/10 votes`}</div> : <div className="cell  w-24">n/a</div>
 		}
 	}),
 	columnHelper.accessor('is_current_delegate', {
@@ -128,7 +128,7 @@ function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> 
 
 function GovScoreHeader() {
 	return (
-		<div className="head col-gov-score flex items-center gap-1 mr-1">
+		<div className="head col-gov-score flex justify-center items-center gap-1">
 			<div>GovScore</div>
 			<Tooltip content={
 				<div>

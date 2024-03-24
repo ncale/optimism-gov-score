@@ -30,14 +30,14 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 	})
 
 	if (!address) return (
-		<div className="delegate-recommendation">
+		<div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
 				Connect wallet to see your delegate
 		</div>
 	)
 
 	const burnAddress = new RegExp('0x0000000000')
 	if (!delegateAddress || (burnAddress.test(delegateAddress))) return (
-		<div className="delegate-recommendation">
+		<div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
 			You haven&apos;t delegated any OP... <a 
 				href="https://app.uniswap.org/explore/tokens/optimism/0x4200000000000000000000000000000000000042" 
 				className="special link">buy some?</a>
@@ -49,7 +49,7 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 	const delegate = delegateData.find((delegate) => delegate.address.toLowerCase() === delegateAddress.toLowerCase())
 
 	if (!delegate) return (
-		<div className="delegate-recommendation">
+		<div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2">
 			uh oh... your delegate isn&apos;t here. This is unexpected, but we&apos;ll do our best to fix it. 
 			Please send your feedback to ncale.eth, and we&apos;ll get working on it asap. Your feedback 
 			is extremely valued as we iron out the kinks in this new site, and we appreciate your
@@ -80,11 +80,11 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 	const pctDelegationText = getPctDelegationText(scores.pctDelegation)
 	const shortAddr = `${delegateAddress.slice(0, 5)}...${delegateAddress.slice(-4)}`
 	return (
-		<div className="delegate-recommendation flex flex-col items-center justify-center">
+		<div className="flex flex-col items-center justify-center my-4 md:my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-md">
 			<a 
 				href={`https://vote.optimism.io/delegates/${delegateAddress}`} 
 				target="_blank"
-				className="flex items-center mb-1 text-xl font-bold">
+				className="flex items-center mb-1 text-lg md:text-xl font-bold">
 				<div className="mr-2">Your delegate:</div>
 				<Avatar>
 					{ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
@@ -94,7 +94,7 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 					<h3 className="">{ensName ? ensName : shortAddr}</h3>
 				</div>
 			</a>
-			<p>
+			<p className="text-sm md:text-md">
 				{ensName ? ensName : 'Your delegate'} has a GovScore of
 				<Tooltip 
 					placement="right"
