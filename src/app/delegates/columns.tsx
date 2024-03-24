@@ -209,10 +209,6 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 							<ScorePill score={scores.ensAvatar} />
 							<span className="line">{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
 						</div>
-						{/* <div className="tooltip-text">
-							<ScoreCircle num={scores.fcAcct} />
-							[WIP] {govScoreConfig.isFcAcctAttached ? "" : "No "} Detected Farcaster Account
-						</div> */}
 						<div className="tooltip-text">
 							{scores.recentParticipation > 3.5 ? <CheckIcon /> : (scores.recentParticipation > 1.5 ? <EmptyIcon /> : <XMarkIcon />)}
 							<ScorePill score={scores.recentParticipation} />
