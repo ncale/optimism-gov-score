@@ -10,6 +10,7 @@ const font = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 export const metadata: Metadata = {
   title: "GovScore",
   description: "Ensure your governance tokens are allocated to the best delegates.",
+	metadataBase: new URL("https://govscore.xyz/"),
 };
 
 export default function RootLayout({
