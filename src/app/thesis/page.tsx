@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-		<main className="main thesis-page">
+		<main className="main info-page">
 			<Accordion type="single" collapsible className='mx-auto w-11/12 md:w-readWidth'>
 				<AccordionItem value="item-1">
 					<AccordionTrigger>Why GovScore?</AccordionTrigger>
