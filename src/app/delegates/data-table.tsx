@@ -64,12 +64,12 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn("address")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm shadow-sm"
         />
       </div>
 
 			{/* Table */}
-			<div className="table rounded-md border">
+			<div className="text-center my-0 mx-auto relative w-full md:w-min rounded-md border">
 				<Table>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -97,7 +97,7 @@ export function DataTable<TData, TValue>({
 									data-state={row.getIsSelected() && "selected"}
 								>
 									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>
+										<TableCell key={cell.id} width={cell.column.columnDef.size}>
 											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
@@ -116,11 +116,11 @@ export function DataTable<TData, TValue>({
 
 			{/* Pagination */}
 			<div className="flex justify-center pt-4 pb-2 text-sm">
-				<div className="page-bg">
+				<div className="page-bg shadow-sm">
 					{table.getState().pagination.pageIndex + 1} of {table.getPageCount().toLocaleString()}
 				</div>
 			</div>
-			<div className="flex items-center justify-center space-x-2 pb-4">
+			<div className="flex items-center justify-center space-x-2 pb-4 mb-36">
         <Button
           size="sm"
 					variant="outline"
