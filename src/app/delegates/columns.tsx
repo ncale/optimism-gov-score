@@ -21,6 +21,7 @@ import { LuCheckCircle2 } from "react-icons/lu";
 import { LuMinusCircle } from "react-icons/lu";
 import { LuXCircle } from "react-icons/lu";
 import Link from "next/link";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const columnHelper = createColumnHelper<DelegateTableRow>()
 
@@ -128,8 +129,9 @@ function DelegateCell({ props }: { props: CellContext<DelegateTableRow, string> 
 
 function GovScoreHeader() {
 	return (
-		<div className="head col-gov-score flex justify-center items-center gap-1">
+		<div className="head flex justify-center items-center gap-1">
 			<div>GovScore</div>
+			{/* Desktop */}
 			<Tooltip content={
 				<div>
 					<div className="info-tooltip">
@@ -139,8 +141,21 @@ function GovScoreHeader() {
 					</div>
 				</div>
 			}>
-				<span className="cursor-pointer"><HelpIcon /></span>
+				<span className="cursor-pointer hidden md:flex bg-green-400"><HelpIcon /></span>
 			</Tooltip>
+			{/* Mobile */}
+			<div className="flex items-center">
+				<Popover>
+					<PopoverTrigger><span className="flex md:hidden"><HelpIcon /></span></PopoverTrigger>
+					<PopoverContent>
+						<div className="leading-tight w-64 rounded-md">
+							<span className="block mb-1">An opinionated score of delegate quality. </span> 
+							<span className="block mb-1">A high govscore means a delegate <span className="special">votes consistently</span>, has a <span className="special">transparent onchain identity</span>, and is not <span className="special">too powerful</span>. </span>
+							<Link href='/thesis' className="special link">read more</Link>
+						</div>
+					</PopoverContent>
+				</Popover>
+			</div>
 		</div>
 	)
 }
