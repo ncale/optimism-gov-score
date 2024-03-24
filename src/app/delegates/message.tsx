@@ -8,6 +8,7 @@ import { calcGovScore } from "@/lib/utils";
 import { CheckIcon, DelegateTableRow, EmptyIcon, ScorePill, XMarkIcon } from "./columns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip } from "@nextui-org/react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export default function Message({ delegateData }: { delegateData: DelegateTableRow[] | undefined }) {
 	
@@ -95,7 +96,8 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 				</div>
 			</a>
 			<p className="text-sm md:text-md">
-				{ensName ? ensName : 'Your delegate'} has a GovScore of
+				{ensName ? ensName : 'Your delegate'} has a GovScore of&nbsp;
+				{/* Desktop */}
 				<Tooltip 
 					placement="right"
 					content={
@@ -123,8 +125,36 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 						</div>
 					}
 				>
-					<span className="cursor-pointer"> {govScore}/10. </span>
+					<span className="cursor-pointer hidden md:flex"> {govScore}/10. </span>
 				</Tooltip>
+				{/* Mobile */}
+				<Popover>
+						<PopoverTrigger className="md:hidden"><span>{`${govScore}/10.`}&nbsp;</span></PopoverTrigger>
+						<PopoverContent>
+							<div>
+								<div className="tooltip-text">
+									{scores.ensName === 1 ? <CheckIcon /> : <XMarkIcon />}
+									<ScorePill score={scores.ensName} />
+									<span className="line">{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set</span>
+								</div>
+								<div className="tooltip-text">
+									{scores.ensAvatar === 1 ? <CheckIcon /> : <XMarkIcon />}
+									<ScorePill score={scores.ensAvatar} />
+									<span className="line">{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
+								</div>
+								<div className="tooltip-text">
+									{scores.recentParticipation > 3.5 ? <CheckIcon /> : (scores.recentParticipation > 1.5 ? <EmptyIcon /> : <XMarkIcon />)}
+									<ScorePill score={scores.recentParticipation} />
+									<span className="line">Voted in <span className="special">{delegate?.count_participation ?? 0}</span> of last <span className="special">10</span> onchain proposals</span>
+								</div>
+								<div className="tooltip-text">
+									{scores.pctDelegation === 3 ? <CheckIcon /> : (scores.pctDelegation > 0 ? <EmptyIcon /> : <XMarkIcon />)}
+									<ScorePill score={scores.pctDelegation} />
+									<span className="line">{pctDelegationText} of total delegated OP</span>
+								</div>
+							</div>
+						</PopoverContent>
+					</Popover>
 				{govScore > 6 ? "Awesome 😎" : "Consider re-delegating..."}
 			</p>
 		</div>
