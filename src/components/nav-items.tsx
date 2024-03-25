@@ -9,8 +9,8 @@ export function NavLinks() {
 	return (
 		<NavbarContent className="hidden sm:flex gap-4 tracking-wide" justify="center">
 			<NavbarItem className="text-xl">
-				<Link href="/thesis" color="foreground" className={currentPath === "/thesis" ? "font-bold" : ""}>
-					Thesis
+				<Link href="/faq" color="foreground" className={currentPath === "/faq" ? "font-bold" : ""}>
+					FAQ
 				</Link>
 			</NavbarItem>
 			<NavbarItem className="text-xl">|</NavbarItem>
@@ -19,7 +19,7 @@ export function NavLinks() {
 					Delegates
 				</Link>
 			</NavbarItem>
-		</NavbarContent>
+		</NavbarContent> 
 	)
 }
 
