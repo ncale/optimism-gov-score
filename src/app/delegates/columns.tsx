@@ -141,7 +141,7 @@ function GovScoreHeader() {
 					</div>
 				</div>
 			}>
-				<span className="cursor-pointer hidden md:flex bg-green-400"><HelpIcon /></span>
+				<span className="cursor-pointer hidden md:flex"><HelpIcon /></span>
 			</Tooltip>
 			{/* Mobile */}
 			<div className="flex items-center">
