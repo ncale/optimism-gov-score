@@ -5,6 +5,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { usePathname } from "next/navigation";
 import HamburgerIcon from "./icons/hamburger-icon";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
 
 export function NavLinks() {
 	const isDesktop = useMediaQuery("(min-width: 768px)")
@@ -31,7 +32,8 @@ export function NavLinks() {
 }
 
 export function NavConnectButton() {
-	const isDesktop = useMediaQuery("(min-width: 768px)")
+	const isDesktop = useMediaQuery("(min-width: 768px)");
+	const currentPath = usePathname();
 	return (
 		<NavbarContent justify="end">
 			<NavbarItem>
@@ -39,7 +41,19 @@ export function NavConnectButton() {
 			</NavbarItem>
 			{isDesktop ? null : (
 				<NavbarItem>
-					<HamburgerIcon />
+					<Drawer direction="top">
+						<DrawerTrigger><HamburgerIcon /></DrawerTrigger>
+						<DrawerContent>
+							<ul className="flex flex-col mt-6">
+								<li className="text-3xl ml-2">
+									<Link href="/faq" color="foreground" className={`${currentPath === "/faq" ? "font-bold" : ""} text-3xl p-1`}>FAQ</Link>
+								</li>
+								<li className="text-3xl ml-2">
+									<Link href="/delegates" color="foreground" className={`${currentPath === "/delegates" ? "font-bold" : ""} text-3xl p-1`}>Delegates</Link>
+								</li>
+							</ul>
+						</DrawerContent>
+					</Drawer>
 				</NavbarItem>
 			)}
 		</NavbarContent>
