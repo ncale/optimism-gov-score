@@ -20,7 +20,10 @@ const config = {
       },
     },
     extend: {
-      colors: {
+      spacing: {
+				readWidth: "40em",
+			},
+			colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

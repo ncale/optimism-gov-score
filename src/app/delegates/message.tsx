@@ -96,7 +96,7 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 				</div>
 			</a>
 			<p className="text-sm md:text-md">
-				{ensName ? ensName : 'Your delegate'} has a GovScore of&nbsp;
+				{ensName ? ensName : 'Your delegate'} has a GovScore of
 				{/* Desktop */}
 				<Tooltip 
 					placement="right"
@@ -125,11 +125,11 @@ export default function Message({ delegateData }: { delegateData: DelegateTableR
 						</div>
 					}
 				>
-					<span className="cursor-pointer hidden md:flex"> {govScore}/10. </span>
+					<span className="cursor-pointer hidden md:inline"> {govScore}/10. </span>
 				</Tooltip>
 				{/* Mobile */}
 				<Popover>
-						<PopoverTrigger className="md:hidden"><span>{`${govScore}/10.`}&nbsp;</span></PopoverTrigger>
+						<PopoverTrigger className="md:hidden"><span>&nbsp;{`${govScore}/10.`}&nbsp;</span></PopoverTrigger>
 						<PopoverContent>
 							<div>
 								<div className="tooltip-text">

@@ -141,7 +141,7 @@ function GovScoreHeader() {
 					</div>
 				</div>
 			}>
-				<span className="cursor-pointer hidden md:flex bg-green-400"><HelpIcon /></span>
+				<span className="cursor-pointer hidden md:flex"><HelpIcon /></span>
 			</Tooltip>
 			{/* Mobile */}
 			<div className="flex items-center">
@@ -193,7 +193,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 	}
 	const pctDelegationText = getPctDelegationText(scores.pctDelegation)
 	return (
-		<div className="cell col-gov-score">
+		<div className="cell">
 			{(new RegExp('0x').test(row.original.address)) ? (
 				<>
 					{/* Desktop */}
@@ -224,7 +224,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
 							</div>
 						}
 					>
-						<span className="cursor-pointer hidden md:flex">{`${govScore}/10`}</span>
+						<span className="cursor-pointer hidden md:flex w-fit mx-auto">{`${govScore}/10`}</span>
 					</Tooltip>
 					{/* Mobile */}
 					<Popover>
