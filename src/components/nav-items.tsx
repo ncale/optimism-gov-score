@@ -27,7 +27,7 @@ export function NavConnectButton() {
 	return (
 		<NavbarContent justify="end">
 			<NavbarItem>
-				<ConnectButton chainStatus="none" showBalance={false} />
+				<ConnectButton chainStatus="none" showBalance={false} accountStatus={{ smallScreen: "avatar", largeScreen: "address" }}/>
 			</NavbarItem>
 		</NavbarContent>
 	)
