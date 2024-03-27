@@ -65,7 +65,8 @@ const faqItems: Array<[question: string, response: ReactNode]> = [
         By distributing responsibility, DAOs can not only live up to their name,
         but also receive a wide diversity of opinions and thoughts. Delegating
         to engaged and relatively less powerful delegates builds a more
-        decentralized ecosystem, and allows the people's voices to come through.
+        decentralized ecosystem, and allows the people&apos;s voices to come
+        through.
       </p>
     </>,
   ],
