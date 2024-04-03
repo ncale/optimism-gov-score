@@ -1,162 +1,89 @@
-'use client';
+"use client";
 
 import { useAccount, useReadContract, useEnsName, useEnsAvatar } from "wagmi";
 import { opTokenAbi } from "@/config/op-token-abi";
 import { OP_TOKEN_ADDRESS } from "@/config/config";
-import { normalize } from "viem/ens";
 import { calcGovScore } from "@/lib/utils";
-import { CheckIcon, DelegateTableRow, EmptyIcon, ScorePill, XMarkIcon } from "./columns";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tooltip } from "@nextui-org/react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { DelegateTableRow } from "./columns";
+import { DelegateCard } from "./card-components";
+import { normalize } from "viem/ens";
 
-export default function Message({ delegateData }: { delegateData: DelegateTableRow[] | undefined }) {
-	
-	const { address } = useAccount()
-	const { data: delegateAddress } = useReadContract({
-		address: OP_TOKEN_ADDRESS,
-		abi: opTokenAbi,
-		functionName: "delegates",
-		args: [address ?? "0x"],
-		chainId: 10
-	})
+export default function Message({
+  delegateData,
+}: {
+  delegateData: DelegateTableRow[] | undefined;
+}) {
+  const { address } = useAccount();
+  const { data: delegateAddress } = useReadContract({
+    address: OP_TOKEN_ADDRESS,
+    abi: opTokenAbi,
+    functionName: "delegates",
+    args: [address ?? "0x"],
+    chainId: 10,
+  });
+  const { data: ensName } = useEnsName({
+    address: delegateAddress,
+    chainId: 1,
+  });
+  const { data: ensAvatar } = useEnsAvatar({
+    name: normalize(ensName?.toString() ?? ""),
+    chainId: 1,
+  });
 
-	const { data: ensName } = useEnsName({
-		address: delegateAddress,
-		chainId: 1
-	})
-	const { data: ensAvatar } = useEnsAvatar({
-		name: normalize(ensName?.toString() ?? ''),
-		chainId: 1
-	})
+  if (!address) {
+    return (
+      <div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
+        Connect wallet to see your delegate
+      </div>
+    );
+  }
 
-	if (!address) return (
-		<div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
-				Connect wallet to see your delegate
-		</div>
-	)
+  if (!delegateAddress || new RegExp("0x000000000000").test(delegateAddress)) {
+    return (
+      <div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
+        You haven&apos;t delegated any OP...{" "}
+        <a
+          href="https://app.uniswap.org/explore/tokens/optimism/0x4200000000000000000000000000000000000042"
+          className="special link"
+        >
+          buy some?
+        </a>
+      </div>
+    );
+  }
 
-	const burnAddress = new RegExp('0x0000000000')
-	if (!delegateAddress || (burnAddress.test(delegateAddress))) return (
-		<div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
-			You haven&apos;t delegated any OP... <a 
-				href="https://app.uniswap.org/explore/tokens/optimism/0x4200000000000000000000000000000000000042" 
-				className="special link">buy some?</a>
-		</div>
-	)
+  if (!delegateData) return <pre>Error... Missing Data</pre>;
 
-	if (!delegateData) return <pre>Error... Missing Data</pre>
+  const delegate = delegateData.find(
+    (delegate) =>
+      delegate.address.toLowerCase() === delegateAddress.toLowerCase()
+  );
 
-	const delegate = delegateData.find((delegate) => delegate.address.toLowerCase() === delegateAddress.toLowerCase())
+  if (!delegate)
+    return (
+      <div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2">
+        uh oh... your delegate isn&apos;t here. This is unexpected, but
+        we&apos;ll do our best to fix it. Please send your feedback to
+        ncale.eth, and we&apos;ll get working on it asap. Your feedback is
+        extremely valued as we iron out the kinks in this new site, and we
+        appreciate your patience as we get off the ground. Thanks!
+      </div>
+    );
 
-	if (!delegate) return (
-		<div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2">
-			uh oh... your delegate isn&apos;t here. This is unexpected, but we&apos;ll do our best to fix it. 
-			Please send your feedback to ncale.eth, and we&apos;ll get working on it asap. Your feedback 
-			is extremely valued as we iron out the kinks in this new site, and we appreciate your
-			patience as we get off the ground. Thanks!</div>
-	)
+  const govScoreConfig = {
+    isEnsNameSet: typeof ensName === "string" && ensName.length > 0,
+    isEnsAvatarSet: typeof ensAvatar === "string" && ensAvatar.length > 0,
+    isFcAcctAttached: false, // dummy data
+    recentParticipation: delegate.count_participation,
+    pctDelegation: delegate.pct_voting_power,
+  };
+  const { scores, govScore } = calcGovScore(govScoreConfig);
 
-	const govScoreConfig = {
-		isEnsNameSet: (typeof ensName === 'string' && ensName.length > 0),
-		isEnsAvatarSet: (typeof ensAvatar === 'string' && ensAvatar.length > 0),
-		isFcAcctAttached: false, // dummy data
-		recentParticipation: delegate.count_participation,
-		pctDelegation: delegate.pct_voting_power,
-	}
-	const { scores } = calcGovScore(govScoreConfig)
-	const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
-	function getPctDelegationText(score: number) {
-		switch (score) {
-			case 0:
-				return "More than 1.5%"
-			case 1: 
-				return "More than 1.0%"
-			case 2:
-				return "More than 0.5%"
-			case 3:
-				return "Less than 0.5%"
-		}
-	}
-	const pctDelegationText = getPctDelegationText(scores.pctDelegation)
-	const shortAddr = `${delegateAddress.slice(0, 5)}...${delegateAddress.slice(-4)}`
-	return (
-		<div className="flex flex-col items-center justify-center my-4 md:my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-md">
-			<a 
-				href={`https://vote.optimism.io/delegates/${delegateAddress}`} 
-				target="_blank"
-				className="flex items-center mb-1 text-lg md:text-xl font-bold">
-				<div className="mr-2">Your delegate:</div>
-				<Avatar>
-					{ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
-					<AvatarFallback className="bg-ens-grad" />
-				</Avatar>
-				<div className="ml-2">
-					<h3 className="">{ensName ? ensName : shortAddr}</h3>
-				</div>
-			</a>
-			<p className="text-sm md:text-md">
-				{ensName ? ensName : 'Your delegate'} has a GovScore of
-				{/* Desktop */}
-				<Tooltip 
-					placement="right"
-					content={
-						<div>
-							<div className="tooltip-text">
-								{scores.ensName === 1 ? <CheckIcon /> : <XMarkIcon />}
-								<ScorePill score={scores.ensName} />
-								<span className="line">{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set</span>
-							</div>
-							<div className="tooltip-text">
-								{scores.ensAvatar === 1 ? <CheckIcon /> : <XMarkIcon />}
-								<ScorePill score={scores.ensAvatar} />
-								<span className="line">{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
-							</div>
-							<div className="tooltip-text">
-								{scores.recentParticipation > 3.5 ? <CheckIcon /> : (scores.recentParticipation > 1.5 ? <EmptyIcon /> : <XMarkIcon />)}
-								<ScorePill score={scores.recentParticipation} />
-								<span className="line">Voted in <span className="special">{delegate?.count_participation ?? 0}</span> of last <span className="special">10</span> onchain proposals</span>
-							</div>
-							<div className="tooltip-text">
-								{scores.pctDelegation === 3 ? <CheckIcon /> : (scores.pctDelegation > 0 ? <EmptyIcon /> : <XMarkIcon />)}
-								<ScorePill score={scores.pctDelegation} />
-								<span className="line">{pctDelegationText} of total delegated OP</span>
-							</div>
-						</div>
-					}
-				>
-					<span className="cursor-pointer hidden md:inline"> {govScore}/10. </span>
-				</Tooltip>
-				{/* Mobile */}
-				<Popover>
-						<PopoverTrigger className="md:hidden"><span>&nbsp;{`${govScore}/10.`}&nbsp;</span></PopoverTrigger>
-						<PopoverContent>
-							<div>
-								<div className="tooltip-text">
-									{scores.ensName === 1 ? <CheckIcon /> : <XMarkIcon />}
-									<ScorePill score={scores.ensName} />
-									<span className="line">{govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name Set</span>
-								</div>
-								<div className="tooltip-text">
-									{scores.ensAvatar === 1 ? <CheckIcon /> : <XMarkIcon />}
-									<ScorePill score={scores.ensAvatar} />
-									<span className="line">{govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set</span>
-								</div>
-								<div className="tooltip-text">
-									{scores.recentParticipation > 3.5 ? <CheckIcon /> : (scores.recentParticipation > 1.5 ? <EmptyIcon /> : <XMarkIcon />)}
-									<ScorePill score={scores.recentParticipation} />
-									<span className="line">Voted in <span className="special">{delegate?.count_participation ?? 0}</span> of last <span className="special">10</span> onchain proposals</span>
-								</div>
-								<div className="tooltip-text">
-									{scores.pctDelegation === 3 ? <CheckIcon /> : (scores.pctDelegation > 0 ? <EmptyIcon /> : <XMarkIcon />)}
-									<ScorePill score={scores.pctDelegation} />
-									<span className="line">{pctDelegationText} of total delegated OP</span>
-								</div>
-							</div>
-						</PopoverContent>
-					</Popover>
-				{govScore > 6 ? "Awesome 😎" : "Consider re-delegating..."}
-			</p>
-		</div>
-	)
+  return (
+    <DelegateCard
+      address={delegateAddress}
+      scores={scores}
+      govScore={govScore}
+    />
+  );
 }

@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ReactNode } from "react";
+import { ScoreCard, ScorePill } from "../delegates/card-components";
 
 export default function Home() {
   return (
@@ -39,36 +40,59 @@ function FaqAccordion({
 
 const faqItems: Array<[question: string, response: ReactNode]> = [
   [
-    "Why GovScore?",
-    "In the world of DAO governance and leadership, we see two core concerns among those in the space: first, the slow but consistent consolidation of power, and second, the concern of waning engagement among delegates. We believe strongly in the potential of decentralized governance, but to unlock that potential, we need to start with systems that hold delegates accountable. Enter GovScore: what we see as the first step in ensuring that those who decide the future of	DAOs are consistently the best for the job.",
-  ],
-  [
     "How is the score calculated?",
     <>
-      GovScore is calculated on 3 key metrics: transparency, consistency, and
-      voting power.
-      <p className="special mt-2">Transparency (2 pts)</p>
-      <p>
-        Transparency is the foundation of any healthy ecosystem because it is
-        the basis of accountability. Delegates using ENS identify themselves
-        onchain, and by association, create a reputation to uphold.
+      <p className="mb-2">
+        GovScore ranks OP delegates on 3 key metrics:{" "}
+        <span className="underline font-bold">transparency</span>,{" "}
+        <span className="underline font-bold">consistency</span>, and{" "}
+        <span className="underline font-bold">voting power</span>.
       </p>
-      <p className="special mt-2">Consistency (5 pts)</p>
-      <p>
-        When delegates are consistent voters, two things happen: proposals can
-        field more opinions, giving the DAO a stronger understanding of its
-        ideals and goals, and second, proposals will continue to meet quorum.
-        Tokens that are delegated should be used.
+      <p className="mb-2">
+        The ideal candidate has a transparent onchain identity as identified
+        using ENS, a consistent and proven recent voting history, and relatively
+        low voting power.
       </p>
-      <p className="special mt-2">Voting Power (3 pts)</p>
-      <p>
-        By distributing responsibility, DAOs can not only live up to their name,
-        but also receive a wide diversity of opinions and thoughts. Delegating
-        to engaged and relatively less powerful delegates builds a more
-        decentralized ecosystem, and allows the people&apos;s voices to come
-        through.
-      </p>
+      <div className="mt-2 bg-secondary space-y-2 w-fit h-fit p-2 rounded-md shadow-lg">
+        <div className="flex gap-1 items-center [&>div]:shrink-0">
+          <ScorePill score={"2 pts"} />
+          <p>1 point each for setting a primary ENS name and avatar</p>
+        </div>
+        <hr />
+        <div className="flex gap-1 items-center [&>div]:shrink-0">
+          <ScorePill score={"5 pts"} />
+          <p>
+            0.5 points for each vote casted on the 10 most recent onchain OP
+            proposals
+          </p>
+        </div>
+        <hr />
+        <div className="flex gap-1 items-center [&>div]:shrink-0">
+          <ScorePill score={"3 pts"} />
+          <p>
+            3 points for having less than 0.5% of the total voting pool
+            <br />
+            2 points for having less than 1%
+            <br />1 point for having less than 1.5%
+          </p>
+        </div>
+      </div>
+      <p className="mt-2">Ex...</p>
+      <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
+        <ScoreCard
+          scores={{
+            ensName: 1,
+            ensAvatar: 0,
+            recentParticipation: 4.5,
+            pctDelegation: 3,
+          }}
+        />
+      </div>
     </>,
+  ],
+  [
+    "Why GovScore?",
+    "In the world of DAO governance and leadership, we see two core concerns among those in the space: first, the slow but consistent consolidation of power, and second, the concern of waning engagement among delegates. We believe strongly in the potential of decentralized governance, but to unlock that potential, we need to start with systems that hold delegates accountable. Enter GovScore: what we see as the first step in ensuring that those who decide the future of	DAOs are consistently the best for the job.",
   ],
   [
     "How do I set my ENS domain and avatar?",
