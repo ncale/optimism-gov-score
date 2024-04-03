@@ -1,16 +1,15 @@
 "use client";
 
 import { Address } from "viem";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useEnsAvatar, useEnsName } from "wagmi";
 import { normalize } from "viem/ens";
-// Icons & Components
 import {
   CheckIcon,
   MinusIcon,
   XMarkIcon,
 } from "@/components/icons/lucide-icons";
 import { type Scores } from "@/lib/utils";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 export default function DelegateCard({
   address,
@@ -36,14 +35,14 @@ export default function DelegateCard({
     : `${address.slice(0, 5)}...${address.slice(-4)}`;
 
   return (
-    <div className="flex flex-col items-left justify-center my-4 md:my-8 mx-auto py-4 px-4 md:px-8 text-left bg-muted rounded w-11/12 md:w-[30rem] shadow-md">
-      <div className="mb-1">Your delegate:</div>
+    <div className="flex flex-col items-left justify-center my-4 md:my-8 mx-auto py-4 px-4 md:px-8 text-left bg-muted rounded w-11/12 md:w-[28rem] gap-1.5 shadow-md">
+      <div>Your delegate is...</div>
       <a
         href={`https://vote.optimism.io/delegates/${address}`}
         target="_blank"
-        className="flex items-center mb-1 text-lg md:text-2xl font-bold"
+        className="flex items-center text-lg md:text-2xl font-bold"
       >
-        <Avatar>
+        <Avatar className="h-14 w-14">
           {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
           <AvatarFallback className="bg-ens-grad" />
         </Avatar>
@@ -51,9 +50,9 @@ export default function DelegateCard({
           <h3 className="">{nameText}</h3>
         </div>
       </a>
-      <hr className="my-1.5" />
+      <hr />
       <ScoreCard scores={scores} />
-      <hr className="my-1.5" />
+      <hr />
       <p className="text-xl font-bold">{govScore}/10 GovScore</p>
     </div>
   );
