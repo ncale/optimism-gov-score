@@ -1,11 +1,13 @@
+import { Address } from 'viem'
+
 import { fetchDuneData, type QueryResponse } from "@/services/fetchDuneData";
 import { getAllVotes } from "@/services/fetchVotes";
 import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
 
-export async function getDelegates() {
+export async function getDelegates(address?: Address | undefined) {
 	// Fetch data
 	const duneData = await fetchDuneData()
-	const votes = await getAllVotes()
+	const votes = await getAllVotes(address)
 	if (!duneData || !votes) return
 	// Combine to one object list
 	const combinedData = duneData.map((delegate) => {
