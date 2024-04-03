@@ -11,7 +11,7 @@ import {
 import { type Scores } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-export default function DelegateCard({
+export function DelegateCard({
   address,
   scores,
   govScore,

@@ -21,7 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ScoreCard } from "./delegate-card";
+import { ScoreCard } from "./card-components";
 
 const columnHelper = createColumnHelper<DelegateTableRow>();
 

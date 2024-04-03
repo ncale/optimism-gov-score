@@ -5,7 +5,7 @@ import { opTokenAbi } from "@/config/op-token-abi";
 import { OP_TOKEN_ADDRESS } from "@/config/config";
 import { calcGovScore } from "@/lib/utils";
 import { DelegateTableRow } from "./columns";
-import DelegateCard from "./delegate-card";
+import { DelegateCard } from "./card-components";
 import { normalize } from "viem/ens";
 
 export default function Message({
