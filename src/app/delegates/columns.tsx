@@ -14,12 +14,13 @@ import { normalize } from "viem/ens";
 // Types
 import type { CellContext, Row } from "@tanstack/react-table";
 // Icons
-import { IconContext } from "react-icons/lib";
-import { LuArrowUpDown } from "react-icons/lu";
-import { LuHelpCircle } from "react-icons/lu";
-import { LuCheckCircle2 } from "react-icons/lu";
-import { LuMinusCircle } from "react-icons/lu";
-import { LuXCircle } from "react-icons/lu";
+import {
+  FilterIcon,
+  HelpIcon,
+  CheckIcon,
+  MinusIcon,
+  XMarkIcon,
+} from "@/components/icons/lucide-icons";
 import Link from "next/link";
 import {
   Popover,
@@ -268,7 +269,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
                   {scores.recentParticipation > 3.5 ? (
                     <CheckIcon />
                   ) : scores.recentParticipation > 1.5 ? (
-                    <EmptyIcon />
+                    <MinusIcon />
                   ) : (
                     <XMarkIcon />
                   )}
@@ -282,7 +283,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
                   {scores.pctDelegation === 3 ? (
                     <CheckIcon />
                   ) : scores.pctDelegation > 0 ? (
-                    <EmptyIcon />
+                    <MinusIcon />
                   ) : (
                     <XMarkIcon />
                   )}
@@ -320,7 +321,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
                   {scores.recentParticipation > 3.5 ? (
                     <CheckIcon />
                   ) : scores.recentParticipation > 1.5 ? (
-                    <EmptyIcon />
+                    <MinusIcon />
                   ) : (
                     <XMarkIcon />
                   )}
@@ -334,7 +335,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
                   {scores.pctDelegation === 3 ? (
                     <CheckIcon />
                   ) : scores.pctDelegation > 0 ? (
-                    <EmptyIcon />
+                    <MinusIcon />
                   ) : (
                     <XMarkIcon />
                   )}
@@ -354,41 +355,6 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
   );
 }
 
-export function FilterIcon() {
-  return (
-    <IconContext.Provider value={{ size: "1.15em" }}>
-      <LuArrowUpDown />
-    </IconContext.Provider>
-  );
-}
-export function HelpIcon() {
-  return (
-    <IconContext.Provider value={{ size: "0.9em" }}>
-      <LuHelpCircle />
-    </IconContext.Provider>
-  );
-}
-export function CheckIcon() {
-  return (
-    <IconContext.Provider value={{ color: "green", size: "1.15em" }}>
-      <LuCheckCircle2 />
-    </IconContext.Provider>
-  );
-}
-export function EmptyIcon() {
-  return (
-    <IconContext.Provider value={{ color: "orange", size: "1.15em" }}>
-      <LuMinusCircle />
-    </IconContext.Provider>
-  );
-}
-export function XMarkIcon() {
-  return (
-    <IconContext.Provider value={{ color: "red", size: "1.15em" }}>
-      <LuXCircle />
-    </IconContext.Provider>
-  );
-}
 export function ScorePill({ score }: { score: number }) {
   return (
     <div
