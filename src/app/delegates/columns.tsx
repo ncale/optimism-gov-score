@@ -26,6 +26,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScoreCard } from "./card-components";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const columnHelper = createColumnHelper<DelegateTableRow>();
 
@@ -210,6 +211,7 @@ function GovScoreHeader() {
 }
 
 function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const { data: ensName } = useEnsName({
     address: row.original.address,
     chainId: 1,
@@ -245,17 +247,18 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
     <div className="cell">
       {new RegExp("0x").test(row.original.address) ? (
         <>
-          {/* Desktop */}
-          <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
-            <span className="cursor-pointer hidden md:flex w-fit mx-auto">{`${govScore}/10`}</span>
-          </Tooltip>
-          {/* Mobile */}
-          <Popover>
-            <PopoverTrigger className="md:hidden">{`${govScore}/10`}</PopoverTrigger>
-            <PopoverContent>
-              <ScoreCard scores={scores} />
-            </PopoverContent>
-          </Popover>
+          {isDesktop ? (
+            <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
+              <div className="cursor-pointer w-16 mx-auto py-0.5 bg-blue-600 rounded-md text-primary-foreground font-bold hover:bg-blue-500 ease-in-out duration-75">{`${govScore}/10`}</div>
+            </Tooltip>
+          ) : (
+            <Popover>
+              <PopoverTrigger className="bg-blue-600 text-primary-foreground font-bold py-0.5 px-1 rounded-md">{`${govScore}/10`}</PopoverTrigger>
+              <PopoverContent>
+                <ScoreCard scores={scores} />
+              </PopoverContent>
+            </Popover>
+          )}
         </>
       ) : (
         <span>n/a</span>
