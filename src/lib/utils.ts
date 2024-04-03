@@ -35,7 +35,7 @@ export function calcGovScore({
   pctDelegation,
 }: GovScoreConfig): GovScore {
   // init scores variable
-  let scores: Scores = {
+  const scores: Scores = {
     ensName: 0,
     ensAvatar: 0,
     recentParticipation: 0,
@@ -63,11 +63,11 @@ type GovScoreConfig = {
   recentParticipation: number;
   pctDelegation: number;
 };
-type GovScore = {
+export type GovScore = {
   scores: Scores;
   govScore: number;
 };
-type Scores = {
+export type Scores = {
   ensName: number;
   ensAvatar: number;
   recentParticipation: number;
