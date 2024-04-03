@@ -14,19 +14,14 @@ import { normalize } from "viem/ens";
 // Types
 import type { CellContext, Row } from "@tanstack/react-table";
 // Icons
-import {
-  FilterIcon,
-  HelpIcon,
-  CheckIcon,
-  MinusIcon,
-  XMarkIcon,
-} from "@/components/icons/lucide-icons";
+import { FilterIcon, HelpIcon } from "@/components/icons/lucide-icons";
 import Link from "next/link";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ScoreCard } from "./delegate-card";
 
 const columnHelper = createColumnHelper<DelegateTableRow>();
 
@@ -246,121 +241,20 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
       {new RegExp("0x").test(row.original.address) ? (
         <>
           {/* Desktop */}
-          <Tooltip
-            placement="right"
-            content={
-              <div>
-                <div className="tooltip-text">
-                  {scores.ensName === 1 ? <CheckIcon /> : <XMarkIcon />}
-                  <ScorePill score={scores.ensName} />
-                  <span className="line">
-                    {govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name
-                    Set
-                  </span>
-                </div>
-                <div className="tooltip-text">
-                  {scores.ensAvatar === 1 ? <CheckIcon /> : <XMarkIcon />}
-                  <ScorePill score={scores.ensAvatar} />
-                  <span className="line">
-                    {govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set
-                  </span>
-                </div>
-                <div className="tooltip-text">
-                  {scores.recentParticipation > 3.5 ? (
-                    <CheckIcon />
-                  ) : scores.recentParticipation > 1.5 ? (
-                    <MinusIcon />
-                  ) : (
-                    <XMarkIcon />
-                  )}
-                  <ScorePill score={scores.recentParticipation} />
-                  <span className="line">
-                    Voted in <span className="special">{voteCount}</span> of
-                    last <span className="special">10</span> onchain proposals
-                  </span>
-                </div>
-                <div className="tooltip-text">
-                  {scores.pctDelegation === 3 ? (
-                    <CheckIcon />
-                  ) : scores.pctDelegation > 0 ? (
-                    <MinusIcon />
-                  ) : (
-                    <XMarkIcon />
-                  )}
-                  <ScorePill score={scores.pctDelegation} />
-                  <span className="line">
-                    {pctDelegationText} of total delegated OP
-                  </span>
-                </div>
-              </div>
-            }
-          >
+          <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
             <span className="cursor-pointer hidden md:flex w-fit mx-auto">{`${govScore}/10`}</span>
           </Tooltip>
           {/* Mobile */}
           <Popover>
             <PopoverTrigger className="md:hidden">{`${govScore}/10`}</PopoverTrigger>
             <PopoverContent>
-              <div>
-                <div className="tooltip-text">
-                  {scores.ensName === 1 ? <CheckIcon /> : <XMarkIcon />}
-                  <ScorePill score={scores.ensName} />
-                  <span className="line">
-                    {govScoreConfig.isEnsNameSet ? "" : "No "} ENS Primary Name
-                    Set
-                  </span>
-                </div>
-                <div className="tooltip-text">
-                  {scores.ensAvatar === 1 ? <CheckIcon /> : <XMarkIcon />}
-                  <ScorePill score={scores.ensAvatar} />
-                  <span className="line">
-                    {govScoreConfig.isEnsAvatarSet ? "" : "No "} ENS Avatar Set
-                  </span>
-                </div>
-                <div className="tooltip-text">
-                  {scores.recentParticipation > 3.5 ? (
-                    <CheckIcon />
-                  ) : scores.recentParticipation > 1.5 ? (
-                    <MinusIcon />
-                  ) : (
-                    <XMarkIcon />
-                  )}
-                  <ScorePill score={scores.recentParticipation} />
-                  <span className="line">
-                    Voted in <span className="special">{voteCount}</span> of
-                    last <span className="special">10</span> onchain proposals
-                  </span>
-                </div>
-                <div className="tooltip-text">
-                  {scores.pctDelegation === 3 ? (
-                    <CheckIcon />
-                  ) : scores.pctDelegation > 0 ? (
-                    <MinusIcon />
-                  ) : (
-                    <XMarkIcon />
-                  )}
-                  <ScorePill score={scores.pctDelegation} />
-                  <span className="line">
-                    {pctDelegationText} of total delegated OP
-                  </span>
-                </div>
-              </div>
+              <ScoreCard scores={scores} />
             </PopoverContent>
           </Popover>
         </>
       ) : (
         <span>n/a</span>
       )}
-    </div>
-  );
-}
-
-export function ScorePill({ score }: { score: number }) {
-  return (
-    <div
-      className={`rounded-full text-xs text-center w-6 h-4 bg-gray-600 text-white font-bold`}
-    >
-      {score}
     </div>
   );
 }

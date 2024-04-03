@@ -10,7 +10,6 @@ import {
   MinusIcon,
   XMarkIcon,
 } from "@/components/icons/lucide-icons";
-import { ScorePill } from "./columns";
 import { type Scores } from "@/lib/utils";
 
 export default function DelegateCard({
@@ -60,7 +59,7 @@ export default function DelegateCard({
   );
 }
 
-function ScoreCard({ scores }: { scores: Scores }) {
+export function ScoreCard({ scores }: { scores: Scores }) {
   const ensScore = scores.ensName + scores.ensAvatar;
   return (
     <div className="text-sm">
@@ -81,7 +80,6 @@ function ScoreCard({ scores }: { scores: Scores }) {
             ? "ENS primary name set, no avatar"
             : "No ENS primary name or avatar set"}
         </span>
-        <span>{scores.ensName + " " + scores.ensAvatar}</span>
       </div>
 
       {/* Recent Voting Score */}
@@ -130,4 +128,12 @@ function getPctDelegationText(score: number) {
     case 3:
       return "Less than 0.5%";
   }
+}
+
+function ScorePill({ score }: { score: string | number }) {
+  return (
+    <div className="rounded-full text-xs text-center w-9 h-[1.3em] bg-gray-600 text-white font-bold">
+      {score}
+    </div>
+  );
 }
