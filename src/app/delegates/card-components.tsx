@@ -129,7 +129,7 @@ function getPctDelegationText(score: number) {
   }
 }
 
-function ScorePill({ score }: { score: string | number }) {
+export function ScorePill({ score }: { score: string | number }) {
   return (
     <div className="rounded-full text-xs text-center w-9 h-[1.3em] bg-gray-600 text-white font-bold">
       {score}
