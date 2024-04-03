@@ -14,7 +14,11 @@ import { normalize } from "viem/ens";
 // Types
 import type { CellContext, Row } from "@tanstack/react-table";
 // Icons
-import { FilterIcon, HelpIcon } from "@/components/icons/lucide-icons";
+import {
+  FilterIcon,
+  HelpIcon,
+  ShareIcon,
+} from "@/components/icons/lucide-icons";
 import Link from "next/link";
 import {
   Popover,
@@ -126,14 +130,15 @@ function DelegateCell({
           href={`https://vote.optimism.io/delegates/${props.row.original.address}`}
           target="_blank"
         >
-          <div className="cell col-delegate flex w-56">
+          <div className="cell w-56 flex items-center hover:scale-105 origin-left ease-in-out duration-75">
             <Avatar>
               {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
               <AvatarFallback className="bg-ens-grad" />
             </Avatar>
-            <div className="flex flex-col ml-2 items-start justify-center">
+            <div className="flex flex-col ml-2 mr-1 items-start justify-center">
               <h3 className="">{ensName ? ensName : abbrevAddress}</h3>
             </div>
+            <ShareIcon />
           </div>
         </a>
       ) : (
