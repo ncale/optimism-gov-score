@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Address, createPublicClient, http, isAddress } from "viem";
+import { isAddress } from "viem";
 import { getEnsData } from "@/services/getEnsData";
 import { calcGovScore } from "@/lib/utils";
 import { getData } from "@/services/getData";
-import { fetchVotes } from "@/services/fetchVotes";
 
 export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   // parse url param and validate format
-  const address = req.nextUrl.searchParams.get("address") as Address;
+  const address = req.nextUrl.searchParams.get("address");
   if (!address || !isAddress(address)) {
     return NextResponse.json({ error: "Invalid address" });
   }
