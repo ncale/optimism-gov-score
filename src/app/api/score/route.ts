@@ -1,63 +1,37 @@
-import { OP_TOKEN_ADDRESS } from '@/config/config'
-import { opTokenAbi } from '@/config/op-token-abi'
-import { NextRequest, NextResponse } from 'next/server'
-import { createPublicClient, http, isAddress } from 'viem'
-import { mainnet, optimism } from 'viem/chains'
-import { calcGovScore } from '@/lib/utils'
-import { getData } from '@/services/getData'
+import { NextRequest, NextResponse } from "next/server";
+import { Address, createPublicClient, http, isAddress } from "viem";
+import { getEnsData } from "@/services/getEnsData";
+import { calcGovScore } from "@/lib/utils";
+import { getData } from "@/services/getData";
+import { fetchVotes } from "@/services/fetchVotes";
 
-export const runtime = 'edge'
+export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
-  const address = req.nextUrl.searchParams.get('address')
-
+  // parse url param and validate format
+  const address = req.nextUrl.searchParams.get("address") as Address;
   if (!address || !isAddress(address)) {
-    return NextResponse.json({ error: 'Invalid address' })
+    return NextResponse.json({ error: "Invalid address" });
   }
 
-  const opClient = createPublicClient({
-    chain: optimism,
-    transport: http('https://optimism-rpc.publicnode.com'),
-  })
-
-  const mainnetClient = createPublicClient({
-    chain: mainnet,
-    transport: http('https://ethereum-rpc.publicnode.com'),
-  })
-
-  const delegateAddress = await opClient.readContract({
-    address: OP_TOKEN_ADDRESS,
-    abi: opTokenAbi,
-    functionName: 'delegates',
-    args: [address],
-  })
-
-  const delegateEnsName = await mainnetClient.getEnsName({
-    address: delegateAddress,
-  })
-
-  // Only fetch avatar if ENS name is set
-  const delegateEnsAvatar = delegateEnsName
-    ? await mainnetClient.getEnsAvatar({ name: delegateEnsName })
-    : undefined
-
-  const allDelegateData = await getData(delegateAddress)
-
+  // get ens data
+  const [ensName, ensAvatar] = await getEnsData(address);
+  // get delegate data
+  const allDelegateData = await getData(address);
   const delegateData = allDelegateData?.find(
-    (delegate) =>
-      delegate.address.toLowerCase() === delegateAddress.toLowerCase()
-  )
+    (delegate) => delegate.address.toLowerCase() === address.toLowerCase()
+  );
 
   const govScoreConfig = {
-    isEnsNameSet: !!delegateEnsName,
-    isEnsAvatarSet: !!delegateEnsAvatar,
+    isEnsNameSet: !!ensName,
+    isEnsAvatarSet: !!ensAvatar,
     isFcAcctAttached: false, // dummy data, borrowed from message.tx
     recentParticipation: delegateData?.count_participation || 0,
     pctDelegation: delegateData?.pct_voting_power || 0,
-  }
+  };
 
-  const { scores } = calcGovScore(govScoreConfig)
-  const govScore = Object.values(scores).reduce((a, b) => a + b, 0)
+  const { scores } = calcGovScore(govScoreConfig);
+  const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
 
-  return NextResponse.json({ scores, govScore })
+  return NextResponse.json({ scores, govScore });
 }

@@ -1,36 +1,36 @@
-import { PONDER_API_URL } from '@/config/config'
-import { Address } from 'viem'
+import { PONDER_API_URL } from "@/config/config";
+import { Address } from "viem";
 
 export async function getAllVotes(address?: Address | undefined) {
-  const allVotes = []
-  let votesPage = await fetchVotes({ delegate: address })
-  allVotes.push(...votesPage.items)
+  const allVotes = [];
+  let votesPage = await fetchVotes({ delegate: address });
+  allVotes.push(...votesPage.items);
   while (votesPage.pageInfo.hasNextPage ?? false) {
-    votesPage = await fetchVotes({ endCursor: votesPage.pageInfo.endCursor })
-    allVotes.push(...votesPage.items)
+    votesPage = await fetchVotes({ endCursor: votesPage.pageInfo.endCursor });
+    allVotes.push(...votesPage.items);
   }
 
-  return allVotes
+  return allVotes;
 }
 
-async function fetchVotes({
+export async function fetchVotes({
   endCursor,
   delegate,
 }: {
-  endCursor?: string
-  delegate?: Address
+  endCursor?: string;
+  delegate?: Address;
 }) {
-  const hasFilters = !!delegate || !!endCursor
+  const hasFilters = !!delegate || !!endCursor;
 
   const query = `
 	query MyQuery {
 		delegates ${
       hasFilters
         ? `(
-			${delegate ? `where: { address: "${delegate}" }` : ''}
-			${endCursor ? `after: "${endCursor}"` : ''}
+			${delegate ? `where: { address: "${delegate}" }` : ""}
+			${endCursor ? `after: "${endCursor}"` : ""}
 		)`
-        : ''
+        : ""
     } {
 			items {
 				votes {
@@ -47,39 +47,39 @@ async function fetchVotes({
 			}
 		}
 	}
-	`
+	`;
   const data = await fetch(PONDER_API_URL, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({ query }),
-  })
-  const res = (await data.json()) as QueryResponse
+  });
+  const res = (await data.json()) as QueryResponse;
 
-  return res.data.delegates
+  return res.data.delegates;
 }
 
 // Response types
 interface QueryResponse {
   data: {
     delegates: {
-      items: Delegate[]
+      items: Delegate[];
       pageInfo: {
-        hasNextPage: boolean
-        endCursor: string
-      }
-    }
-  }
+        hasNextPage: boolean;
+        endCursor: string;
+      };
+    };
+  };
 }
 interface Delegate {
-  address: `0x${string}`
+  address: `0x${string}`;
   votes: {
-    items: Vote[]
-  }
+    items: Vote[];
+  };
 }
 interface Vote {
-  proposalId: string
-  blockNum: string
+  proposalId: string;
+  blockNum: string;
 }
