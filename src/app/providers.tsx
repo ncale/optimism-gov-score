@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const config = getDefaultConfig({
   appName: "GovScore",
   projectId: WC_PROJECT_ID,
-  chains: [mainnet, optimism],
+  chains: [optimism, mainnet],
   transports: {
     [mainnet.id]: http(),
     [optimism.id]: http(
@@ -28,7 +28,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
+        <RainbowKitProvider initialChain={optimism}>
           <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
