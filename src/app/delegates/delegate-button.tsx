@@ -36,14 +36,22 @@ export default function DelegateButton({
   }
 
   return (
-    <Button
-      size="xs"
-      disabled={!isConnected || isCurrentDelegate}
-      onClick={handleClick}
-      variant="secondary"
-      className="hover:scale-105 hover:bg-blue-200 origin-center ease-in-out duration-75 active:shadow-inner active:bg-blue-400"
-    >
-      <div>redelegate</div>
-    </Button>
+    <>
+      {isConnected ? (
+        <div className="w-20">
+          <Button
+            size="xs"
+            disabled={isCurrentDelegate}
+            onClick={handleClick}
+            variant="secondary"
+            className="hover:scale-105 hover:bg-blue-200 origin-center ease-in-out duration-75 active:shadow-inner active:bg-blue-400"
+          >
+            <div>redelegate</div>
+          </Button>
+        </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }

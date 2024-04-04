@@ -85,14 +85,9 @@ export const columns = [
   }),
   columnHelper.accessor("is_current_delegate", {
     header: () => <></>,
-    cell: ({ row }) =>
-      row.getValue("is_current_delegate") ? (
-        <div className="cell">current delegate</div>
-      ) : (
-        <div className="cell w-20">
-          <DelegateButton newDelegateAddress={row.original.address} />
-        </div>
-      ),
+    cell: ({ row }) => (
+      <DelegateButton newDelegateAddress={row.original.address} />
+    ),
   }),
 ] as ColumnDef<DelegateTableRow>[];
 
