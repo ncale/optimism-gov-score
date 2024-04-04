@@ -83,8 +83,8 @@ export const columns = [
       );
     },
   }),
-  columnHelper.accessor("is_current_delegate", {
-    header: () => <></>,
+  columnHelper.display({
+    id: "delegateButton",
     cell: ({ row }) => (
       <DelegateButton newDelegateAddress={row.original.address} />
     ),
@@ -95,12 +95,10 @@ export type DelegateTableRow = {
   rank: number;
   address: `0x${string}`;
   username: string;
-  pfpLink?: string;
   voting_power: number;
   pct_voting_power: number;
   count_participation: number;
   gov_score?: number;
-  is_current_delegate?: boolean;
 };
 
 function DelegateCell({
