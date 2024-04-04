@@ -18,46 +18,21 @@ export default function DelegateButton({
     args: [address ?? "0x"],
     chainId: 10,
   });
-  const {
-    writeContract,
-    data,
-    error,
-    isError,
-    failureCount,
-    failureReason,
-    isIdle,
-    isPending,
-    isPaused,
-    reset,
-    status,
-  } = useWriteContract();
-
-  console.log("status:", status);
+  const { writeContract, isPending } = useWriteContract();
 
   const isCurrentDelegate = delegateAddress
     ? newDelegateAddress.toLowerCase() === delegateAddress.toLowerCase()
     : false;
 
   function handleClick() {
-    console.log(
-      `calling 'delegate' OP token contract...\nContract address: ${OP_TOKEN_ADDRESS}\nAddress calling the function: ${address}\nDelegatee: ${newDelegateAddress}`
-    );
-    console.log("status:", status);
-    writeContract(
-      {
-        abi: opTokenAbi,
-        address: OP_TOKEN_ADDRESS,
-        functionName: "delegate",
-        account: address,
-        args: [newDelegateAddress],
-        chainId: 10,
-      },
-      {
-        onSuccess: () => console.log("success"),
-        onSettled: () => console.log("txn settled"),
-        onError: () => console.log("error"),
-      }
-    );
+    writeContract({
+      abi: opTokenAbi,
+      address: OP_TOKEN_ADDRESS,
+      functionName: "delegate",
+      account: address,
+      args: [newDelegateAddress],
+      chainId: 10,
+    });
   }
 
   return (
@@ -71,7 +46,7 @@ export default function DelegateButton({
             variant="secondary"
             className="hover:scale-105 hover:bg-blue-200 origin-center ease-in-out duration-75 active:shadow-inner active:bg-blue-400"
           >
-            <div>redelegate</div>
+            <div>{isPending ? "delegating..." : "redelegate"}</div>
           </Button>
         </div>
       ) : (
