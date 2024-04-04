@@ -1,38 +1,37 @@
-'use client';
+"use client";
 
-import { getDefaultConfig, RainbowKitProvider } from '@rainbow-me/rainbowkit';
-import { WC_PROJECT_ID } from '@/config/config';
+import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { WC_PROJECT_ID } from "@/config/config";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { WagmiProvider } from 'wagmi';
-import { mainnet, optimism, optimismSepolia } from 'wagmi/chains';
-import { http } from '@wagmi/core';
-import { NextUIProvider } from '@nextui-org/react';
-import { useRouter } from 'next/navigation';
+import { WagmiProvider } from "wagmi";
+import { mainnet, optimism } from "wagmi/chains";
+import { http } from "@wagmi/core";
+import { NextUIProvider } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const config = getDefaultConfig({
-  appName: 'GovScore',
+  appName: "GovScore",
   projectId: WC_PROJECT_ID,
-  chains: [mainnet, optimism, optimismSepolia],
-	transports: {
+  chains: [mainnet, optimism],
+  transports: {
     [mainnet.id]: http(),
-    [optimism.id]: http(),
-		[optimismSepolia.id]: http(),
+    [optimism.id]: http(
+      "https://opt-mainnet.g.alchemy.com/v2/MDC1pKQOykm8ldDe2T0dckRjkmHULfll"
+    ),
   },
   ssr: true,
 });
 const queryClient = new QueryClient();
 
-export default function Providers({children}: { children: React.ReactNode }) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-	return (
+  return (
     <WagmiProvider config={config}>
-			<QueryClientProvider client={queryClient}>
-				<RainbowKitProvider>
-					<NextUIProvider navigate={router.push}>
-						{children}
-					</NextUIProvider>
-				</RainbowKitProvider>
-			</QueryClientProvider>
-		</WagmiProvider>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>
+          <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
+        </RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
-};
+}
