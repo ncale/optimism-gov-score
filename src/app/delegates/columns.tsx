@@ -156,26 +156,7 @@ function GovScoreHeader() {
     <div className="head flex justify-center items-center gap-1">
       <div>GovScore</div>
       {/* Desktop */}
-      <Tooltip
-        content={
-          <div>
-            <div className="info-tooltip">
-              <span className="line mb-1">
-                An opinionated score of delegate quality.{" "}
-              </span>
-              <span className="line mb-1">
-                A high govscore means a delegate{" "}
-                <span className="special">votes consistently</span>, has a{" "}
-                <span className="special">transparent onchain identity</span>,
-                and is not <span className="special">too powerful</span>.{" "}
-              </span>
-              <Link href="/faq" className="special link">
-                read more
-              </Link>
-            </div>
-          </div>
-        }
-      >
+      <Tooltip content={<InfoTooltipContent />}>
         <span className="cursor-pointer hidden md:flex">
           <HelpIcon />
         </span>
@@ -189,22 +170,42 @@ function GovScoreHeader() {
             </span>
           </PopoverTrigger>
           <PopoverContent>
-            <div className="leading-tight w-64 rounded-md">
-              <span className="block mb-1">
-                An opinionated score of delegate quality.{" "}
-              </span>
-              <span className="block mb-1">
-                A high govscore means a delegate{" "}
-                <span className="special">votes consistently</span>, has a{" "}
-                <span className="special">transparent onchain identity</span>,
-                and is not <span className="special">too powerful</span>.{" "}
-              </span>
-              <Link href="/faq" className="special link">
-                read more
-              </Link>
-            </div>
+            <InfoTooltipContent />
           </PopoverContent>
         </Popover>
+      </div>
+    </div>
+  );
+}
+
+function InfoTooltipContent() {
+  return (
+    <div>
+      <div className="leading-tight w-64 md:w-72">
+        <p className="mb-1">
+          An opinionated score of how worthy a delegate is of receiving further
+          delegation.
+        </p>
+        <p className="mb-1">
+          A high govscore means a delegate{" "}
+          <span className="special">votes consistently</span>, has a{" "}
+          <span className="special">transparent onchain identity</span>, and is
+          not <span className="special">too powerful</span>.{" "}
+        </p>
+        <p className="mt-2">Ex...</p>
+        <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
+          <ScoreCard
+            scores={{
+              ensName: 1,
+              ensAvatar: 0,
+              recentParticipation: 4.5,
+              pctDelegation: 3,
+            }}
+          />
+        </div>
+        <Link href="/faq" className="special link">
+          read more
+        </Link>
       </div>
     </div>
   );

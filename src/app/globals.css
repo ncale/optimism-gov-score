@@ -110,19 +110,10 @@ Table div {
 
 .special {
   text-decoration: underline;
-}
-.info-tooltip {
-  line-height: 1.2;
-  width: 18rem;
-}
-.info-tooltip br {
-  border: 1px solid;
-}
-.info-tooltip .line {
-  display: block;
-}
-.special {
   font-weight: 500;
+}
+.link {
+  color: theme("colors.blue.500");
 }
 
 .bg-ens-grad {
@@ -138,8 +129,4 @@ Table div {
   background-color: theme("colors.muted.DEFAULT");
   padding: 0.2rem 0.5rem;
   border-radius: 0.375rem;
-}
-
-.link {
-  color: theme("colors.blue.500");
 }
