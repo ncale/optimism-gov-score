@@ -25,6 +25,9 @@ export default function DelegateButton({
     : false;
 
   function handleClick() {
+    console.log(
+      `calling 'delegate' OP token contract...\nContract address: ${OP_TOKEN_ADDRESS}\nAddress calling the function: ${address}\nDelegatee: ${newDelegateAddress}`
+    );
     writeContract({
       abi: opTokenAbi,
       address: OP_TOKEN_ADDRESS,
