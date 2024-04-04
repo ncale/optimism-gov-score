@@ -17,7 +17,7 @@ import type { CellContext, Row } from "@tanstack/react-table";
 import {
   FilterIcon,
   HelpIcon,
-  ShareIcon,
+  LinkIcon,
 } from "@/components/icons/lucide-icons";
 import Link from "next/link";
 import {
@@ -85,14 +85,9 @@ export const columns = [
   }),
   columnHelper.accessor("is_current_delegate", {
     header: () => <></>,
-    cell: ({ row }) =>
-      row.getValue("is_current_delegate") ? (
-        <div className="cell">current delegate</div>
-      ) : (
-        <div className="cell w-20">
-          <DelegateButton newDelegateeAddr={row.original.address} />
-        </div>
-      ),
+    cell: ({ row }) => (
+      <DelegateButton newDelegateAddress={row.original.address} />
+    ),
   }),
 ] as ColumnDef<DelegateTableRow>[];
 
@@ -139,7 +134,7 @@ function DelegateCell({
             <div className="flex flex-col ml-2 mr-1 items-start justify-center">
               <h3 className="">{ensName ? ensName : abbrevAddress}</h3>
             </div>
-            <ShareIcon />
+            <LinkIcon />
           </div>
         </a>
       ) : (
