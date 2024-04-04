@@ -2,6 +2,7 @@ import { IconContext } from "react-icons/lib";
 import { LuArrowUpDown } from "react-icons/lu";
 import { LuHelpCircle } from "react-icons/lu";
 import { LuShare } from "react-icons/lu";
+import { LuExternalLink } from "react-icons/lu";
 import { LuCheckCircle2 } from "react-icons/lu";
 import { LuMinusCircle } from "react-icons/lu";
 import { LuXCircle } from "react-icons/lu";
@@ -24,6 +25,13 @@ export function ShareIcon() {
   return (
     <IconContext.Provider value={{ size: "0.8em" }}>
       <LuShare />
+    </IconContext.Provider>
+  );
+}
+export function LinkIcon() {
+  return (
+    <IconContext.Provider value={{ size: "0.8em" }}>
+      <LuExternalLink />
     </IconContext.Provider>
   );
 }
