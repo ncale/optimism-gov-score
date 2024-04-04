@@ -18,7 +18,21 @@ export default function DelegateButton({
     args: [address ?? "0x"],
     chainId: 10,
   });
-  const { writeContract } = useWriteContract();
+  const {
+    writeContract,
+    data,
+    error,
+    isError,
+    failureCount,
+    failureReason,
+    isIdle,
+    isPending,
+    isPaused,
+    reset,
+    status,
+  } = useWriteContract();
+
+  console.log("status:", status);
 
   const isCurrentDelegate = delegateAddress
     ? newDelegateAddress.toLowerCase() === delegateAddress.toLowerCase()
@@ -28,14 +42,22 @@ export default function DelegateButton({
     console.log(
       `calling 'delegate' OP token contract...\nContract address: ${OP_TOKEN_ADDRESS}\nAddress calling the function: ${address}\nDelegatee: ${newDelegateAddress}`
     );
-    writeContract({
-      abi: opTokenAbi,
-      address: OP_TOKEN_ADDRESS,
-      functionName: "delegate",
-      account: address,
-      args: [newDelegateAddress],
-      chainId: 10,
-    });
+    console.log("status:", status);
+    writeContract(
+      {
+        abi: opTokenAbi,
+        address: OP_TOKEN_ADDRESS,
+        functionName: "delegate",
+        account: address,
+        args: [newDelegateAddress],
+        chainId: 10,
+      },
+      {
+        onSuccess: () => console.log("success"),
+        onSettled: () => console.log("txn settled"),
+        onError: () => console.log("error"),
+      }
+    );
   }
 
   return (
