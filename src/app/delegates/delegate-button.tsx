@@ -6,9 +6,9 @@ import { opTokenAbi } from "@/config/op-token-abi";
 import { OP_TOKEN_ADDRESS } from "@/config/config";
 
 export default function DelegateButton({
-  newDelegateeAddr,
+  newDelegateAddress,
 }: {
-  newDelegateeAddr: `0x${string}`;
+  newDelegateAddress: `0x${string}`;
 }) {
   const { isConnected, address } = useAccount();
   const { data: delegateAddress } = useReadContract({
@@ -21,12 +21,7 @@ export default function DelegateButton({
   const { writeContract } = useWriteContract();
 
   const isCurrentDelegate = delegateAddress
-    ? newDelegateeAddr.toLowerCase() === delegateAddress.toLowerCase()
-    : false;
-
-  const burnAddress = new RegExp("0x0000000000");
-  const hasDelegate = delegateAddress
-    ? !burnAddress.test(delegateAddress)
+    ? newDelegateAddress.toLowerCase() === delegateAddress.toLowerCase()
     : false;
 
   function handleClick() {
@@ -35,7 +30,7 @@ export default function DelegateButton({
       address: OP_TOKEN_ADDRESS,
       functionName: "delegate",
       account: address,
-      args: [newDelegateeAddr],
+      args: [newDelegateAddress],
       chainId: 10,
     });
   }
@@ -43,7 +38,7 @@ export default function DelegateButton({
   return (
     <Button
       size="xs"
-      disabled={!isConnected || isCurrentDelegate || !hasDelegate}
+      disabled={!isConnected || isCurrentDelegate}
       onClick={handleClick}
       variant="secondary"
       className="hover:scale-105 hover:bg-blue-200 origin-center ease-in-out duration-75 active:shadow-inner active:bg-blue-400"

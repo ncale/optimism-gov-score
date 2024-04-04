@@ -90,7 +90,7 @@ export const columns = [
         <div className="cell">current delegate</div>
       ) : (
         <div className="cell w-20">
-          <DelegateButton newDelegateeAddr={row.original.address} />
+          <DelegateButton newDelegateAddress={row.original.address} />
         </div>
       ),
   }),
