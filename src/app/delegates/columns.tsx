@@ -116,16 +116,8 @@ function SortButton({
       {children}
       {column.getIsSorted() ? null : <SortArrowsIcon />}
       {{
-        asc: (
-          <div className="rounded-full border-[1px]">
-            <SortUpIcon />
-          </div>
-        ),
-        desc: (
-          <div className="rounded-full border-[1px]">
-            <SortDownIcon />
-          </div>
-        ),
+        asc: <SortUpIcon />,
+        desc: <SortDownIcon />,
       }[column.getIsSorted() as string] ?? null}
     </Button>
   );

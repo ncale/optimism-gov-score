@@ -1,7 +1,7 @@
 import { IconContext } from "react-icons/lib";
 import { LuArrowUpDown } from "react-icons/lu";
-import { LuArrowUp } from "react-icons/lu";
-import { LuArrowDown } from "react-icons/lu";
+import { LuChevronUpSquare } from "react-icons/lu";
+import { LuChevronDownSquare } from "react-icons/lu";
 import { LuFilter } from "react-icons/lu";
 import { LuHelpCircle } from "react-icons/lu";
 import { LuShare } from "react-icons/lu";
@@ -20,14 +20,14 @@ export function SortArrowsIcon() {
 export function SortUpIcon() {
   return (
     <IconContext.Provider value={{ size: "1.15em" }}>
-      <LuArrowUp />
+      <LuChevronUpSquare />
     </IconContext.Provider>
   );
 }
 export function SortDownIcon() {
   return (
     <IconContext.Provider value={{ size: "1.15em" }}>
-      <LuArrowDown />
+      <LuChevronDownSquare />
     </IconContext.Provider>
   );
 }
