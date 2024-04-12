@@ -2,6 +2,7 @@ import { IconContext } from "react-icons/lib";
 import { LuArrowUpDown } from "react-icons/lu";
 import { LuArrowUp } from "react-icons/lu";
 import { LuArrowDown } from "react-icons/lu";
+import { LuFilter } from "react-icons/lu";
 import { LuHelpCircle } from "react-icons/lu";
 import { LuShare } from "react-icons/lu";
 import { LuExternalLink } from "react-icons/lu";
@@ -9,24 +10,31 @@ import { LuCheckCircle2 } from "react-icons/lu";
 import { LuMinusCircle } from "react-icons/lu";
 import { LuXCircle } from "react-icons/lu";
 
-export function FilterIcon() {
+export function SortArrowsIcon() {
   return (
     <IconContext.Provider value={{ size: "1.15em" }}>
       <LuArrowUpDown />
     </IconContext.Provider>
   );
 }
-export function FilterUpIcon() {
+export function SortUpIcon() {
   return (
     <IconContext.Provider value={{ size: "1.15em" }}>
       <LuArrowUp />
     </IconContext.Provider>
   );
 }
-export function FilterDownIcon() {
+export function SortDownIcon() {
   return (
     <IconContext.Provider value={{ size: "1.15em" }}>
       <LuArrowDown />
+    </IconContext.Provider>
+  );
+}
+export function FilterIcon() {
+  return (
+    <IconContext.Provider value={{ size: "1.15em" }}>
+      <LuFilter />
     </IconContext.Provider>
   );
 }

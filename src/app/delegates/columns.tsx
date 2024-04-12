@@ -16,9 +16,9 @@ import type { Column, Row } from "@tanstack/react-table";
 import { type PropsWithChildren } from "react";
 // Icons
 import {
-  FilterIcon,
-  FilterUpIcon,
-  FilterDownIcon,
+  SortArrowsIcon,
+  SortUpIcon,
+  SortDownIcon,
   HelpIcon,
   LinkIcon,
 } from "@/components/icons/lucide-icons";
@@ -114,16 +114,16 @@ function SortButton({
       className="space-x-1"
     >
       {children}
-      {column.getIsSorted() ? null : <FilterIcon />}
+      {column.getIsSorted() ? null : <SortArrowsIcon />}
       {{
         asc: (
           <div className="rounded-full border-[1px]">
-            <FilterUpIcon />
+            <SortUpIcon />
           </div>
         ),
         desc: (
           <div className="rounded-full border-[1px]">
-            <FilterDownIcon />
+            <SortDownIcon />
           </div>
         ),
       }[column.getIsSorted() as string] ?? null}
