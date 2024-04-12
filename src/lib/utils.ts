@@ -57,7 +57,7 @@ export function calcGovScore({
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
   return { scores, govScore };
 }
-type GovScoreConfig = {
+export type GovScoreConfig = {
   isEnsNameSet: boolean;
   isEnsAvatarSet: boolean;
   recentParticipation: number;
