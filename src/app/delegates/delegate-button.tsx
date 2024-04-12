@@ -21,7 +21,8 @@ export default function DelegateButton({
   const { writeContract, isPending } = useWriteContract();
 
   const isCurrentDelegate = delegateAddress
-    ? newDelegateAddress.toLowerCase() === delegateAddress.toLowerCase()
+    ? newDelegateAddress.toString().toLowerCase() ===
+      delegateAddress.toString().toLowerCase()
     : false;
 
   function handleClick() {

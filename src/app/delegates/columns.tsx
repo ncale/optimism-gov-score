@@ -6,13 +6,14 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Tooltip } from "@nextui-org/react";
 import DelegateButton from "./delegate-button";
+import { ScoreCard } from "./card-components";
 // Hooks
-import { useEnsName, useEnsAvatar } from "wagmi";
+import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
-import { formatBigNumber, formatPercentValue, calcGovScore } from "@/lib/utils";
-import { normalize } from "viem/ens";
+import { formatBigNumber, formatPercentValue, Scores } from "@/lib/utils";
 // Types
-import type { CellContext, Row } from "@tanstack/react-table";
+import type { Row } from "@tanstack/react-table";
+import { type PropsWithChildren } from "react";
 // Icons
 import {
   FilterIcon,
@@ -25,8 +26,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ScoreCard } from "./card-components";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { Address } from "viem";
 
 const columnHelper = createColumnHelper<DelegateTableRow>();
 
@@ -34,120 +34,115 @@ export const columns = [
   columnHelper.accessor("rank", {
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        <SortButton
+          clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <div className="head mr-1">Rank</div>
-          <FilterIcon />
-        </Button>
+          Rank
+        </SortButton>
       );
     },
-    cell: ({ row }) => <div className="cell">{row.getValue("rank")}</div>,
   }),
-  columnHelper.accessor(
-    (delegate) => `${delegate.address} - ${delegate.username}`,
-    {
-      id: "address",
-      header: () => <div className="head col-delegate">Delegate</div>,
-      cell: (props) => <DelegateCell props={props} />,
-    }
-  ),
+  columnHelper.accessor("delegate", {
+    header: "Delegate",
+    cell: ({ row }) => <DelegateCell row={row} />,
+  }),
   columnHelper.accessor("gov_score", {
-    header: () => <GovScoreHeader />,
+    header: ({ column }) => {
+      return (
+        <SortButton
+          clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          <GovScoreHeader />
+        </SortButton>
+      );
+    },
     cell: ({ row }) => <GovScoreCell row={row} />,
   }),
   columnHelper.accessor("voting_power", {
-    header: () => <div className="head">Voting Power</div>,
+    header: ({ column }) => {
+      return (
+        <SortButton
+          clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Voting Power
+        </SortButton>
+      );
+    },
     cell: ({ row }) => {
       const num = formatBigNumber(row.getValue("voting_power"));
-      return <div className="cell w-28">{`${num} OP`}</div>;
+      return <div className="w-28">{`${num} OP`}</div>;
     },
   }),
   columnHelper.accessor("pct_voting_power", {
-    header: () => <div className="head">% of Voting Power</div>,
+    header: "% of Voting Power",
     cell: ({ row }) => {
       const num = formatPercentValue(row.getValue("pct_voting_power"));
       return <div className="cell w-28">{num}</div>;
     },
   }),
-  columnHelper.accessor("count_participation", {
-    header: () => <div className="head">Recent Participation</div>,
-    cell: ({ row }) => {
-      const isUser = new RegExp("0x").test(row.original.address.toLowerCase());
-      const voteCount = row.getValue("count_participation");
-      return isUser ? (
-        <div className="cell">{`${voteCount}/10 votes`}</div>
-      ) : (
-        <div className="cell  w-24">n/a</div>
-      );
-    },
+  columnHelper.accessor("recent_participation", {
+    header: "Recent Participation",
+    cell: ({ row }) => `${row.getValue("recent_participation")}/10 votes`,
   }),
   columnHelper.display({
     id: "delegateButton",
     cell: ({ row }) => (
-      <DelegateButton newDelegateAddress={row.original.address} />
+      <DelegateButton newDelegateAddress={row.original.metadata__address} />
     ),
   }),
 ] as ColumnDef<DelegateTableRow>[];
 
 export type DelegateTableRow = {
   rank: number;
-  address: `0x${string}`;
-  username: string;
+  delegate: `${Address} - ${string}.eth`; // id included as a concatenated string to allow easier search filtering
+  metadata__address: Address;
+  metadata__ens_name: `${string}.eth` | null;
+  metadata__ens_avatar: string | null;
+  gov_score: number;
+  metadata__scores: Scores;
   voting_power: number;
   pct_voting_power: number;
-  count_participation: number;
-  gov_score?: number;
+  recent_participation: number;
 };
 
-function DelegateCell({
-  props,
-}: {
-  props: CellContext<DelegateTableRow, string>;
-}) {
-  const { data: ensName } = useEnsName({
-    address: props.getValue().split(" - ")[0] as `0x${string}`,
-    chainId: 1,
-  });
-  const { data: ensAvatar } = useEnsAvatar({
-    name: normalize(ensName?.toString() ?? ""),
-    chainId: 1,
-  });
-  const [addr, username] = props.getValue().split(" - ");
-  const isUser = new RegExp("0x").test(addr.toLowerCase());
-  const abbrevAddress = `${addr.slice(0, 5)}...${addr.slice(-4)}`;
+function SortButton({
+  children,
+  clickFunc,
+}: PropsWithChildren<{ clickFunc: () => void }>) {
   return (
-    <>
-      {isUser ? (
-        <a
-          href={`https://vote.optimism.io/delegates/${props.row.original.address}`}
-          target="_blank"
-        >
-          <div className="cell w-56 flex items-center hover:scale-105 origin-left ease-in-out duration-75">
-            <Avatar>
-              {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
-              <AvatarFallback className="bg-ens-grad" />
-            </Avatar>
-            <div className="flex flex-col ml-2 mr-1 items-start justify-center">
-              <h3 className="">{ensName ? ensName : abbrevAddress}</h3>
-            </div>
-            <LinkIcon />
-          </div>
-        </a>
-      ) : (
-        <div className="cell col-delegate flex flex-col ml-2 items-start justify-center">
-          <h3 className="">{addr}</h3>
+    <Button variant="ghost" onClick={clickFunc}>
+      {children}
+      <FilterIcon />
+    </Button>
+  );
+}
+
+function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
+  const address = row.original.metadata__address;
+  const ensName = row.original.metadata__ens_name;
+  const ensAvatar = row.original.metadata__ens_avatar;
+
+  const abbreviatedAddress = `${address.slice(0, 5)}...${address.slice(-4)}`;
+
+  return (
+    <a href={`https://vote.optimism.io/delegates/${address}`} target="_blank">
+      <div className="w-56 flex items-center hover:scale-105 origin-left ease-in-out duration-75">
+        <Avatar>
+          {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
+          <AvatarFallback className="bg-ens-grad" />
+        </Avatar>
+        <div className="flex flex-col ml-2 mr-1 items-start justify-center">
+          <h3 className="">{ensName ? ensName : abbreviatedAddress}</h3>
         </div>
-      )}
-    </>
+        <LinkIcon />
+      </div>
+    </a>
   );
 }
 
 function GovScoreHeader() {
   return (
-    <div className="head flex justify-center items-center gap-1">
-      <div>GovScore</div>
+    <div className="flex justify-center items-center gap-1">
       {/* Desktop */}
       <Tooltip content={<InfoTooltipContent />}>
         <span className="cursor-pointer hidden md:flex">
@@ -155,7 +150,7 @@ function GovScoreHeader() {
         </span>
       </Tooltip>
       {/* Mobile */}
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <Popover>
           <PopoverTrigger>
             <span className="flex md:hidden">
@@ -166,7 +161,8 @@ function GovScoreHeader() {
             <InfoTooltipContent />
           </PopoverContent>
         </Popover>
-      </div>
+      </div> */}
+      <div>GovScore</div>
     </div>
   );
 }
@@ -206,56 +202,21 @@ function InfoTooltipContent() {
 
 function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const { data: ensName } = useEnsName({
-    address: row.original.address,
-    chainId: 1,
-  });
-  const { data: ensAvatar } = useEnsAvatar({
-    name: normalize(ensName?.toString() ?? ""),
-    chainId: 1,
-  });
-  const voteCount = row.original.count_participation;
-  const govScoreConfig = {
-    isEnsNameSet: typeof ensName === "string" && ensName.length > 0,
-    isEnsAvatarSet: typeof ensAvatar === "string" && ensAvatar.length > 0,
-    isFcAcctAttached: false, // dummy data
-    recentParticipation: voteCount,
-    pctDelegation: row.original.pct_voting_power,
-  };
-  const { scores } = calcGovScore(govScoreConfig);
-  const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
-  function getPctDelegationText(score: number) {
-    switch (score) {
-      case 0:
-        return "More than 1.5%";
-      case 1:
-        return "More than 1.0%";
-      case 2:
-        return "More than 0.5%";
-      case 3:
-        return "Less than 0.5%";
-    }
-  }
-  const pctDelegationText = getPctDelegationText(scores.pctDelegation);
+  const govScore = row.original.gov_score;
+  const scores = row.original.metadata__scores;
   return (
-    <div className="cell">
-      {new RegExp("0x").test(row.original.address) ? (
-        <>
-          {isDesktop ? (
-            <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
-              <div className="cursor-pointer w-16 mx-auto py-0.5 bg-blue-600 rounded-md text-primary-foreground font-bold hover:bg-blue-500 ease-in-out duration-75">{`${govScore}/10`}</div>
-            </Tooltip>
-          ) : (
-            <Popover>
-              <PopoverTrigger className="bg-blue-600 text-primary-foreground font-bold py-0.5 px-1 rounded-md">{`${govScore}/10`}</PopoverTrigger>
-              <PopoverContent>
-                <ScoreCard scores={scores} />
-              </PopoverContent>
-            </Popover>
-          )}
-        </>
+    <div className="">
+      {isDesktop ? (
+        <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
+          <div className="cursor-pointer w-16 mx-auto py-0.5 bg-blue-600 rounded-md text-primary-foreground font-bold hover:bg-blue-500 ease-in-out duration-75">{`${govScore}/10`}</div>
+        </Tooltip>
       ) : (
-        <span>n/a</span>
+        <Popover>
+          <PopoverTrigger className="bg-blue-600 text-primary-foreground font-bold py-0.5 px-1 rounded-md">{`${govScore}/10`}</PopoverTrigger>
+          <PopoverContent>
+            <ScoreCard scores={scores} />
+          </PopoverContent>
+        </Popover>
       )}
     </div>
   );
