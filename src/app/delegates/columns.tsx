@@ -37,7 +37,7 @@ export const columns = [
         <SortButton
           clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Rank
+          <div>Rank</div>
         </SortButton>
       );
     },
@@ -52,7 +52,7 @@ export const columns = [
         <SortButton
           clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          <GovScoreHeader />
+          <div>GovScore</div>
         </SortButton>
       );
     },
@@ -64,20 +64,20 @@ export const columns = [
         <SortButton
           clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Voting Power
+          <div>Voting Power</div>
         </SortButton>
       );
     },
     cell: ({ row }) => {
       const num = formatBigNumber(row.getValue("voting_power"));
-      return <div className="w-28">{`${num} OP`}</div>;
+      return `${num} OP`;
     },
   }),
   columnHelper.accessor("pct_voting_power", {
     header: "% of Voting Power",
     cell: ({ row }) => {
       const num = formatPercentValue(row.getValue("pct_voting_power"));
-      return <div className="cell w-28">{num}</div>;
+      return <div className="w-28">{num}</div>;
     },
   }),
   columnHelper.accessor("recent_participation", {
@@ -110,7 +110,7 @@ function SortButton({
   clickFunc,
 }: PropsWithChildren<{ clickFunc: () => void }>) {
   return (
-    <Button variant="ghost" onClick={clickFunc}>
+    <Button variant="ghost" onClick={clickFunc} className="space-x-1">
       {children}
       <FilterIcon />
     </Button>
@@ -162,7 +162,6 @@ function GovScoreHeader() {
           </PopoverContent>
         </Popover>
       </div> */}
-      <div>GovScore</div>
     </div>
   );
 }
@@ -205,7 +204,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
   const govScore = row.original.gov_score;
   const scores = row.original.metadata__scores;
   return (
-    <div className="">
+    <div>
       {isDesktop ? (
         <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
           <div className="cursor-pointer w-16 mx-auto py-0.5 bg-blue-600 rounded-md text-primary-foreground font-bold hover:bg-blue-500 ease-in-out duration-75">{`${govScore}/10`}</div>

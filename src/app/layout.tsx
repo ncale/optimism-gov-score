@@ -4,8 +4,9 @@ import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import Providers from "@/app/providers";
 import Header from "@/components/header";
-import { Analytics } from "@vercel/analytics/react";
+import FeedbackFlag from "@/components/feedback-flag";
 import Footer from "@/components/footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const font = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={font.className}>
         <Providers>
           <Header />
+          <FeedbackFlag />
           {children}
           <Footer />
         </Providers>
