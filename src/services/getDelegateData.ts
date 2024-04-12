@@ -12,7 +12,7 @@ async function queryGqlApi<T>(query: string): Promise<T> {
     },
     body: JSON.stringify({ query }),
     next: {
-      revalidate: 5,
+      revalidate: 3600 * 24,
     },
   });
   return (await res.json()) as T;
