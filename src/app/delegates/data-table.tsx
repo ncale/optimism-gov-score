@@ -125,7 +125,7 @@ export function DataTable<TData, TValue>({
           {table.getPageCount().toLocaleString()}
         </div>
       </div>
-      <div className="flex items-center justify-center space-x-2 pb-4 mb-36">
+      <div className="flex items-center justify-center space-x-2 pb-4 mb-12">
         <Button
           size="sm"
           variant="outline"
