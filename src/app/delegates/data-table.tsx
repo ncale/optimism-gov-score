@@ -119,29 +119,57 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center pt-4 pb-2 text-sm">
-        <div className="page-bg shadow-sm">
-          {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount().toLocaleString()}
-        </div>
-      </div>
-      <div className="flex items-center justify-center space-x-2 pb-4 mb-12">
+      <div className="flex items-center justify-center space-x-2 mt-4">
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => table.firstPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {"<<"}
+        </Button>
         <Button
           size="sm"
           variant="outline"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          {"<"}
         </Button>
+        <div className="text-sm">
+          {table.getState().pagination.pageIndex + 1} of{" "}
+          {table.getPageCount().toLocaleString()}
+        </div>
         <Button
           size="sm"
           variant="outline"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          {">"}
         </Button>
+        <Button
+          size="sm"
+          variant="outline"
+          onClick={() => table.lastPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {">>"}
+        </Button>
+      </div>
+      <div className="flex items-center justify-center space-x-2 mt-4 mb-12">
+        <div className="text-sm">{"Go to page: "}</div>
+        <Input
+          type="text"
+          inputMode="numeric"
+          placeholder="1"
+          // defaultValue={table.getState().pagination.pageIndex + 1}
+          onChange={(e) => {
+            const page = e.target.value ? Number(e.target.value) - 1 : 0;
+            table.setPageIndex(page);
+          }}
+          className="w-12 text-center"
+        />
       </div>
     </div>
   );
