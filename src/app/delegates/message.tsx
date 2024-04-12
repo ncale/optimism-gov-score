@@ -1,12 +1,11 @@
 "use client";
 
-import { useAccount, useReadContract, useEnsName, useEnsAvatar } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import { opTokenAbi } from "@/config/op-token-abi";
 import { OP_TOKEN_ADDRESS } from "@/config/config";
 import { DelegateTableRow } from "./columns";
-import { DelegateCard } from "./card-components";
-import { useQuery } from "@tanstack/react-query";
-import { getEnsData } from "@/services/getEnsData";
+import { OPBalanceCard, DelegateCard } from "./card-components";
+import { formatEther } from "viem";
 
 export default function Message({
   delegateData,
@@ -21,19 +20,22 @@ export default function Message({
     args: [address ?? "0x"],
     chainId: 10,
   });
+  const { data: opBalance } = useReadContract({
+    address: OP_TOKEN_ADDRESS,
+    abi: opTokenAbi,
+    functionName: "balanceOf",
+    args: [address ?? "0x"],
+    chainId: 10,
+  });
 
   if (!address) {
-    return (
-      <div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
-        Connect wallet to see your delegate
-      </div>
-    );
+    return <></>;
   }
 
   if (!delegateAddress || new RegExp("0x000000000000").test(delegateAddress)) {
     return (
       <div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
-        You haven&apos;t delegated any OP
+        You haven&apos;t delegated OP
       </div>
     );
   }
@@ -52,11 +54,20 @@ export default function Message({
       </div>
     );
 
+  const formattedOpBalance = opBalance ? formatEther(opBalance) : null;
+
   return (
-    <DelegateCard
-      address={delegateAddress}
-      scores={delegate.metadata__scores}
-      govScore={delegate.gov_score}
-    />
+    <>
+      {formattedOpBalance ? (
+        <OPBalanceCard balance={formattedOpBalance} />
+      ) : (
+        <></>
+      )}
+      <DelegateCard
+        address={delegateAddress}
+        scores={delegate.metadata__scores}
+        govScore={delegate.gov_score}
+      />
+    </>
   );
 }

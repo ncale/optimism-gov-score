@@ -58,6 +58,17 @@ export function DelegateCard({
   );
 }
 
+export function OPBalanceCard({ balance }: { balance: string | number }) {
+  const roundedNum = Math.round(Number(balance) * 10) / 10;
+  return (
+    <div className="my-4 mx-auto bg-muted py-4 px-4 md:px-8 rounded w-11/12 md:w-[28rem] shadow-md">
+      <span>
+        You have <span className="font-bold">{roundedNum} OP</span>
+      </span>
+    </div>
+  );
+}
+
 export function ScoreCard({ scores }: { scores: Scores }) {
   const ensScore = scores.ensName + scores.ensAvatar;
   return (
