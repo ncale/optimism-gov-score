@@ -34,7 +34,7 @@ export default function Message({
 
   if (!delegateAddress || new RegExp("0x000000000000").test(delegateAddress)) {
     return (
-      <div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
+      <div className="flex flex-col items-center justify-center mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2 shadow-sm">
         You haven&apos;t delegated OP
       </div>
     );
@@ -49,7 +49,7 @@ export default function Message({
 
   if (!delegate)
     return (
-      <div className="flex flex-col items-center justify-center my-8 mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2">
+      <div className="flex flex-col items-center justify-center mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2">
         This is unexpected...
       </div>
     );
@@ -57,17 +57,14 @@ export default function Message({
   const formattedOpBalance = opBalance ? formatEther(opBalance) : null;
 
   return (
-    <>
+    <div className="flex flex-col mx-auto py-4 px-4 md:px-8 bg-muted rounded w-11/12 md:w-[36rem] gap-1.5 shadow-md">
       {formattedOpBalance ? (
         <OPBalanceCard balance={formattedOpBalance} />
       ) : (
         <></>
       )}
-      <DelegateCard
-        address={delegateAddress}
-        scores={delegate.metadata__scores}
-        govScore={delegate.gov_score}
-      />
-    </>
+      {formattedOpBalance && delegate ? <hr /> : <></>}
+      {delegate ? <DelegateCard delegate={delegate} /> : <></>}
+    </div>
   );
 }
