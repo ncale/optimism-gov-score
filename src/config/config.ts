@@ -1,5 +1,7 @@
 // export environment variables
 export const WC_PROJECT_ID = process.env.WC_PROJECT_ID || "PROJECT_ID";
+export const OPTIMISM_RPC_URL = process.env.OPTIMISM_RPC_URL || "";
+export const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || "";
 export const DUNE_API_KEY = process.env.DUNE_API_KEY || "";
 export const PONDER_API_URL = process.env.PONDER_API_URL || "";
 

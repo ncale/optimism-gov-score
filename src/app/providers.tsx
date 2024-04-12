@@ -1,7 +1,11 @@
 "use client";
 
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { WC_PROJECT_ID } from "@/config/config";
+import {
+  WC_PROJECT_ID,
+  OPTIMISM_RPC_URL,
+  MAINNET_RPC_URL,
+} from "@/config/config";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { mainnet, optimism } from "wagmi/chains";
@@ -14,10 +18,8 @@ const config = getDefaultConfig({
   projectId: WC_PROJECT_ID,
   chains: [optimism, mainnet],
   transports: {
-    [mainnet.id]: http(),
-    [optimism.id]: http(
-      "https://opt-mainnet.g.alchemy.com/v2/MDC1pKQOykm8ldDe2T0dckRjkmHULfll"
-    ),
+    [mainnet.id]: http(MAINNET_RPC_URL),
+    [optimism.id]: http(OPTIMISM_RPC_URL),
   },
   ssr: true,
 });
