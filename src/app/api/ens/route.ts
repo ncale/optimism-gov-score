@@ -9,6 +9,6 @@ export async function GET(req: NextRequest) {
   if (!address || !isAddress(address)) {
     return NextResponse.json({ error: "Invalid address" });
   }
-  const [ensName, ensAvatar] = await getEnsData(address);
+  const { ensName, ensAvatar } = await getEnsData(address);
   return NextResponse.json({ ensName, ensAvatar });
 }

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAddress } from "viem";
-import { getEnsData } from "@/services/getEnsData";
-import { calcGovScore } from "@/lib/utils";
-import { getData } from "@/services/getData";
+import { formatEther, isAddress } from "viem";
+import { findOneDelegate } from "@/services/getDelegateData";
+import { GovScoreConfig, calcGovScore } from "@/lib/utils";
+import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
 
 export const runtime = "edge";
 
@@ -13,24 +13,30 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Invalid address" });
   }
 
-  // get ens data
-  const [ensName, ensAvatar] = await getEnsData(address);
-  // get delegate data
-  const allDelegateData = await getData(address);
-  const delegateData = allDelegateData?.find(
-    (delegate) => delegate.address.toLowerCase() === address.toLowerCase()
-  );
+  const res = await findOneDelegate(address);
+  const delegate = res.data.delegates.items[0];
 
-  const govScoreConfig = {
-    isEnsNameSet: !!ensName,
-    isEnsAvatarSet: !!ensAvatar,
-    isFcAcctAttached: false, // dummy data, borrowed from message.tx
-    recentParticipation: delegateData?.count_participation || 0,
-    pctDelegation: delegateData?.pct_voting_power || 0,
+  // calculate percent of voting power
+  const currentVotableOP = BigInt("87424148000000000000000000"); // as of 4/11/24
+  const currentVotableOP_num = Number(formatEther(currentVotableOP));
+  const votingPower_num = Number(formatEther(BigInt(delegate.votingPower)));
+  const pct_voting_power = votingPower_num / currentVotableOP_num;
+
+  // calculate recent voting participation
+  const proposalsVotedOn = delegate.votes.items.map((vote) => vote.proposalId);
+  const nonDuplicateVotes = [...Array.from(new Set(proposalsVotedOn))];
+  const recent_participation = nonDuplicateVotes.filter((proposal) => {
+    return QUALIFYING_PROPOSAL_IDS.includes(BigInt(proposal));
+  }).length;
+
+  // combine and calculate govscore
+  const govScoreConfig: GovScoreConfig = {
+    isEnsNameSet: !!delegate.ensName,
+    isEnsAvatarSet: !!delegate.ensAvatar,
+    recentParticipation: recent_participation,
+    pctDelegation: pct_voting_power,
   };
-
-  const { scores } = calcGovScore(govScoreConfig);
-  const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
+  const { govScore, scores } = calcGovScore(govScoreConfig);
 
   return NextResponse.json({ scores, govScore });
 }
