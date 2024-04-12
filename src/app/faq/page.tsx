@@ -9,7 +9,7 @@ import { ScoreCard, ScorePill } from "../delegates/card-components";
 
 export default function Home() {
   return (
-    <main className="main info-page">
+    <main className="mb-12">
       {faqItems.map(([question, response], i) => (
         <FaqAccordion question={question} response={response} key={i} />
       ))}
