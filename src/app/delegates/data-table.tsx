@@ -75,12 +75,14 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} className="text-center">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
+                      {header.isPlaceholder ? null : (
+                        <>
+                          {flexRender(
                             header.column.columnDef.header,
                             header.getContext()
                           )}
+                        </>
+                      )}
                     </TableHead>
                   );
                 })}

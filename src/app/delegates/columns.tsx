@@ -12,11 +12,13 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
 import { formatBigNumber, formatPercentValue, Scores } from "@/lib/utils";
 // Types
-import type { Row } from "@tanstack/react-table";
+import type { Column, Row } from "@tanstack/react-table";
 import { type PropsWithChildren } from "react";
 // Icons
 import {
   FilterIcon,
+  FilterUpIcon,
+  FilterDownIcon,
   HelpIcon,
   LinkIcon,
 } from "@/components/icons/lucide-icons";
@@ -34,9 +36,7 @@ export const columns = [
   columnHelper.accessor("rank", {
     header: ({ column }) => {
       return (
-        <SortButton
-          clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <SortButton column={column}>
           <div>Rank</div>
         </SortButton>
       );
@@ -49,9 +49,7 @@ export const columns = [
   columnHelper.accessor("gov_score", {
     header: ({ column }) => {
       return (
-        <SortButton
-          clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <SortButton column={column}>
           <div>GovScore</div>
         </SortButton>
       );
@@ -61,9 +59,7 @@ export const columns = [
   columnHelper.accessor("voting_power", {
     header: ({ column }) => {
       return (
-        <SortButton
-          clickFunc={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <SortButton column={column}>
           <div>Voting Power</div>
         </SortButton>
       );
@@ -107,12 +103,30 @@ export type DelegateTableRow = {
 
 function SortButton({
   children,
-  clickFunc,
-}: PropsWithChildren<{ clickFunc: () => void }>) {
+  column,
+}: PropsWithChildren<{
+  column: Column<DelegateTableRow>;
+}>) {
   return (
-    <Button variant="ghost" onClick={clickFunc} className="space-x-1">
+    <Button
+      variant="ghost"
+      onClick={() => column.toggleSorting()}
+      className="space-x-1"
+    >
       {children}
-      <FilterIcon />
+      {column.getIsSorted() ? null : <FilterIcon />}
+      {{
+        asc: (
+          <div className="rounded-full border-[1px]">
+            <FilterUpIcon />
+          </div>
+        ),
+        desc: (
+          <div className="rounded-full border-[1px]">
+            <FilterDownIcon />
+          </div>
+        ),
+      }[column.getIsSorted() as string] ?? null}
     </Button>
   );
 }
