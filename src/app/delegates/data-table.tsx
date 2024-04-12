@@ -165,12 +165,13 @@ export function DataTable<TData, TValue>({
           type="text"
           inputMode="numeric"
           placeholder="1"
-          // defaultValue={table.getState().pagination.pageIndex + 1}
           onChange={(e) => {
             const page = e.target.value ? Number(e.target.value) - 1 : 0;
-            table.setPageIndex(page);
+            if (page >= 0 && page < table.getPageCount()) {
+              table.setPageIndex(page);
+            }
           }}
-          className="w-12 text-center"
+          className="w-10 text-center"
         />
       </div>
     </div>
