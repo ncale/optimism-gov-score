@@ -121,8 +121,10 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-between mt-4 w">
-        <div className="w-0"></div>
+      <div className="flex justify-center md:justify-between mt-3 px-2 text-sm">
+        <div className="w-40 text-muted-foreground hidden md:block">
+          Rows per page: 10
+        </div>
         <div className="flex items-center space-x-2">
           <Button
             size="sm"
@@ -140,7 +142,7 @@ export function DataTable<TData, TValue>({
           >
             {"<"}
           </Button>
-          <div className="text-sm">
+          <div>
             {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount().toLocaleString()}
           </div>
@@ -161,10 +163,12 @@ export function DataTable<TData, TValue>({
             {">>"}
           </Button>
         </div>
-        <div className="w-0"></div>
+        <div className="w-40 text-right text-muted-foreground hidden md:block">
+          Total: 200
+        </div>
       </div>
-      <div className="flex items-center justify-center space-x-2 mt-4 mb-12">
-        <div className="text-sm">{"Go to page: "}</div>
+      <div className="flex items-center justify-center space-x-2 mt-3 mb-12 text-sm">
+        <div>{"Go to page: "}</div>
         <Input
           type="text"
           inputMode="numeric"
