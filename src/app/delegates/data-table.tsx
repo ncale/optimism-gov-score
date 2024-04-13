@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
+    <div className="md:w-min mx-auto">
       {/* Search */}
       {/* <div className="flex items-center justify-center pb-4">
         <Input
@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
       </div> */}
 
       {/* Table */}
-      <div className="text-center my-0 mx-auto relative w-full md:w-min rounded-md border">
+      <div className="relative w-full rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -121,56 +121,65 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-center space-x-2 mt-4">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => table.firstPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {"<<"}
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {"<"}
-        </Button>
-        <div className="text-sm">
-          {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount().toLocaleString()}
+      <div className="flex justify-center md:justify-between mt-3 px-2 text-sm">
+        <div className="w-40 text-muted-foreground hidden md:block">
+          Rows per page: 10
         </div>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {">"}
-        </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => table.lastPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {">>"}
-        </Button>
+        <div className="flex items-center space-x-2">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => table.firstPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {"<<"}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {"<"}
+          </Button>
+          <div>
+            {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount().toLocaleString()}
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {">"}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => table.lastPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {">>"}
+          </Button>
+        </div>
+        <div className="w-40 text-right text-muted-foreground hidden md:block">
+          Total: 200
+        </div>
       </div>
-      <div className="flex items-center justify-center space-x-2 mt-4 mb-12">
-        <div className="text-sm">{"Go to page: "}</div>
+      <div className="flex items-center justify-center space-x-2 mt-3 mb-12 text-sm">
+        <div>{"Go to page: "}</div>
         <Input
           type="text"
           inputMode="numeric"
           placeholder="1"
-          // defaultValue={table.getState().pagination.pageIndex + 1}
           onChange={(e) => {
             const page = e.target.value ? Number(e.target.value) - 1 : 0;
-            table.setPageIndex(page);
+            if (page >= 0 && page < table.getPageCount()) {
+              table.setPageIndex(page);
+            }
           }}
-          className="w-12 text-center"
+          className="w-10 text-center"
         />
       </div>
     </div>

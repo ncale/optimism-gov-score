@@ -1,8 +1,3 @@
-"use client";
-
-import { Address } from "viem";
-import { useEnsAvatar, useEnsName } from "wagmi";
-import { normalize } from "viem/ens";
 import {
   CheckIcon,
   MinusIcon,
@@ -10,32 +5,21 @@ import {
 } from "@/components/icons/lucide-icons";
 import { type Scores } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { type DelegateTableRow } from "./columns";
 
-export function DelegateCard({
-  address,
-  scores,
-  govScore,
-}: {
-  address: Address;
-  scores: Scores;
-  govScore: number;
-}) {
-  // get ens data
-  const { data: ensName } = useEnsName({
-    address: address,
-    chainId: 1,
-  });
-  const { data: ensAvatar } = useEnsAvatar({
-    name: normalize(ensName?.toString() ?? ""),
-    chainId: 1,
-  });
+export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
+  const address = delegate.metadata__address;
+  const ensName = delegate.metadata__ens_name;
+  const ensAvatar = delegate.metadata__ens_avatar;
+  const scores = delegate.metadata__scores;
+  const govScore = delegate.gov_score;
 
   const nameText = ensName
     ? ensName
     : `${address.slice(0, 5)}...${address.slice(-4)}`;
 
   return (
-    <div className="flex flex-col items-left justify-center my-4 md:my-8 mx-auto py-4 px-4 md:px-8 text-left bg-muted rounded w-11/12 md:w-[28rem] gap-1.5 shadow-md">
+    <div className="flex flex-col items-left w-full gap-1.5">
       <div>Your delegate is...</div>
       <a
         href={`https://vote.optimism.io/delegates/${address}`}
@@ -54,6 +38,17 @@ export function DelegateCard({
       <ScoreCard scores={scores} />
       <hr />
       <p className="text-xl font-bold">{govScore}/10 GovScore</p>
+    </div>
+  );
+}
+
+export function OPBalanceCard({ balance }: { balance: string | number }) {
+  const roundedNum = Math.round(Number(balance));
+  return (
+    <div className="w-full">
+      <span>
+        You have <span className="font-bold">{roundedNum} OP</span>
+      </span>
     </div>
   );
 }

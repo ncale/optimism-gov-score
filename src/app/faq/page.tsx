@@ -11,7 +11,12 @@ export default function Home() {
   return (
     <main className="mb-12">
       {faqItems.map(([question, response], i) => (
-        <FaqAccordion question={question} response={response} key={i} />
+        <FaqAccordion
+          question={question}
+          response={response}
+          key={i}
+          index={i}
+        />
       ))}
     </main>
   );
@@ -20,9 +25,11 @@ export default function Home() {
 function FaqAccordion({
   question,
   response,
+  index,
 }: {
   question: string;
   response: ReactNode;
+  index: number;
 }) {
   return (
     <Accordion
@@ -30,7 +37,7 @@ function FaqAccordion({
       collapsible
       className="mx-auto w-11/12 md:w-readWidth"
     >
-      <AccordionItem value="item-1">
+      <AccordionItem value={`item-${index + 1}`}>
         <AccordionTrigger>{question}</AccordionTrigger>
         <AccordionContent>{response}</AccordionContent>
       </AccordionItem>
@@ -77,7 +84,7 @@ const faqItems: Array<[question: string, response: ReactNode]> = [
           </p>
         </div>
       </div>
-      <p className="mt-2">Ex...</p>
+      {/* <p className="mt-2">Ex...</p>
       <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
         <ScoreCard
           scores={{
@@ -87,7 +94,7 @@ const faqItems: Array<[question: string, response: ReactNode]> = [
             pctDelegation: 3,
           }}
         />
-      </div>
+      </div> */}
     </>,
   ],
   [
