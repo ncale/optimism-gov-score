@@ -125,7 +125,7 @@ export async function getAllDelegates() {
   return allDelegates;
 }
 
-type DelegateQueryResponse = {
+export type DelegateQueryResponse = {
   data: {
     delegates: {
       items: Delegate[];
