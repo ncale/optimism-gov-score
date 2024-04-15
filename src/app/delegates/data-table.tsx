@@ -166,7 +166,7 @@ export function DataTable<TData, TValue>({
           </Button>
         </div>
         <div className="w-40 text-right text-muted-foreground hidden md:block">
-          Total: 200
+          Total: {table.getPageCount() * 10}
         </div>
       </div>
       <div className="flex items-center justify-center space-x-2 mt-3 mb-12 text-sm">
