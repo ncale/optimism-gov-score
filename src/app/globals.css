@@ -24,6 +24,9 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+    --optimism-white: 240, 121.8%, 100%;
+    --optimism-red: 353.25, 99.996%, 50.612%;
+    --optimism-gray: 0, 0%, 13.333%;
   }
 
   .dark {
