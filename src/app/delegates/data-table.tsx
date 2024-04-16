@@ -55,16 +55,18 @@ export function DataTable<TData, TValue>({
   return (
     <div className="md:w-min mx-auto">
       {/* Search */}
-      {/* <div className="flex items-center justify-center pb-4">
+      <div className="flex items-center pb-4">
         <Input
           placeholder="Filter delegates..."
-          value={(table.getColumn("address")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("delegate")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) =>
-            table.getColumn("address")?.setFilterValue(event.target.value)
+            table.getColumn("delegate")?.setFilterValue(event.target.value)
           }
           className="max-w-sm shadow-sm"
         />
-      </div> */}
+      </div>
 
       {/* Table */}
       <div className="relative w-full rounded-md border">
@@ -164,7 +166,7 @@ export function DataTable<TData, TValue>({
           </Button>
         </div>
         <div className="w-40 text-right text-muted-foreground hidden md:block">
-          Total: 200
+          Total: {table.getPageCount() * 10}
         </div>
       </div>
       <div className="flex items-center justify-center space-x-2 mt-3 mb-12 text-sm">

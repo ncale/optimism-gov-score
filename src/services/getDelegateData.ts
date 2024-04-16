@@ -114,7 +114,7 @@ export async function getAllDelegates() {
   // return delegatePage.data ? delegatePage.data.delegates.items : [];
   allDelegates.push(...delegates);
   let loopCount = 0;
-  while (loopCount < 3) {
+  while (loopCount < 9) {
     // (delegatePageInfo.hasNextPage ?? false) || loopCount === 3) {
     response = await getDelegatePage(delegatePageInfo.endCursor);
     delegates = response.data ? response.data.delegates.items : [];
@@ -125,7 +125,7 @@ export async function getAllDelegates() {
   return allDelegates;
 }
 
-type DelegateQueryResponse = {
+export type DelegateQueryResponse = {
   data: {
     delegates: {
       items: Delegate[];

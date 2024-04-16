@@ -1,6 +1,6 @@
 const footerLinks: FooterLink[] = [
   ["Contact Us", "mailto:contact@onchainclarity.co"],
-  ["Give Feedback", "https://forms.gle/ZLTRfZ7z1PwUTGao9"],
+  ["Give Feedback", "https://forms.gle/k6VdUY2JrvxYZkrj7"],
   ["Onchain Clarity", "https://onchainclarity.co/"],
 ];
 

@@ -1,15 +1,15 @@
 import type { Config } from "tailwindcss";
-import {nextui} from "@nextui-org/react";
+import { nextui } from "@nextui-org/react";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './src/pages/**/*.{ts,tsx}',
-    './src/components/**/*.{ts,tsx}',
-    './src/app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-		"./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-	],
+    "./src/pages/**/*.{ts,tsx}",
+    "./src/components/**/*.{ts,tsx}",
+    "./src/app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -21,9 +21,9 @@ const config = {
     },
     extend: {
       spacing: {
-				readWidth: "40em",
-			},
-			colors: {
+        readWidth: "40em",
+      },
+      colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -57,6 +57,11 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        optimism: {
+          white: "hsl(var(--optimism-white))",
+          red: "hsl(var(--optimism-red))",
+          gray: "hsl(var(--optimism-gray))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -79,8 +84,8 @@ const config = {
       },
     },
   },
-	darkmode: "class",
+  darkmode: "class",
   plugins: [nextui(), require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;
