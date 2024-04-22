@@ -19,7 +19,6 @@ import {
   SortArrowsIcon,
   SortUpIcon,
   SortDownIcon,
-  HelpIcon,
   LinkIcon,
 } from "@/components/icons/lucide-icons";
 import Link from "next/link";
@@ -37,7 +36,7 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Rank</div>
+          <div>#</div>
         </SortButton>
       );
     },
@@ -70,14 +69,26 @@ export const columns = [
     },
   }),
   columnHelper.accessor("pct_voting_power", {
-    header: "% of Voting Power",
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div>% of Voting Power</div>
+        </SortButton>
+      );
+    },
     cell: ({ row }) => {
       const num = formatPercentValue(row.getValue("pct_voting_power"));
-      return <div className="w-28">{num}</div>;
+      return <div>{num}</div>;
     },
   }),
   columnHelper.accessor("recent_participation", {
-    header: "Recent Participation",
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div>Recent Participation</div>
+        </SortButton>
+      );
+    },
     cell: ({ row }) => `${row.getValue("recent_participation")}/10 votes`,
   }),
   columnHelper.display({
@@ -143,32 +154,6 @@ function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
         <LinkIcon />
       </div>
     </a>
-  );
-}
-
-function GovScoreHeader() {
-  return (
-    <div className="flex justify-center items-center gap-1">
-      {/* Desktop */}
-      <Tooltip content={<InfoTooltipContent />}>
-        <span className="cursor-pointer hidden md:flex">
-          <HelpIcon />
-        </span>
-      </Tooltip>
-      {/* Mobile */}
-      {/* <div className="flex items-center">
-        <Popover>
-          <PopoverTrigger>
-            <span className="flex md:hidden">
-              <HelpIcon />
-            </span>
-          </PopoverTrigger>
-          <PopoverContent>
-            <InfoTooltipContent />
-          </PopoverContent>
-        </Popover>
-      </div> */}
-    </div>
   );
 }
 
