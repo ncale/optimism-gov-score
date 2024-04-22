@@ -29,27 +29,22 @@ export function formatPercentValue(num: number) {
 }
 
 export function calcGovScore({
+  recentParticipation,
+  pctDelegation,
   isEnsNameSet,
   isEnsAvatarSet,
-  recentParticipation,
   recentParticipationWithReason,
-  pctDelegation,
 }: GovScoreConfig): GovScore {
   // init scores variable
   const scores: Scores = {
+    recentParticipation: 0,
+    pctDelegation: 0,
     ensName: 0,
     ensAvatar: 0,
-    recentParticipation: 0,
     recentParticipationWithReason: 0,
-    pctDelegation: 0,
   };
-  // add transparency criteria
-  if (isEnsNameSet) scores.ensName = 1;
-  if (isEnsAvatarSet) scores.ensAvatar = 1;
   // add consistency criteria
   scores.recentParticipation = recentParticipation * 0.4;
-  // add voting with reason criteria
-  scores.recentParticipationWithReason = recentParticipationWithReason * 0.1;
   // add power balance criteria
   if (pctDelegation < 0.005) {
     scores.pctDelegation = 3;
@@ -58,24 +53,30 @@ export function calcGovScore({
   } else if (pctDelegation < 0.015) {
     scores.pctDelegation = 1;
   }
+  // add transparency criteria
+  if (isEnsNameSet) scores.ensName = 1;
+  if (isEnsAvatarSet) scores.ensAvatar = 1;
+  // add voting with reason criteria
+  scores.recentParticipationWithReason = recentParticipationWithReason * 0.1;
+  // sum and return
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
   return { scores, govScore };
 }
 export type GovScoreConfig = {
+  recentParticipation: number;
+  pctDelegation: number;
   isEnsNameSet: boolean;
   isEnsAvatarSet: boolean;
-  recentParticipation: number;
   recentParticipationWithReason: number;
-  pctDelegation: number;
 };
 export type GovScore = {
   scores: Scores;
   govScore: number;
 };
 export type Scores = {
+  recentParticipation: number;
+  pctDelegation: number;
   ensName: number;
   ensAvatar: number;
-  recentParticipation: number;
   recentParticipationWithReason: number;
-  pctDelegation: number;
 };
