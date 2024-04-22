@@ -175,10 +175,11 @@ function InfoTooltipContent() {
         <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
           <ScoreCard
             scores={{
+              recentParticipation: 3.6,
+              pctDelegation: 3,
               ensName: 1,
               ensAvatar: 0,
-              recentParticipation: 4.5,
-              pctDelegation: 3,
+              recentParticipationWithReason: 0.6,
             }}
           />
         </div>
