@@ -70,14 +70,26 @@ export const columns = [
     },
   }),
   columnHelper.accessor("pct_voting_power", {
-    header: "% of Voting Power",
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div>% of Voting Power</div>
+        </SortButton>
+      );
+    },
     cell: ({ row }) => {
       const num = formatPercentValue(row.getValue("pct_voting_power"));
-      return <div className="w-28">{num}</div>;
+      return <div>{num}</div>;
     },
   }),
   columnHelper.accessor("recent_participation", {
-    header: "Recent Participation",
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div>Recent Participation</div>
+        </SortButton>
+      );
+    },
     cell: ({ row }) => `${row.getValue("recent_participation")}/10 votes`,
   }),
   columnHelper.display({
