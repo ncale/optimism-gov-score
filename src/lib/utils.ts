@@ -32,6 +32,7 @@ export function calcGovScore({
   isEnsNameSet,
   isEnsAvatarSet,
   recentParticipation,
+  recentParticipationWithReason,
   pctDelegation,
 }: GovScoreConfig): GovScore {
   // init scores variable
@@ -39,13 +40,16 @@ export function calcGovScore({
     ensName: 0,
     ensAvatar: 0,
     recentParticipation: 0,
+    recentParticipationWithReason: 0,
     pctDelegation: 0,
   };
   // add transparency criteria
   if (isEnsNameSet) scores.ensName = 1;
   if (isEnsAvatarSet) scores.ensAvatar = 1;
   // add consistency criteria
-  scores.recentParticipation = recentParticipation * 0.5;
+  scores.recentParticipation = recentParticipation * 0.4;
+  // add voting with reason criteria
+  scores.recentParticipationWithReason = recentParticipationWithReason * 0.1;
   // add power balance criteria
   if (pctDelegation < 0.005) {
     scores.pctDelegation = 3;
@@ -61,6 +65,7 @@ export type GovScoreConfig = {
   isEnsNameSet: boolean;
   isEnsAvatarSet: boolean;
   recentParticipation: number;
+  recentParticipationWithReason: number;
   pctDelegation: number;
 };
 export type GovScore = {
@@ -71,5 +76,6 @@ export type Scores = {
   ensName: number;
   ensAvatar: number;
   recentParticipation: number;
+  recentParticipationWithReason: number;
   pctDelegation: number;
 };
