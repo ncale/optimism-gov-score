@@ -19,7 +19,6 @@ import {
   SortArrowsIcon,
   SortUpIcon,
   SortDownIcon,
-  HelpIcon,
   LinkIcon,
 } from "@/components/icons/lucide-icons";
 import Link from "next/link";
@@ -155,32 +154,6 @@ function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
         <LinkIcon />
       </div>
     </a>
-  );
-}
-
-function GovScoreHeader() {
-  return (
-    <div className="flex justify-center items-center gap-1">
-      {/* Desktop */}
-      <Tooltip content={<InfoTooltipContent />}>
-        <span className="cursor-pointer hidden md:flex">
-          <HelpIcon />
-        </span>
-      </Tooltip>
-      {/* Mobile */}
-      {/* <div className="flex items-center">
-        <Popover>
-          <PopoverTrigger>
-            <span className="flex md:hidden">
-              <HelpIcon />
-            </span>
-          </PopoverTrigger>
-          <PopoverContent>
-            <InfoTooltipContent />
-          </PopoverContent>
-        </Popover>
-      </div> */}
-    </div>
   );
 }
 
