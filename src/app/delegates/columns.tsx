@@ -36,7 +36,7 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Rank</div>
+          <div>#</div>
         </SortButton>
       );
     },
