@@ -153,5 +153,5 @@ type Vote = {
   proposalId: string;
   blockNum: string;
   delegateId?: string;
-  withReason?: boolean;
+  withReason: boolean;
 };
