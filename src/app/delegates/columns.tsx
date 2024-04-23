@@ -193,7 +193,7 @@ function InfoTooltipContent() {
 
 function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const govScore = row.original.gov_score;
+  const govScore = Math.round(row.original.gov_score * 10) / 10;
   const scores = row.original.metadata__scores;
   return (
     <div>

@@ -44,7 +44,8 @@ export function calcGovScore({
     recentParticipationWithReason: 0,
   };
   // add consistency criteria
-  scores.recentParticipation = recentParticipation * 0.4;
+  const recentParticipationScore = recentParticipation * 0.4;
+  scores.recentParticipation = Math.round(recentParticipationScore * 10) / 10;
   // add power balance criteria
   if (pctDelegation < 0.005) {
     scores.pctDelegation = 3;
@@ -57,7 +58,10 @@ export function calcGovScore({
   if (isEnsNameSet) scores.ensName = 1;
   if (isEnsAvatarSet) scores.ensAvatar = 1;
   // add voting with reason criteria
-  scores.recentParticipationWithReason = recentParticipationWithReason * 0.1;
+  const recentParticipationWithReasonScore =
+    recentParticipationWithReason * 0.1;
+  scores.recentParticipationWithReason =
+    Math.round(recentParticipationWithReasonScore * 10) / 10;
   // sum and return
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
   return { scores, govScore };

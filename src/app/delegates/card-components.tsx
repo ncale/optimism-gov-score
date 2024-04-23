@@ -69,8 +69,10 @@ export function ScoreCard({ scores }: { scores: Scores }) {
         <ScorePill score={`${scores.recentParticipation}/4`} />
         <span>
           Voted in{" "}
-          <span className="special">{scores.recentParticipation / 0.4}</span> of
-          last <span className="special">10</span> onchain props
+          <span className="special">
+            {Math.round(scores.recentParticipation / 0.4)}
+          </span>{" "}
+          of last <span className="special">10</span> onchain props
         </span>
       </div>
 
@@ -117,11 +119,13 @@ export function ScoreCard({ scores }: { scores: Scores }) {
         ) : (
           <XMarkIcon />
         )}
-        <ScorePill score={`${scores.recentParticipation}/1`} />
+        <ScorePill score={`${scores.recentParticipationWithReason}/1`} />
         <span>
           Voted with reason in{" "}
-          <span className="special">{scores.recentParticipation / 0.1}</span> of
-          last <span className="special">10</span> props
+          <span className="special">
+            {Math.round(scores.recentParticipationWithReason / 0.1)}
+          </span>{" "}
+          of last <span className="special">10</span> props
         </span>
       </div>
     </div>
