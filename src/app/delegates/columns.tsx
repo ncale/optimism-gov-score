@@ -54,6 +54,7 @@ export const columns = [
       );
     },
     cell: ({ row }) => <GovScoreCell row={row} />,
+    size: 400,
   }),
   columnHelper.accessor("voting_power", {
     header: ({ column }) => {
