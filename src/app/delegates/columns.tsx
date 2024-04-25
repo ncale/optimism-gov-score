@@ -59,7 +59,10 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Voting Power</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Voting</div>
+            <div>Power</div>
+          </div>
         </SortButton>
       );
     },
@@ -72,7 +75,10 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>% of Voting Power</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>% of Voting</div>
+            <div>Power</div>
+          </div>
         </SortButton>
       );
     },
@@ -85,7 +91,10 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Recent Votes</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Recent</div>
+            <div>Votes</div>
+          </div>
         </SortButton>
       );
     },
@@ -95,7 +104,10 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Recent Votes With Reason</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Recent Votes</div>
+            <div>With Reason</div>
+          </div>
         </SortButton>
       );
     },
@@ -134,7 +146,7 @@ function SortButton({
     <Button
       variant="ghost"
       onClick={() => column.toggleSorting()}
-      className="space-x-1"
+      className="space-x-1.5"
     >
       {children}
       {column.getIsSorted() ? null : <SortArrowsIcon />}
