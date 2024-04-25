@@ -29,23 +29,23 @@ export function formatPercentValue(num: number) {
 }
 
 export function calcGovScore({
-  isEnsNameSet,
-  isEnsAvatarSet,
   recentParticipation,
   pctDelegation,
+  isEnsNameSet,
+  isEnsAvatarSet,
+  recentParticipationWithReason,
 }: GovScoreConfig): GovScore {
   // init scores variable
   const scores: Scores = {
-    ensName: 0,
-    ensAvatar: 0,
     recentParticipation: 0,
     pctDelegation: 0,
+    ensName: 0,
+    ensAvatar: 0,
+    recentParticipationWithReason: 0,
   };
-  // add transparency criteria
-  if (isEnsNameSet) scores.ensName = 1;
-  if (isEnsAvatarSet) scores.ensAvatar = 1;
   // add consistency criteria
-  scores.recentParticipation = recentParticipation * 0.5;
+  const recentParticipationScore = recentParticipation * 0.4;
+  scores.recentParticipation = Math.round(recentParticipationScore * 10) / 10;
   // add power balance criteria
   if (pctDelegation < 0.005) {
     scores.pctDelegation = 3;
@@ -54,22 +54,33 @@ export function calcGovScore({
   } else if (pctDelegation < 0.015) {
     scores.pctDelegation = 1;
   }
+  // add transparency criteria
+  if (isEnsNameSet) scores.ensName = 1;
+  if (isEnsAvatarSet) scores.ensAvatar = 1;
+  // add voting with reason criteria
+  const recentParticipationWithReasonScore =
+    recentParticipationWithReason * 0.1;
+  scores.recentParticipationWithReason =
+    Math.round(recentParticipationWithReasonScore * 10) / 10;
+  // sum and return
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
   return { scores, govScore };
 }
 export type GovScoreConfig = {
-  isEnsNameSet: boolean;
-  isEnsAvatarSet: boolean;
   recentParticipation: number;
   pctDelegation: number;
+  isEnsNameSet: boolean;
+  isEnsAvatarSet: boolean;
+  recentParticipationWithReason: number;
 };
 export type GovScore = {
   scores: Scores;
   govScore: number;
 };
 export type Scores = {
-  ensName: number;
-  ensAvatar: number;
   recentParticipation: number;
   pctDelegation: number;
+  ensName: number;
+  ensAvatar: number;
+  recentParticipationWithReason: number;
 };

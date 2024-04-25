@@ -18,17 +18,30 @@ export async function getTableData() {
     const votingPower_num = Number(formatEther(BigInt(row.votingPower)));
     const pct_voting_power = votingPower_num / currentVotableOP_num;
 
-    const proposalsVotedOn = row.votes.items.map((vote) => vote.proposalId);
-    const nonDuplicateVotes = [...Array.from(new Set(proposalsVotedOn))];
-    const recent_participation = nonDuplicateVotes.filter((proposal) => {
-      return QUALIFYING_PROPOSAL_IDS.includes(BigInt(proposal));
-    }).length;
+    const proposals = row.votes.items.map((vote) => vote.proposalId);
+    const votes = row.votes.items.map((vote) => ({
+      prop: vote.proposalId,
+      withReason: vote.withReason,
+    }));
+    const nonDupeVotes = votes.filter(
+      (vote, index) => proposals.indexOf(vote.prop) === index
+    );
+
+    const qualifying_votes = nonDupeVotes.filter((proposal) => {
+      return QUALIFYING_PROPOSAL_IDS.includes(BigInt(proposal.prop));
+    });
+
+    const recent_participation = qualifying_votes.length;
+    const recent_participation_with_reason = qualifying_votes.filter(
+      (vote) => vote.withReason
+    ).length;
 
     const govScoreConfig: GovScoreConfig = {
-      isEnsNameSet: !!row.ensName,
-      isEnsAvatarSet: !!row.ensAvatar,
       recentParticipation: recent_participation,
       pctDelegation: pct_voting_power,
+      isEnsNameSet: !!row.ensName,
+      isEnsAvatarSet: !!row.ensAvatar,
+      recentParticipationWithReason: recent_participation_with_reason,
     };
     const { govScore, scores } = calcGovScore(govScoreConfig);
 
@@ -43,6 +56,7 @@ export async function getTableData() {
       voting_power: votingPower_num,
       pct_voting_power: pct_voting_power,
       recent_participation: recent_participation,
+      recent_participation_with_reason: recent_participation_with_reason,
     } as DelegateTableRow;
   });
 

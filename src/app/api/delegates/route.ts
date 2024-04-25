@@ -13,9 +13,13 @@ export async function GET(req: NextRequest) {
   if (!address || !isAddress(address)) {
     return NextResponse.json({ error: "Invalid address" });
   }
-  const delegate = await findOneDelegate(address);
-  const formattedData = formatResponse(delegate);
-  return NextResponse.json(formattedData);
+  return NextResponse.json({
+    status: 500,
+    message: "Server error. This endpoint is not currently maintained.",
+  });
+  // const delegate = await findOneDelegate(address);
+  // const formattedData = formatResponse(delegate);
+  // return NextResponse.json(formattedData);
 }
 
 function formatResponse(res: DelegateQueryResponse) {
@@ -34,10 +38,11 @@ function formatResponse(res: DelegateQueryResponse) {
   }).length;
 
   const govScoreConfig: GovScoreConfig = {
-    isEnsNameSet: !!delegate.ensName,
-    isEnsAvatarSet: !!delegate.ensAvatar,
     recentParticipation: recent_participation,
     pctDelegation: pct_voting_power,
+    isEnsNameSet: !!delegate.ensName,
+    isEnsAvatarSet: !!delegate.ensAvatar,
+    recentParticipationWithReason: 0, // dummy data
   };
   const { govScore, scores } = calcGovScore(govScoreConfig);
 

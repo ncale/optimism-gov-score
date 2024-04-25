@@ -54,12 +54,16 @@ export const columns = [
       );
     },
     cell: ({ row }) => <GovScoreCell row={row} />,
+    size: 400,
   }),
   columnHelper.accessor("voting_power", {
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Voting Power</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Voting</div>
+            <div>Power</div>
+          </div>
         </SortButton>
       );
     },
@@ -72,7 +76,10 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>% of Voting Power</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>% of Voting</div>
+            <div>Power</div>
+          </div>
         </SortButton>
       );
     },
@@ -85,11 +92,28 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Recent Participation</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Recent</div>
+            <div>Votes</div>
+          </div>
         </SortButton>
       );
     },
     cell: ({ row }) => `${row.getValue("recent_participation")}/10 votes`,
+  }),
+  columnHelper.accessor("recent_participation_with_reason", {
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Recent Votes</div>
+            <div>With Reason</div>
+          </div>
+        </SortButton>
+      );
+    },
+    cell: ({ row }) =>
+      `${row.getValue("recent_participation_with_reason")}/10 votes`,
   }),
   columnHelper.display({
     id: "delegateButton",
@@ -110,6 +134,7 @@ export type DelegateTableRow = {
   voting_power: number;
   pct_voting_power: number;
   recent_participation: number;
+  recent_participation_with_reason: number;
 };
 
 function SortButton({
@@ -122,7 +147,7 @@ function SortButton({
     <Button
       variant="ghost"
       onClick={() => column.toggleSorting()}
-      className="space-x-1"
+      className="space-x-1.5"
     >
       {children}
       {column.getIsSorted() ? null : <SortArrowsIcon />}
@@ -175,10 +200,11 @@ function InfoTooltipContent() {
         <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
           <ScoreCard
             scores={{
+              recentParticipation: 3.6,
+              pctDelegation: 3,
               ensName: 1,
               ensAvatar: 0,
-              recentParticipation: 4.5,
-              pctDelegation: 3,
+              recentParticipationWithReason: 0.6,
             }}
           />
         </div>
@@ -192,7 +218,7 @@ function InfoTooltipContent() {
 
 function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const govScore = row.original.gov_score;
+  const govScore = Math.round(row.original.gov_score * 10) / 10;
   const scores = row.original.metadata__scores;
   return (
     <div>

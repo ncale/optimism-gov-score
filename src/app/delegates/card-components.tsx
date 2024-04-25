@@ -57,6 +57,40 @@ export function ScoreCard({ scores }: { scores: Scores }) {
   const ensScore = scores.ensName + scores.ensAvatar;
   return (
     <div className="text-sm">
+      {/* Recent Voting Score */}
+      <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
+        {scores.recentParticipation > 2.8 ? (
+          <CheckIcon />
+        ) : scores.recentParticipation > 1.2 ? (
+          <MinusIcon />
+        ) : (
+          <XMarkIcon />
+        )}
+        <ScorePill score={`${scores.recentParticipation}/4`} />
+        <span>
+          Voted in{" "}
+          <span className="special">
+            {Math.round(scores.recentParticipation / 0.4)}
+          </span>{" "}
+          of last <span className="special">10</span> onchain props
+        </span>
+      </div>
+
+      {/* Voting Power Score */}
+      <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
+        {scores.pctDelegation === 3 ? (
+          <CheckIcon />
+        ) : scores.pctDelegation > 0 ? (
+          <MinusIcon />
+        ) : (
+          <XMarkIcon />
+        )}
+        <ScorePill score={`${scores.pctDelegation}/3`} />
+        <span>
+          {getPctDelegationText(scores.pctDelegation)} of total delegated OP
+        </span>
+      </div>
+
       {/* Ens Score */}
       <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
         {ensScore === 2 ? (
@@ -76,35 +110,22 @@ export function ScoreCard({ scores }: { scores: Scores }) {
         </span>
       </div>
 
-      {/* Recent Voting Score */}
+      {/* Recent Voting With Reason Score */}
       <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
-        {scores.recentParticipation > 3.5 ? (
+        {scores.recentParticipationWithReason > 0.7 ? (
           <CheckIcon />
-        ) : scores.recentParticipation > 1.5 ? (
+        ) : scores.recentParticipationWithReason > 0.3 ? (
           <MinusIcon />
         ) : (
           <XMarkIcon />
         )}
-        <ScorePill score={`${scores.recentParticipation}/5`} />
+        <ScorePill score={`${scores.recentParticipationWithReason}/1`} />
         <span>
-          Voted in{" "}
-          <span className="special">{scores.recentParticipation * 2}</span> of
-          last <span className="special">10</span> onchain proposals
-        </span>
-      </div>
-
-      {/* Voting Power Score */}
-      <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
-        {scores.pctDelegation === 3 ? (
-          <CheckIcon />
-        ) : scores.pctDelegation > 0 ? (
-          <MinusIcon />
-        ) : (
-          <XMarkIcon />
-        )}
-        <ScorePill score={`${scores.pctDelegation}/3`} />
-        <span>
-          {getPctDelegationText(scores.pctDelegation)} of total delegated OP
+          Voted with reason in{" "}
+          <span className="special">
+            {Math.round(scores.recentParticipationWithReason / 0.1)}
+          </span>{" "}
+          of last <span className="special">10</span> props
         </span>
       </div>
     </div>
