@@ -85,11 +85,22 @@ export const columns = [
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>Recent Participation</div>
+          <div>Recent Votes</div>
         </SortButton>
       );
     },
     cell: ({ row }) => `${row.getValue("recent_participation")}/10 votes`,
+  }),
+  columnHelper.accessor("recent_participation_with_reason", {
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div>Recent Votes With Reason</div>
+        </SortButton>
+      );
+    },
+    cell: ({ row }) =>
+      `${row.getValue("recent_participation_with_reason")}/10 votes`,
   }),
   columnHelper.display({
     id: "delegateButton",
@@ -110,6 +121,7 @@ export type DelegateTableRow = {
   voting_power: number;
   pct_voting_power: number;
   recent_participation: number;
+  recent_participation_with_reason: number;
 };
 
 function SortButton({
