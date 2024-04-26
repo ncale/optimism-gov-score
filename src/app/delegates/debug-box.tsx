@@ -24,21 +24,7 @@ export default function DebugBox({
       </div>
       {showDebug ? (
         <>
-          <pre>
-            all votes:{" "}
-            {JSON.stringify(delegate?.metadata__vote_list_1, null, 2)}
-          </pre>
-          <pre>
-            proposals:{" "}
-            {JSON.stringify(delegate?.metadata__vote_list_2, null, 2)}
-          </pre>
-          <pre>
-            votes: {JSON.stringify(delegate?.metadata__vote_list_3, null, 2)}
-          </pre>
-          <pre>
-            non-duplicated votes:{" "}
-            {JSON.stringify(delegate?.metadata__vote_list_4, null, 2)}
-          </pre>
+          <pre>{JSON.stringify(delegate?.testing__data, null, 2)}</pre>
         </>
       ) : (
         ""
