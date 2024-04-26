@@ -18,23 +18,28 @@ export async function getTableData() {
     const votingPower_num = Number(formatEther(BigInt(delegate.votingPower)));
     const pct_voting_power = votingPower_num / currentVotableOP_num;
 
-    const proposals = delegate.votes.items.map((vote) => vote.proposalId);
     const votes = delegate.votes.items.map((vote) => ({
       prop: vote.proposalId,
       withReason: vote.withReason,
     }));
-    const nonDupeVotes = votes.filter(
-      (vote, index) => proposals.indexOf(vote.prop) === index,
+    // remove unrelated props
+    const qualifyingVotes = votes.filter((vote) =>
+      QUALIFYING_PROPOSAL_IDS.includes(vote.prop),
+    );
+    // remove duplicate props
+    const finalProps = qualifyingVotes.reduce(
+      (reasons, vote) =>
+        reasons.set(
+          vote.prop,
+          vote.withReason || (reasons.get(vote.prop) ?? false),
+        ),
+      new Map<string, boolean>(),
     );
 
-    const qualifying_votes = nonDupeVotes.filter((proposal) => {
-      return QUALIFYING_PROPOSAL_IDS.includes(proposal.prop);
-    });
-
-    const recent_participation = qualifying_votes.length;
-    const recent_participation_with_reason = qualifying_votes.filter(
-      (vote) => vote.withReason,
-    ).length;
+    const recent_participation = finalProps.size;
+    let counter = 0;
+    finalProps.forEach((val) => (val ? counter++ : counter));
+    const recent_participation_with_reason = counter;
 
     const govScoreConfig: GovScoreConfig = {
       recentParticipation: recent_participation,
