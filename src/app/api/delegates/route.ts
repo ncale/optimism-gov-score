@@ -34,7 +34,7 @@ function formatResponse(res: DelegateQueryResponse) {
   const proposalsVotedOn = delegate.votes.items.map((vote) => vote.proposalId);
   const nonDuplicateVotes = [...Array.from(new Set(proposalsVotedOn))];
   const recent_participation = nonDuplicateVotes.filter((proposal) => {
-    return QUALIFYING_PROPOSAL_IDS.includes(BigInt(proposal));
+    return QUALIFYING_PROPOSAL_IDS.includes(proposal);
   }).length;
 
   const govScoreConfig: GovScoreConfig = {
