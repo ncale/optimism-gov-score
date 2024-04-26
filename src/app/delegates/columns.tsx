@@ -135,6 +135,7 @@ export type DelegateTableRow = {
   pct_voting_power: number;
   recent_participation: number;
   recent_participation_with_reason: number;
+  testing__data: any;
 };
 
 function SortButton({
