@@ -130,7 +130,7 @@ export function DataTable<TData, TValue>({
       {/* Pagination */}
       <div className="flex justify-center md:justify-between mt-3 px-2 text-sm">
         <div className="w-40 text-muted-foreground hidden md:block">
-          Rows per page: 10
+          Rows per page: {table.getRowCount() <= 10 ? table.getRowCount() : 10}
         </div>
         <div className="flex items-center space-x-2">
           <Button
@@ -171,7 +171,7 @@ export function DataTable<TData, TValue>({
           </Button>
         </div>
         <div className="w-40 text-right text-muted-foreground hidden md:block">
-          Total: {table.getPageCount() * 10}
+          Total: {table.getRowCount()}
         </div>
       </div>
       <div className="flex items-center justify-center space-x-2 mt-3 mb-12 text-sm">
