@@ -51,7 +51,7 @@ export default function Message({
   if (!delegate)
     return (
       <div className="flex flex-col items-center justify-center mx-auto p-4 text-center bg-muted rounded w-11/12 md:w-1/2">
-        Error - Your delegate isn't in our list. We apologize for the
+        Error - Your delegate isn&apos;t in our list. We apologize for the
         inconvenience and are working on a solution
       </div>
     );
