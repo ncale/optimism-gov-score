@@ -9,48 +9,48 @@ export async function getTableData() {
 
   const delegateData = await getAllDelegates();
 
-  const currentVotableOP = BigInt("87424148000000000000000000"); // as of 4/11/24
-  const currentVotableOP_num = Number(formatEther(currentVotableOP));
+  const currentVotableOP = "87424148000000000000000000"; // as of 4/11/24
+  const currentVotableOP_num = Number(formatEther(BigInt(currentVotableOP)));
 
   if (!delegateData) return undefined;
 
-  const tableData = delegateData.map((row, i) => {
-    const votingPower_num = Number(formatEther(BigInt(row.votingPower)));
+  const tableData = delegateData.map((delegate, i) => {
+    const votingPower_num = Number(formatEther(BigInt(delegate.votingPower)));
     const pct_voting_power = votingPower_num / currentVotableOP_num;
 
-    const proposals = row.votes.items.map((vote) => vote.proposalId);
-    const votes = row.votes.items.map((vote) => ({
+    const proposals = delegate.votes.items.map((vote) => vote.proposalId);
+    const votes = delegate.votes.items.map((vote) => ({
       prop: vote.proposalId,
       withReason: vote.withReason,
     }));
     const nonDupeVotes = votes.filter(
-      (vote, index) => proposals.indexOf(vote.prop) === index
+      (vote, index) => proposals.indexOf(vote.prop) === index,
     );
 
     const qualifying_votes = nonDupeVotes.filter((proposal) => {
-      return QUALIFYING_PROPOSAL_IDS.includes(BigInt(proposal.prop));
+      return QUALIFYING_PROPOSAL_IDS.includes(proposal.prop);
     });
 
     const recent_participation = qualifying_votes.length;
     const recent_participation_with_reason = qualifying_votes.filter(
-      (vote) => vote.withReason
+      (vote) => vote.withReason,
     ).length;
 
     const govScoreConfig: GovScoreConfig = {
       recentParticipation: recent_participation,
       pctDelegation: pct_voting_power,
-      isEnsNameSet: !!row.ensName,
-      isEnsAvatarSet: !!row.ensAvatar,
+      isEnsNameSet: !!delegate.ensName,
+      isEnsAvatarSet: !!delegate.ensAvatar,
       recentParticipationWithReason: recent_participation_with_reason,
     };
     const { govScore, scores } = calcGovScore(govScoreConfig);
 
     return {
       rank: i + 1,
-      delegate: `${row.address} - ${row.ensName}`,
-      metadata__address: row.address,
-      metadata__ens_name: row.ensName,
-      metadata__ens_avatar: row.ensAvatar,
+      delegate: `${delegate.address} - ${delegate.ensName}`,
+      metadata__address: delegate.address,
+      metadata__ens_name: delegate.ensName,
+      metadata__ens_avatar: delegate.ensAvatar,
       gov_score: govScore,
       metadata__scores: scores,
       voting_power: votingPower_num,
