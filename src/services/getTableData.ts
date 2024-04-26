@@ -56,6 +56,10 @@ export async function getTableData() {
       voting_power: votingPower_num,
       pct_voting_power: pct_voting_power,
       recent_participation: recent_participation,
+      metadata__vote_list_1: delegate.votes.items,
+      metadata__vote_list_2: proposals,
+      metadata__vote_list_3: votes,
+      metadata__vote_list_4: nonDupeVotes,
       recent_participation_with_reason: recent_participation_with_reason,
     } as DelegateTableRow;
   });

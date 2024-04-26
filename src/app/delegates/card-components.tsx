@@ -105,8 +105,8 @@ export function ScoreCard({ scores }: { scores: Scores }) {
           {ensScore === 2
             ? "ENS primary name and avatar set"
             : ensScore === 1
-            ? "ENS primary name set, no avatar"
-            : "No ENS primary name or avatar set"}
+              ? "ENS primary name set, no avatar"
+              : "No ENS primary name or avatar set"}
         </span>
       </div>
 
