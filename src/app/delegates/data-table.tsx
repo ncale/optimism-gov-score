@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="md:w-min mx-auto">
+    <div className="mx-auto md:w-min">
       {/* Search */}
       <div className="flex items-center pb-4">
         <Input
@@ -128,8 +128,8 @@ export function DataTable<TData, TValue>({
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center md:justify-between mt-3 px-2 text-sm">
-        <div className="w-40 text-muted-foreground hidden md:block">
+      <div className="mt-3 flex justify-center px-2 text-sm md:justify-between">
+        <div className="hidden w-40 text-muted-foreground md:block">
           Rows per page: {table.getRowCount() <= 10 ? table.getRowCount() : 10}
         </div>
         <div className="flex items-center space-x-2">
@@ -170,11 +170,11 @@ export function DataTable<TData, TValue>({
             {">>"}
           </Button>
         </div>
-        <div className="w-40 text-right text-muted-foreground hidden md:block">
+        <div className="hidden w-40 text-right text-muted-foreground md:block">
           Total: {table.getRowCount()}
         </div>
       </div>
-      <div className="flex items-center justify-center space-x-2 mt-3 mb-12 text-sm">
+      <div className="mb-12 mt-3 flex items-center justify-center space-x-2 text-sm">
         <div>{"Go to page: "}</div>
         <Input
           type="text"

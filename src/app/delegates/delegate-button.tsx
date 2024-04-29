@@ -45,7 +45,7 @@ export default function DelegateButton({
             disabled={isCurrentDelegate}
             onClick={handleClick}
             variant="secondary"
-            className="hover:scale-105 hover:bg-blue-200 origin-center ease-in-out duration-75 active:shadow-inner active:bg-blue-400"
+            className="origin-center duration-75 ease-in-out hover:scale-105 hover:bg-blue-200 active:bg-blue-400 active:shadow-inner"
           >
             <div>{isPending ? "delegating..." : "redelegate"}</div>
           </Button>

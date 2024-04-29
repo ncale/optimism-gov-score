@@ -38,7 +38,7 @@ export default function Message({
 
   if (!delegateAddress || new RegExp("0x000000000000").test(delegateAddress)) {
     return (
-      <div className="flex flex-col items-center justify-center mx-auto p-4 text-center bg-muted rounded-md border w-11/12 md:w-1/2">
+      <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-md border bg-muted p-4 text-center md:w-1/2">
         You haven&apos;t delegated OP
       </div>
     );
@@ -54,7 +54,7 @@ export default function Message({
 
   if (!delegate)
     return (
-      <div className="flex flex-col items-center rounded-md border justify-center mx-auto p-4 text-center bg-muted w-11/12 md:w-1/2">
+      <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-md border bg-muted p-4 text-center md:w-1/2">
         Error - Your delegate isn&apos;t in our list. We apologize for the
         inconvenience and are working on a solution
       </div>
@@ -63,24 +63,24 @@ export default function Message({
   const formattedOpBalance = opBalance ? formatEther(opBalance) : null;
 
   return (
-    <div className="mx-auto space-y-2 w-11/12 md:w-[36rem]">
+    <div className="mx-auto w-11/12 space-y-2 md:w-[36rem]">
       <div className="flex space-x-2">
         {ensName ? (
-          <div className="py-2 px-4 rounded-xl border font-medium">
+          <div className="rounded-xl border px-4 py-2 font-medium">
             {ensName}
           </div>
         ) : (
           <></>
         )}
         {formattedOpBalance ? (
-          <div className="py-2 px-4 rounded-xl border">
+          <div className="rounded-xl border px-4 py-2">
             <OPBalanceCard balance={formattedOpBalance} />
           </div>
         ) : (
           <></>
         )}
       </div>
-      <div className="py-2 px-4 rounded-md border gap-1.5">
+      <div className="gap-1.5 rounded-md border px-4 py-2">
         {delegate ? <DelegateCard delegate={delegate} /> : <></>}
       </div>
     </div>

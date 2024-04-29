@@ -58,25 +58,25 @@ export function NavConnectButton() {
               <HamburgerIcon />
             </DrawerTrigger>
             <DrawerContent>
-              <ul className="flex flex-col mt-6">
-                <li className="text-3xl ml-2">
+              <ul className="mt-6 flex flex-col">
+                <li className="ml-2 text-3xl">
                   <Link
                     href="/faq"
                     color="foreground"
                     className={`${
                       currentPath === "/faq" ? "font-bold" : ""
-                    } text-3xl p-1`}
+                    } p-1 text-3xl`}
                   >
                     FAQ
                   </Link>
                 </li>
-                <li className="text-3xl ml-2">
+                <li className="ml-2 text-3xl">
                   <Link
                     href="/delegates"
                     color="foreground"
                     className={`${
                       currentPath === "/delegates" ? "font-bold" : ""
-                    } text-3xl p-1`}
+                    } p-1 text-3xl`}
                   >
                     Delegates
                   </Link>

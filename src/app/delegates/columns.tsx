@@ -169,12 +169,12 @@ function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
 
   return (
     <a href={`https://vote.optimism.io/delegates/${address}`} target="_blank">
-      <div className="w-56 flex items-center hover:scale-105 origin-left ease-in-out duration-75">
+      <div className="flex w-56 origin-left items-center duration-75 ease-in-out hover:scale-105">
         <Avatar>
           {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
           <AvatarFallback className="bg-ens-grad" />
         </Avatar>
-        <div className="flex flex-col ml-2 mr-1 items-start justify-center">
+        <div className="ml-2 mr-1 flex flex-col items-start justify-center">
           <h3 className="">{ensName ? ensName : abbreviatedAddress}</h3>
         </div>
         <LinkIcon />
@@ -186,7 +186,7 @@ function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
 function InfoTooltipContent() {
   return (
     <div>
-      <div className="leading-tight w-64 md:w-72">
+      <div className="w-64 leading-tight md:w-72">
         <p className="mb-1">
           An opinionated score of how worthy a delegate is of receiving further
           delegation.
@@ -198,7 +198,7 @@ function InfoTooltipContent() {
           not <span className="special">too powerful</span>.{" "}
         </p>
         <p className="mt-2">Ex...</p>
-        <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
+        <div className="mb-2 h-fit w-fit rounded-md bg-secondary px-2 py-1 shadow-lg">
           <ScoreCard
             scores={{
               recentParticipation: 3.6,
@@ -225,11 +225,11 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
     <div>
       {isDesktop ? (
         <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
-          <div className="cursor-pointer w-16 mx-auto py-0.5 bg-blue-600 rounded-md text-primary-foreground font-bold hover:bg-blue-500 ease-in-out duration-75">{`${govScore}/10`}</div>
+          <div className="mx-auto w-16 cursor-pointer rounded-md bg-blue-600 py-0.5 font-bold text-primary-foreground duration-75 ease-in-out hover:bg-blue-500">{`${govScore}/10`}</div>
         </Tooltip>
       ) : (
         <Popover>
-          <PopoverTrigger className="bg-blue-600 text-primary-foreground font-bold py-0.5 px-1 rounded-md">{`${govScore}/10`}</PopoverTrigger>
+          <PopoverTrigger className="rounded-md bg-blue-600 px-1 py-0.5 font-bold text-primary-foreground">{`${govScore}/10`}</PopoverTrigger>
           <PopoverContent>
             <ScoreCard scores={scores} />
           </PopoverContent>
