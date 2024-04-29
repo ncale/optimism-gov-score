@@ -1,7 +1,7 @@
 import {
-  CheckIcon,
-  MinusIcon,
-  XMarkIcon,
+  IconCheck,
+  IconMinus,
+  IconXMark,
 } from "@/components/icons/lucide-icons";
 import { type Scores } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -60,11 +60,11 @@ export function ScoreCard({ scores }: { scores: Scores }) {
       {/* Recent Voting Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {scores.recentParticipation > 2.8 ? (
-          <CheckIcon />
+          <IconCheck />
         ) : scores.recentParticipation > 1.2 ? (
-          <MinusIcon />
+          <IconMinus />
         ) : (
-          <XMarkIcon />
+          <IconXMark />
         )}
         <ScorePill score={`${scores.recentParticipation}/4`} />
         <span>
@@ -79,11 +79,11 @@ export function ScoreCard({ scores }: { scores: Scores }) {
       {/* Voting Power Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {scores.pctDelegation === 3 ? (
-          <CheckIcon />
+          <IconCheck />
         ) : scores.pctDelegation > 0 ? (
-          <MinusIcon />
+          <IconMinus />
         ) : (
-          <XMarkIcon />
+          <IconXMark />
         )}
         <ScorePill score={`${scores.pctDelegation}/3`} />
         <span>
@@ -94,11 +94,11 @@ export function ScoreCard({ scores }: { scores: Scores }) {
       {/* Ens Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {ensScore === 2 ? (
-          <CheckIcon />
+          <IconCheck />
         ) : ensScore === 1 ? (
-          <MinusIcon />
+          <IconMinus />
         ) : (
-          <XMarkIcon />
+          <IconXMark />
         )}
         <ScorePill score={`${ensScore}/2`} />
         <span>
@@ -113,11 +113,11 @@ export function ScoreCard({ scores }: { scores: Scores }) {
       {/* Recent Voting With Reason Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {scores.recentParticipationWithReason > 0.7 ? (
-          <CheckIcon />
+          <IconCheck />
         ) : scores.recentParticipationWithReason > 0.3 ? (
-          <MinusIcon />
+          <IconMinus />
         ) : (
-          <XMarkIcon />
+          <IconXMark />
         )}
         <ScorePill score={`${scores.recentParticipationWithReason}/1`} />
         <span>

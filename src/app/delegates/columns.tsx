@@ -15,10 +15,10 @@ import type { Column, Row } from "@tanstack/react-table";
 import { type PropsWithChildren } from "react";
 // Icons
 import {
-  SortArrowsIcon,
-  SortUpIcon,
-  SortDownIcon,
-  LinkIcon,
+  IconSortArrows,
+  IconSortUp,
+  IconSortDown,
+  IconLink,
 } from "@/components/icons/lucide-icons";
 import Link from "next/link";
 import {
@@ -150,10 +150,10 @@ function SortButton({
       className="space-x-1.5"
     >
       {children}
-      {column.getIsSorted() ? null : <SortArrowsIcon />}
+      {column.getIsSorted() ? null : <IconSortArrows />}
       {{
-        asc: <SortUpIcon />,
-        desc: <SortDownIcon />,
+        asc: <IconSortUp />,
+        desc: <IconSortDown />,
       }[column.getIsSorted() as string] ?? null}
     </Button>
   );
@@ -176,7 +176,7 @@ function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
         <div className="ml-2 mr-1 flex flex-col items-start justify-center">
           <h3 className="">{ensName ? ensName : abbreviatedAddress}</h3>
         </div>
-        <LinkIcon />
+        <IconLink />
       </div>
     </a>
   );
