@@ -19,12 +19,12 @@ export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
     : `${address.slice(0, 5)}...${address.slice(-4)}`;
 
   return (
-    <div className="flex flex-col items-left w-full gap-1.5">
+    <div className="items-left flex w-full flex-col gap-1.5">
       <div>Your delegate is...</div>
       <a
         href={`https://vote.optimism.io/delegates/${address}`}
         target="_blank"
-        className="flex items-center text-lg md:text-2xl font-bold"
+        className="flex items-center text-lg font-bold md:text-2xl"
       >
         <Avatar className="h-14 w-14">
           {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
@@ -58,7 +58,7 @@ export function ScoreCard({ scores }: { scores: Scores }) {
   return (
     <div className="text-sm">
       {/* Recent Voting Score */}
-      <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
+      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {scores.recentParticipation > 2.8 ? (
           <CheckIcon />
         ) : scores.recentParticipation > 1.2 ? (
@@ -77,7 +77,7 @@ export function ScoreCard({ scores }: { scores: Scores }) {
       </div>
 
       {/* Voting Power Score */}
-      <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
+      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {scores.pctDelegation === 3 ? (
           <CheckIcon />
         ) : scores.pctDelegation > 0 ? (
@@ -92,7 +92,7 @@ export function ScoreCard({ scores }: { scores: Scores }) {
       </div>
 
       {/* Ens Score */}
-      <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
+      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {ensScore === 2 ? (
           <CheckIcon />
         ) : ensScore === 1 ? (
@@ -105,13 +105,13 @@ export function ScoreCard({ scores }: { scores: Scores }) {
           {ensScore === 2
             ? "ENS primary name and avatar set"
             : ensScore === 1
-            ? "ENS primary name set, no avatar"
-            : "No ENS primary name or avatar set"}
+              ? "ENS primary name set, no avatar"
+              : "No ENS primary name or avatar set"}
         </span>
       </div>
 
       {/* Recent Voting With Reason Score */}
-      <div className="flex items-center gap-1 [&>*]:shrink-0 overflow-hidden">
+      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
         {scores.recentParticipationWithReason > 0.7 ? (
           <CheckIcon />
         ) : scores.recentParticipationWithReason > 0.3 ? (
@@ -147,7 +147,7 @@ function getPctDelegationText(score: number) {
 
 export function ScorePill({ score }: { score: string | number }) {
   return (
-    <div className="rounded-full text-xs text-center w-9 h-[1.3em] bg-gray-600 text-white font-bold">
+    <div className="h-[1.3em] w-9 rounded-full bg-gray-600 text-center text-xs font-bold text-white">
       {score}
     </div>
   );

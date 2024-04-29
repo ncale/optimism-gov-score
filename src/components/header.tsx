@@ -12,10 +12,10 @@ export default function Header() {
             alt="optimism logo"
             width={225}
             height={31}
-            className="h-5 md:h-6 w-auto"
+            className="h-5 w-auto md:h-6"
             radius="none"
           />
-          <h1 className="text-xl md:text-2xl text-inherit">GovScore</h1>
+          <h1 className="text-xl text-inherit md:text-2xl">GovScore</h1>
         </Link>
       </NavbarBrand>
 

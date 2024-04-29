@@ -51,22 +51,22 @@ const faqItems: Array<[question: string, response: ReactNode]> = [
     <>
       <p className="mb-2">
         GovScore ranks OP delegates on 3 key metrics:{" "}
-        <span className="underline font-bold">transparency</span>,{" "}
-        <span className="underline font-bold">consistency</span>, and{" "}
-        <span className="underline font-bold">voting power</span>.
+        <span className="font-bold underline">transparency</span>,{" "}
+        <span className="font-bold underline">consistency</span>, and{" "}
+        <span className="font-bold underline">voting power</span>.
       </p>
       <p className="mb-2">
         The ideal candidate has a transparent onchain identity as identified
         using ENS, a consistent and proven recent voting history, and relatively
         low voting power.
       </p>
-      <div className="mt-2 bg-secondary space-y-2 w-fit h-fit p-2 rounded-md shadow-lg">
-        <div className="flex gap-1 items-center [&>div]:shrink-0">
+      <div className="mt-2 h-fit w-fit space-y-2 rounded-md bg-secondary p-2 shadow-lg">
+        <div className="flex items-center gap-1 [&>div]:shrink-0">
           <ScorePill score={"2 pts"} />
           <p>1 point each for setting a primary ENS name and avatar</p>
         </div>
         <hr />
-        <div className="flex gap-1 items-center [&>div]:shrink-0">
+        <div className="flex items-center gap-1 [&>div]:shrink-0">
           <ScorePill score={"5 pts"} />
           <p>
             0.5 points for each vote casted on the 10 most recent onchain OP
@@ -74,7 +74,7 @@ const faqItems: Array<[question: string, response: ReactNode]> = [
           </p>
         </div>
         <hr />
-        <div className="flex gap-1 items-center [&>div]:shrink-0">
+        <div className="flex items-center gap-1 [&>div]:shrink-0">
           <ScorePill score={"3 pts"} />
           <p>
             3 points for having less than 0.5% of the total voting pool

@@ -8,7 +8,7 @@ type FooterLink = [string, string];
 
 export default function Footer() {
   return (
-    <div className="flex justify-center h-20 text-gray-500">
+    <div className="flex h-20 justify-center text-gray-500">
       {footerLinks.map(([text, link], i) => (
         <div key={i}>
           <a href={link} target="_blank" className="hover:underline">
