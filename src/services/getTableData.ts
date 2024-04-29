@@ -62,7 +62,7 @@ export async function getTableData() {
       pct_voting_power: pct_voting_power,
       recent_participation: recent_participation,
       recent_participation_with_reason: recent_participation_with_reason,
-      testing__data: null,
+      testing__data: delegate.votes.items,
     } as DelegateTableRow;
   });
 
