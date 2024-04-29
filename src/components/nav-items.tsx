@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
-import HamburgerIcon from "./icons/hamburger-icon";
+import { IconHamburger } from "./icons/lucide-icons";
 
 export function NavLinks() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -53,7 +53,7 @@ export function NavConnectButton() {
         <div className="flex items-center">
           <Drawer direction="top">
             <DrawerTrigger>
-              <HamburgerIcon />
+              <IconHamburger />
             </DrawerTrigger>
             <DrawerContent>
               <ul className="mt-6 flex flex-col">
