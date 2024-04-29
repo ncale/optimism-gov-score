@@ -1,82 +1,43 @@
-import { IconContext } from "react-icons/lib";
-import { LuArrowUpDown } from "react-icons/lu";
-import { LuChevronUpSquare } from "react-icons/lu";
-import { LuChevronDownSquare } from "react-icons/lu";
-import { LuFilter } from "react-icons/lu";
-import { LuHelpCircle } from "react-icons/lu";
-import { LuShare } from "react-icons/lu";
-import { LuExternalLink } from "react-icons/lu";
-import { LuCheckCircle2 } from "react-icons/lu";
-import { LuMinusCircle } from "react-icons/lu";
-import { LuXCircle } from "react-icons/lu";
+import {
+  ArrowUpDown,
+  CircleCheck,
+  CircleHelp,
+  CircleMinus,
+  CircleX,
+  ExternalLink,
+  Filter,
+  Share,
+  SquareChevronDown,
+  SquareChevronUp,
+} from "lucide-react";
 
 export function SortArrowsIcon() {
-  return (
-    <IconContext.Provider value={{ size: "1.15em" }}>
-      <LuArrowUpDown />
-    </IconContext.Provider>
-  );
+  return <ArrowUpDown size={16} />;
 }
 export function SortUpIcon() {
-  return (
-    <IconContext.Provider value={{ size: "1.15em" }}>
-      <LuChevronUpSquare />
-    </IconContext.Provider>
-  );
+  return <SquareChevronUp size={16} />;
 }
 export function SortDownIcon() {
-  return (
-    <IconContext.Provider value={{ size: "1.15em" }}>
-      <LuChevronDownSquare />
-    </IconContext.Provider>
-  );
+  return <SquareChevronDown size={16} />;
 }
 export function FilterIcon() {
-  return (
-    <IconContext.Provider value={{ size: "1.15em" }}>
-      <LuFilter />
-    </IconContext.Provider>
-  );
+  return <Filter />;
 }
 export function HelpIcon() {
-  return (
-    <IconContext.Provider value={{ size: "0.9em" }}>
-      <LuHelpCircle />
-    </IconContext.Provider>
-  );
+  return <CircleHelp />;
 }
 export function ShareIcon() {
-  return (
-    <IconContext.Provider value={{ size: "0.8em" }}>
-      <LuShare />
-    </IconContext.Provider>
-  );
+  return <Share />;
 }
 export function LinkIcon() {
-  return (
-    <IconContext.Provider value={{ size: "0.8em" }}>
-      <LuExternalLink />
-    </IconContext.Provider>
-  );
+  return <ExternalLink size={12} strokeWidth={2.25} />;
 }
 export function CheckIcon() {
-  return (
-    <IconContext.Provider value={{ color: "green", size: "1.15em" }}>
-      <LuCheckCircle2 />
-    </IconContext.Provider>
-  );
+  return <CircleCheck size={16} color="green" />;
 }
 export function MinusIcon() {
-  return (
-    <IconContext.Provider value={{ color: "orange", size: "1.15em" }}>
-      <LuMinusCircle />
-    </IconContext.Provider>
-  );
+  return <CircleMinus size={16} color="orange" />;
 }
 export function XMarkIcon() {
-  return (
-    <IconContext.Provider value={{ color: "red", size: "1.15em" }}>
-      <LuXCircle />
-    </IconContext.Provider>
-  );
+  return <CircleX size={16} color="red" />;
 }
