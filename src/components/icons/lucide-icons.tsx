@@ -6,11 +6,15 @@ import {
   CircleX,
   ExternalLink,
   Filter,
+  Menu,
   Share,
   SquareChevronDown,
   SquareChevronUp,
 } from "lucide-react";
 
+export function IconHamburger() {
+  return <Menu />;
+}
 export function IconSortArrows() {
   return <ArrowUpDown size={16} />;
 }
