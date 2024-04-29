@@ -1,41 +1,39 @@
 "use client";
 
-import { NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { usePathname } from "next/navigation";
-import HamburgerIcon from "./icons/hamburger-icon";
+import Link from "next/link";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
+import HamburgerIcon from "./icons/hamburger-icon";
 
 export function NavLinks() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const currentPath = usePathname();
-  return (
-    <>
-      {isDesktop ? (
-        <NavbarContent className="flex gap-4 tracking-wide" justify="center">
-          <NavbarItem className="text-xl">
-            <Link
-              href="/faq"
-              color="foreground"
-              className={currentPath === "/faq" ? "font-bold" : ""}
-            >
-              FAQ
-            </Link>
-          </NavbarItem>
-          <NavbarItem className="text-xl">|</NavbarItem>
-          <NavbarItem className="text-xl">
-            <Link
-              href="/delegates"
-              color="foreground"
-              className={currentPath === "/delegates" ? "font-bold" : ""}
-            >
-              Delegates
-            </Link>
-          </NavbarItem>
-        </NavbarContent>
-      ) : null}
-    </>
+  return isDesktop ? (
+    <div className="flex justify-center space-x-4 tracking-wide">
+      <div>
+        <Link
+          href="/faq"
+          color="foreground"
+          className={currentPath === "/faq" ? "font-bold" : ""}
+        >
+          FAQ
+        </Link>
+      </div>
+      <div>|</div>
+      <div>
+        <Link
+          href="/delegates"
+          color="foreground"
+          className={currentPath === "/delegates" ? "font-bold" : ""}
+        >
+          Delegates
+        </Link>
+      </div>
+    </div>
+  ) : (
+    <></>
   );
 }
 
@@ -43,16 +41,16 @@ export function NavConnectButton() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const currentPath = usePathname();
   return (
-    <NavbarContent justify="end">
-      <NavbarItem>
+    <div className="flex items-center justify-end space-x-2">
+      <div>
         <ConnectButton
           chainStatus="none"
           showBalance={false}
           accountStatus={{ smallScreen: "avatar", largeScreen: "full" }}
         />
-      </NavbarItem>
+      </div>
       {isDesktop ? null : (
-        <NavbarItem>
+        <div className="flex items-center">
           <Drawer direction="top">
             <DrawerTrigger>
               <HamburgerIcon />
@@ -84,8 +82,8 @@ export function NavConnectButton() {
               </ul>
             </DrawerContent>
           </Drawer>
-        </NavbarItem>
+        </div>
       )}
-    </NavbarContent>
+    </div>
   );
 }

@@ -10,7 +10,6 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { mainnet, optimism } from "wagmi/chains";
 import { http } from "@wagmi/core";
-import { NextUIProvider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 const config = getDefaultConfig({
@@ -31,7 +30,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider initialChain={optimism}>
-          <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
+          {children}
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

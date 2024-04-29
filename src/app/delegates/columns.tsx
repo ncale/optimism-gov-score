@@ -4,7 +4,6 @@
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Tooltip } from "@nextui-org/react";
 import DelegateButton from "./delegate-button";
 import { ScoreCard } from "./card-components";
 // Hooks
@@ -218,23 +217,14 @@ function InfoTooltipContent() {
 }
 
 function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
-  const isDesktop = useMediaQuery("(min-width: 768px)");
   const govScore = Math.round(row.original.gov_score * 10) / 10;
   const scores = row.original.metadata__scores;
   return (
-    <div>
-      {isDesktop ? (
-        <Tooltip placement="right" content={<ScoreCard scores={scores} />}>
-          <div className="mx-auto w-16 cursor-pointer rounded-md bg-blue-600 py-0.5 font-bold text-primary-foreground duration-75 ease-in-out hover:bg-blue-500">{`${govScore}/10`}</div>
-        </Tooltip>
-      ) : (
-        <Popover>
-          <PopoverTrigger className="rounded-md bg-blue-600 px-1 py-0.5 font-bold text-primary-foreground">{`${govScore}/10`}</PopoverTrigger>
-          <PopoverContent>
-            <ScoreCard scores={scores} />
-          </PopoverContent>
-        </Popover>
-      )}
-    </div>
+    <Popover>
+      <PopoverTrigger className="w-16 rounded-md bg-blue-600 px-1 py-0.5 font-bold text-primary-foreground">{`${govScore}/10`}</PopoverTrigger>
+      <PopoverContent>
+        <ScoreCard scores={scores} />
+      </PopoverContent>
+    </Popover>
   );
 }

@@ -28,6 +28,8 @@ export default function RootLayout({
         <Providers>
           <Header />
           <FeedbackFlag />
+          {/* Spacer */}
+          <div className="h-24 w-full" />
           {children}
           <Footer />
         </Providers>
