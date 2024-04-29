@@ -39,10 +39,12 @@ export const columns = [
         </SortButton>
       );
     },
+    enableHiding: false,
   }),
   columnHelper.accessor("delegate", {
     header: "Delegate",
     cell: ({ row }) => <DelegateCell row={row} />,
+    enableHiding: false,
   }),
   columnHelper.accessor("gov_score", {
     header: ({ column }) => {
@@ -54,6 +56,7 @@ export const columns = [
     },
     cell: ({ row }) => <GovScoreCell row={row} />,
     size: 400,
+    enableHiding: false,
   }),
   columnHelper.accessor("voting_power", {
     header: ({ column }) => {
@@ -119,6 +122,7 @@ export const columns = [
     cell: ({ row }) => (
       <DelegateButton newDelegateAddress={row.original.metadata__address} />
     ),
+    enableHiding: false,
   }),
 ] as ColumnDef<DelegateTableRow>[];
 
