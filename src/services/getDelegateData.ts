@@ -12,14 +12,14 @@ async function queryGqlApi<T>(query: string): Promise<T> {
     },
     body: JSON.stringify({ query }),
     next: {
-      revalidate: 3600 * 24,
+      revalidate: 3600,
     },
   });
   return (await res.json()) as T;
 }
 
 export async function findOneDelegate(
-  address: Address
+  address: Address,
 ): Promise<DelegateQueryResponse> {
   console.log("Running findOneDelegate...");
 
@@ -72,7 +72,7 @@ export async function getDelegates(): Promise<DelegateQueryResponse> {
 
 // TEMPORARY - get function that is passed a gql cursor for pagination
 async function getDelegatePage(
-  pageCursor?: string
+  pageCursor?: string,
 ): Promise<DelegateQueryResponse> {
   console.log("Running getDelegatePage...");
 
