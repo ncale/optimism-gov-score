@@ -2,7 +2,12 @@ import { type DelegateTableRow } from "@/app/delegates/columns";
 import { getAllDelegates } from "./getDelegateData";
 import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
 import { formatEther } from "viem";
-import { calcGovScore, type GovScoreConfig } from "@/lib/utils";
+import {
+  RecommendationPercentageConfig,
+  calcGovScore,
+  calcRecommendationPercentage,
+  type GovScoreConfig,
+} from "@/lib/utils";
 
 export async function getTableData() {
   console.log("Starting getTableData...");
@@ -49,12 +54,27 @@ export async function getTableData() {
     };
     const { govScore, scores } = calcGovScore(govScoreConfig);
 
+    const vpc =
+      pct_voting_power >= 0.03
+        ? 0
+        : pct_voting_power >= 0.02
+          ? 0.33
+          : pct_voting_power >= 0.01
+            ? 0.66
+            : 1;
+    const recPctConfig: RecommendationPercentageConfig = {
+      govScore: govScore,
+      votingPowerCoefficient: vpc,
+    };
+    const recPct = calcRecommendationPercentage(recPctConfig);
+
     return {
       rank: i + 1,
       delegate: `${delegate.address} - ${delegate.ensName}`,
       metadata__address: delegate.address,
       metadata__ens_name: delegate.ensName,
       metadata__ens_avatar: delegate.ensAvatar,
+      recommendation_percentage: recPct,
       gov_score: govScore,
       metadata__scores: scores,
       voting_power: votingPower_num,

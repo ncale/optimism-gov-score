@@ -46,6 +46,21 @@ export const columns = [
     cell: ({ row }) => <DelegateCell row={row} />,
     enableHiding: false,
   }),
+  columnHelper.accessor("recommendation_percentage", {
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div>% Recommended</div>
+        </SortButton>
+      );
+    },
+    cell: ({ row }) => {
+      const recPct = Number(row.getValue("recommendation_percentage"));
+      const roundedRecPct = Math.round(recPct * 100);
+      return roundedRecPct;
+    },
+    enableHiding: false,
+  }),
   columnHelper.accessor("gov_score", {
     header: ({ column }) => {
       return (
@@ -131,6 +146,7 @@ export type DelegateTableRow = {
   metadata__address: Address;
   metadata__ens_name: `${string}.eth` | null;
   metadata__ens_avatar: string | null;
+  recommendation_percentage: number;
   gov_score: number;
   metadata__scores: Scores;
   voting_power: number;
