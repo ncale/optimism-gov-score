@@ -90,7 +90,7 @@ export const columns = [
       return <div>{num}</div>;
     },
   }),
-  columnHelper.accessor("recent_participation", {
+  columnHelper.accessor("recent_votes", {
     header: ({ column }) => {
       return (
         <SortButton column={column}>
@@ -101,9 +101,9 @@ export const columns = [
         </SortButton>
       );
     },
-    cell: ({ row }) => `${row.getValue("recent_participation")}/10 votes`,
+    cell: ({ row }) => `${row.getValue("recent_votes")}/10 votes`,
   }),
-  columnHelper.accessor("recent_participation_with_reason", {
+  columnHelper.accessor("recent_votes_with_reason", {
     header: ({ column }) => {
       return (
         <SortButton column={column}>
@@ -114,8 +114,7 @@ export const columns = [
         </SortButton>
       );
     },
-    cell: ({ row }) =>
-      `${row.getValue("recent_participation_with_reason")}/10 votes`,
+    cell: ({ row }) => `${row.getValue("recent_votes_with_reason")}/10 votes`,
   }),
   columnHelper.display({
     id: "delegateButton",
@@ -136,8 +135,8 @@ export type DelegateTableRow = {
   metadata__scores: Scores;
   voting_power: number;
   pct_voting_power: number;
-  recent_participation: number;
-  recent_participation_with_reason: number;
+  recent_votes: number;
+  recent_votes_with_reason: number;
   testing__data: any;
 };
 

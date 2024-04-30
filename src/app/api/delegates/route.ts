@@ -33,12 +33,12 @@ function formatResponse(res: DelegateQueryResponse) {
 
   const proposalsVotedOn = delegate.votes.items.map((vote) => vote.proposalId);
   const nonDuplicateVotes = [...Array.from(new Set(proposalsVotedOn))];
-  const recent_participation = nonDuplicateVotes.filter((proposal) => {
+  const recent_votes = nonDuplicateVotes.filter((proposal) => {
     return QUALIFYING_PROPOSAL_IDS.includes(proposal);
   }).length;
 
   const govScoreConfig: GovScoreConfig = {
-    recentParticipation: recent_participation,
+    recentParticipation: recent_votes,
     pctDelegation: pct_voting_power,
     isEnsNameSet: !!delegate.ensName,
     isEnsAvatarSet: !!delegate.ensAvatar,
@@ -55,6 +55,6 @@ function formatResponse(res: DelegateQueryResponse) {
     metadata__scores: scores,
     voting_power: votingPower_num,
     pct_voting_power: pct_voting_power,
-    recent_participation: recent_participation,
+    recent_votes: recent_votes,
   } as DelegateTableRow;
 }
