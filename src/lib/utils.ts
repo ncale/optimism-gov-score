@@ -68,3 +68,18 @@ export type Scores = {
   ensAvatar: number;
   recentParticipationWithReason: number;
 };
+
+export function calcRecommendationPercentage({
+  govScore,
+  votingPowerCoefficient,
+}: RecommendationPercentageConfig): RecommendationPercentage {
+  const scoreFactor = (govScore * 0.7) / 1000;
+  const votingPowerFactor = votingPowerCoefficient * 0.3;
+  const result = scoreFactor + votingPowerFactor;
+  return result;
+}
+export type RecommendationPercentageConfig = {
+  govScore: number;
+  votingPowerCoefficient: number;
+};
+export type RecommendationPercentage = number;
