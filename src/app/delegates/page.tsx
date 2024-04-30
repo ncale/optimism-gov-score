@@ -10,7 +10,6 @@ export default async function Home() {
     <main className="space-y-4 py-4 md:space-y-8 md:pt-8">
       <Message delegateData={data} />
       {data ? <DataTable columns={columns} data={data} /> : null}
-      <DebugBox data={data} />
     </main>
   );
 }
