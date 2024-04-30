@@ -59,37 +59,35 @@ export function ScoreCard({ scores }: { scores: Scores }) {
     <div className="text-sm">
       {/* Recent Voting Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {scores.recentParticipation > 4.2 ? (
+        {scores.recentParticipation > 420 ? (
           <IconCheck />
-        ) : scores.recentParticipation > 1.8 ? (
+        ) : scores.recentParticipation > 180 ? (
           <IconMinus />
         ) : (
           <IconXMark />
         )}
-        <ScorePill score={`${scores.recentParticipation}/6`} />
+        <ScorePill score={`${scores.recentParticipation}/600`} />
         <span>
           Voted in{" "}
-          <span className="special">
-            {Math.round(scores.recentParticipation / 0.6)}
-          </span>{" "}
-          of last <span className="special">10</span> onchain props
+          <span className="special">{scores.recentParticipation / 60}</span> of
+          last <span className="special">10</span> onchain props
         </span>
       </div>
 
       {/* Ens Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {ensScore === 2 ? (
+        {ensScore === 200 ? (
           <IconCheck />
-        ) : ensScore === 1 ? (
+        ) : ensScore === 100 ? (
           <IconMinus />
         ) : (
           <IconXMark />
         )}
-        <ScorePill score={`${ensScore}/2`} />
+        <ScorePill score={`${ensScore}/200`} />
         <span>
-          {ensScore === 2
+          {ensScore === 200
             ? "ENS primary name and avatar set"
-            : ensScore === 1
+            : ensScore === 100
               ? "ENS primary name set, no avatar"
               : "No ENS primary name or avatar set"}
         </span>
@@ -97,18 +95,18 @@ export function ScoreCard({ scores }: { scores: Scores }) {
 
       {/* Recent Voting With Reason Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {scores.recentParticipationWithReason > 1.4 ? (
+        {scores.recentParticipationWithReason > 140 ? (
           <IconCheck />
-        ) : scores.recentParticipationWithReason > 0.6 ? (
+        ) : scores.recentParticipationWithReason > 60 ? (
           <IconMinus />
         ) : (
           <IconXMark />
         )}
-        <ScorePill score={`${scores.recentParticipationWithReason}/2`} />
+        <ScorePill score={`${scores.recentParticipationWithReason}/200`} />
         <span>
           Voted with reason in{" "}
           <span className="special">
-            {Math.round(scores.recentParticipationWithReason / 0.2)}
+            {scores.recentParticipationWithReason / 20}
           </span>{" "}
           of last <span className="special">10</span> props
         </span>
@@ -132,7 +130,7 @@ function getPctDelegationText(score: number) {
 
 export function ScorePill({ score }: { score: string | number }) {
   return (
-    <div className="h-[1.3em] w-9 rounded-full bg-gray-600 text-center text-xs font-bold text-white">
+    <div className="h-[1.3em] w-14 rounded-full bg-gray-600 text-center text-xs font-bold text-white">
       {score}
     </div>
   );

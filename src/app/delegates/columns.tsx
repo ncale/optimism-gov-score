@@ -223,7 +223,9 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
   const scores = row.original.metadata__scores;
   return (
     <Popover>
-      <PopoverTrigger className="w-16 rounded-md bg-blue-600 px-1 py-0.5 font-bold text-primary-foreground">{`${govScore}/10`}</PopoverTrigger>
+      <PopoverTrigger className="w-16 rounded-md bg-blue-600 px-1 py-0.5 font-bold text-primary-foreground">
+        {govScore}
+      </PopoverTrigger>
       <PopoverContent>
         <ScoreCard scores={scores} />
       </PopoverContent>

@@ -42,16 +42,12 @@ export function calcGovScore({
     recentParticipationWithReason: 0,
   };
   // add consistency criteria
-  const recentParticipationScore = recentParticipation * 0.6;
-  scores.recentParticipation = Math.round(recentParticipationScore * 10) / 10;
+  scores.recentParticipation = recentParticipation * 60;
   // add transparency criteria
-  if (isEnsNameSet) scores.ensName = 1;
-  if (isEnsAvatarSet) scores.ensAvatar = 1;
+  if (isEnsNameSet) scores.ensName = 100;
+  if (isEnsAvatarSet) scores.ensAvatar = 100;
   // add voting with reason criteria
-  const recentParticipationWithReasonScore =
-    recentParticipationWithReason * 0.2;
-  scores.recentParticipationWithReason =
-    Math.round(recentParticipationWithReasonScore * 10) / 10;
+  scores.recentParticipationWithReason = recentParticipationWithReason * 20;
   // sum and return
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
   return { scores, govScore };
