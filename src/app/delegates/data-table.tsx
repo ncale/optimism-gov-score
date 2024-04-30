@@ -71,6 +71,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center space-x-2 pb-4">
         <Input
           placeholder="Filter delegates..."
+          type="search"
           value={
             (table.getColumn("delegate")?.getFilterValue() as string) ?? ""
           }
@@ -83,7 +84,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">
-              Columns
+              Edit Columns
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -95,6 +96,7 @@ export function DataTable<TData, TValue>({
                   <DropdownMenuCheckboxItem
                     key={column.id}
                     className="capitalize"
+                    onSelect={(e) => e.preventDefault()}
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) =>
                       column.toggleVisibility(!!value)
