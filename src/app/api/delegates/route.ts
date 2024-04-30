@@ -39,7 +39,6 @@ function formatResponse(res: DelegateQueryResponse) {
 
   const govScoreConfig: GovScoreConfig = {
     recentParticipation: recent_votes,
-    pctDelegation: pct_voting_power,
     isEnsNameSet: !!delegate.ensName,
     isEnsAvatarSet: !!delegate.ensAvatar,
     recentParticipationWithReason: 0, // dummy data

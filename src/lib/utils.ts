@@ -30,7 +30,6 @@ export function formatPercentValue(num: number) {
 
 export function calcGovScore({
   recentParticipation,
-  pctDelegation,
   isEnsNameSet,
   isEnsAvatarSet,
   recentParticipationWithReason,
@@ -38,28 +37,19 @@ export function calcGovScore({
   // init scores variable
   const scores: Scores = {
     recentParticipation: 0,
-    pctDelegation: 0,
     ensName: 0,
     ensAvatar: 0,
     recentParticipationWithReason: 0,
   };
   // add consistency criteria
-  const recentParticipationScore = recentParticipation * 0.4;
+  const recentParticipationScore = recentParticipation * 0.6;
   scores.recentParticipation = Math.round(recentParticipationScore * 10) / 10;
-  // add power balance criteria
-  if (pctDelegation < 0.005) {
-    scores.pctDelegation = 3;
-  } else if (pctDelegation < 0.01) {
-    scores.pctDelegation = 2;
-  } else if (pctDelegation < 0.015) {
-    scores.pctDelegation = 1;
-  }
   // add transparency criteria
   if (isEnsNameSet) scores.ensName = 1;
   if (isEnsAvatarSet) scores.ensAvatar = 1;
   // add voting with reason criteria
   const recentParticipationWithReasonScore =
-    recentParticipationWithReason * 0.1;
+    recentParticipationWithReason * 0.2;
   scores.recentParticipationWithReason =
     Math.round(recentParticipationWithReasonScore * 10) / 10;
   // sum and return
@@ -68,7 +58,6 @@ export function calcGovScore({
 }
 export type GovScoreConfig = {
   recentParticipation: number;
-  pctDelegation: number;
   isEnsNameSet: boolean;
   isEnsAvatarSet: boolean;
   recentParticipationWithReason: number;
@@ -79,7 +68,6 @@ export type GovScore = {
 };
 export type Scores = {
   recentParticipation: number;
-  pctDelegation: number;
   ensName: number;
   ensAvatar: number;
   recentParticipationWithReason: number;

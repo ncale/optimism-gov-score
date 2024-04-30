@@ -43,7 +43,6 @@ export async function getTableData() {
 
     const govScoreConfig: GovScoreConfig = {
       recentParticipation: recent_votes,
-      pctDelegation: pct_voting_power,
       isEnsNameSet: !!delegate.ensName,
       isEnsAvatarSet: !!delegate.ensAvatar,
       recentParticipationWithReason: recent_votes_with_reason,

@@ -204,7 +204,6 @@ function InfoTooltipContent() {
           <ScoreCard
             scores={{
               recentParticipation: 3.6,
-              pctDelegation: 3,
               ensName: 1,
               ensAvatar: 0,
               recentParticipationWithReason: 0.6,

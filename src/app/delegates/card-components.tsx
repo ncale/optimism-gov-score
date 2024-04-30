@@ -59,35 +59,20 @@ export function ScoreCard({ scores }: { scores: Scores }) {
     <div className="text-sm">
       {/* Recent Voting Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {scores.recentParticipation > 2.8 ? (
+        {scores.recentParticipation > 4.2 ? (
           <IconCheck />
-        ) : scores.recentParticipation > 1.2 ? (
+        ) : scores.recentParticipation > 1.8 ? (
           <IconMinus />
         ) : (
           <IconXMark />
         )}
-        <ScorePill score={`${scores.recentParticipation}/4`} />
+        <ScorePill score={`${scores.recentParticipation}/6`} />
         <span>
           Voted in{" "}
           <span className="special">
-            {Math.round(scores.recentParticipation / 0.4)}
+            {Math.round(scores.recentParticipation / 0.6)}
           </span>{" "}
           of last <span className="special">10</span> onchain props
-        </span>
-      </div>
-
-      {/* Voting Power Score */}
-      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {scores.pctDelegation === 3 ? (
-          <IconCheck />
-        ) : scores.pctDelegation > 0 ? (
-          <IconMinus />
-        ) : (
-          <IconXMark />
-        )}
-        <ScorePill score={`${scores.pctDelegation}/3`} />
-        <span>
-          {getPctDelegationText(scores.pctDelegation)} of total delegated OP
         </span>
       </div>
 
@@ -112,18 +97,18 @@ export function ScoreCard({ scores }: { scores: Scores }) {
 
       {/* Recent Voting With Reason Score */}
       <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {scores.recentParticipationWithReason > 0.7 ? (
+        {scores.recentParticipationWithReason > 1.4 ? (
           <IconCheck />
-        ) : scores.recentParticipationWithReason > 0.3 ? (
+        ) : scores.recentParticipationWithReason > 0.6 ? (
           <IconMinus />
         ) : (
           <IconXMark />
         )}
-        <ScorePill score={`${scores.recentParticipationWithReason}/1`} />
+        <ScorePill score={`${scores.recentParticipationWithReason}/2`} />
         <span>
           Voted with reason in{" "}
           <span className="special">
-            {Math.round(scores.recentParticipationWithReason / 0.1)}
+            {Math.round(scores.recentParticipationWithReason / 0.2)}
           </span>{" "}
           of last <span className="special">10</span> props
         </span>
