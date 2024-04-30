@@ -57,7 +57,11 @@ export const columns = [
     cell: ({ row }) => {
       const recPct = Number(row.getValue("recommendation_percentage"));
       const roundedRecPct = Math.round(recPct * 100);
-      return roundedRecPct;
+      return (
+        <div className="mx-auto w-9 rounded-md bg-primary font-bold text-primary-foreground">
+          {roundedRecPct}
+        </div>
+      );
     },
     enableHiding: false,
   }),
@@ -239,7 +243,7 @@ function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
   const scores = row.original.metadata__scores;
   return (
     <Popover>
-      <PopoverTrigger className="w-16 rounded-md bg-blue-600 px-1 py-0.5 font-bold text-primary-foreground">
+      <PopoverTrigger className="w-16 px-1 py-0.5 font-bold">
         {govScore}
       </PopoverTrigger>
       <PopoverContent>
