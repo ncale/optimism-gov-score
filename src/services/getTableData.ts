@@ -36,17 +36,17 @@ export async function getTableData() {
       new Map<string, boolean>(),
     );
 
-    const recent_participation = finalProps.size;
+    const recent_votes = finalProps.size;
     let counter = 0;
     finalProps.forEach((val) => (val ? counter++ : counter));
-    const recent_participation_with_reason = counter;
+    const recent_votes_with_reason = counter;
 
     const govScoreConfig: GovScoreConfig = {
-      recentParticipation: recent_participation,
+      recentParticipation: recent_votes,
       pctDelegation: pct_voting_power,
       isEnsNameSet: !!delegate.ensName,
       isEnsAvatarSet: !!delegate.ensAvatar,
-      recentParticipationWithReason: recent_participation_with_reason,
+      recentParticipationWithReason: recent_votes_with_reason,
     };
     const { govScore, scores } = calcGovScore(govScoreConfig);
 
@@ -60,8 +60,8 @@ export async function getTableData() {
       metadata__scores: scores,
       voting_power: votingPower_num,
       pct_voting_power: pct_voting_power,
-      recent_participation: recent_participation,
-      recent_participation_with_reason: recent_participation_with_reason,
+      recent_votes: recent_votes,
+      recent_votes_with_reason: recent_votes_with_reason,
       testing__data: delegate,
     } as DelegateTableRow;
   });
