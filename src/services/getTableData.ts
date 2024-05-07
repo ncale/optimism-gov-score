@@ -3,10 +3,12 @@ import { getAllDelegates } from "./getDelegateData";
 import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
 import { formatEther } from "viem";
 import {
-  RecommendationPercentageConfig,
-  calcGovScore,
-  calcRecommendationPercentage,
-  type GovScoreConfig,
+  GovScoreConfig,
+  PowerFactorConfig,
+  QualityFactorConfig,
+  calculateGovScore,
+  calculatePowerFactor,
+  calculateQualityFactor,
 } from "@/lib/utils";
 
 export async function getTableData() {
@@ -46,27 +48,27 @@ export async function getTableData() {
     finalProps.forEach((val) => (val ? counter++ : counter));
     const recent_votes_with_reason = counter;
 
-    const govScoreConfig: GovScoreConfig = {
+    // Calculate quality factor
+    const qualityFactorConfig: QualityFactorConfig = {
       recentParticipation: recent_votes,
       isEnsNameSet: !!delegate.ensName,
       isEnsAvatarSet: !!delegate.ensAvatar,
       recentParticipationWithReason: recent_votes_with_reason,
     };
-    const { govScore, scores } = calcGovScore(govScoreConfig);
+    const qualityFactorResult = calculateQualityFactor(qualityFactorConfig);
 
-    const vpc =
-      pct_voting_power >= 0.03
-        ? 0
-        : pct_voting_power >= 0.02
-          ? 0.33
-          : pct_voting_power >= 0.01
-            ? 0.66
-            : 1;
-    const recPctConfig: RecommendationPercentageConfig = {
-      govScore: govScore,
-      votingPowerCoefficient: vpc,
+    // Calculate power factor
+    const powerFactorConfig: PowerFactorConfig = {
+      pct_voting_power: pct_voting_power,
     };
-    const recPct = calcRecommendationPercentage(recPctConfig);
+    const powerFactorResult = calculatePowerFactor(powerFactorConfig);
+
+    // Calculate govscore
+    const govScoreConfig: GovScoreConfig = {
+      qualityFactor: qualityFactorResult.value,
+      powerFactor: powerFactorResult.value,
+    };
+    const govScoreResult = calculateGovScore(govScoreConfig);
 
     return {
       rank: i + 1,
@@ -74,9 +76,12 @@ export async function getTableData() {
       metadata__address: delegate.address,
       metadata__ens_name: delegate.ensName,
       metadata__ens_avatar: delegate.ensAvatar,
-      recommendation_percentage: recPct,
-      gov_score: govScore,
-      metadata__scores: scores,
+      quality_factor: qualityFactorResult.value,
+      metadata__quality_factor_details: qualityFactorResult.details,
+      power_factor: powerFactorResult.value,
+      metadata__power_factor_details: null, // Data WIP
+      gov_score: govScoreResult.value,
+      metadata__gov_score_details: null, // Data WIP
       voting_power: votingPower_num,
       pct_voting_power: pct_voting_power,
       recent_votes: recent_votes,

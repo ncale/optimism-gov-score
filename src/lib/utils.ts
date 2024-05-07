@@ -28,14 +28,14 @@ export function formatPercentValue(num: number) {
   return formattedNum;
 }
 
-export function calcGovScore({
-  recentParticipation,
+export function calculateQualityFactor({
   isEnsNameSet,
   isEnsAvatarSet,
+  recentParticipation,
   recentParticipationWithReason,
-}: GovScoreConfig): GovScore {
+}: QualityFactorConfig): QualityFactorResult {
   // init scores variable
-  const scores: Scores = {
+  const scores: QualityFactorScores = {
     recentParticipation: 0,
     ensName: 0,
     ensAvatar: 0,
@@ -50,36 +50,51 @@ export function calcGovScore({
   scores.recentParticipationWithReason = recentParticipationWithReason * 20;
   // sum and return
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
-  return { scores, govScore };
+  return { details: scores, value: govScore };
 }
-export type GovScoreConfig = {
-  recentParticipation: number;
+export type QualityFactorConfig = {
   isEnsNameSet: boolean;
   isEnsAvatarSet: boolean;
+  recentParticipation: number;
   recentParticipationWithReason: number;
 };
-export type GovScore = {
-  scores: Scores;
-  govScore: number;
+export type QualityFactorResult = {
+  value: number;
+  details: QualityFactorScores;
 };
-export type Scores = {
+export type QualityFactorScores = {
   recentParticipation: number;
   ensName: number;
   ensAvatar: number;
   recentParticipationWithReason: number;
 };
 
-export function calcRecommendationPercentage({
-  govScore,
-  votingPowerCoefficient,
-}: RecommendationPercentageConfig): RecommendationPercentage {
-  const scoreFactor = (govScore * 0.7) / 1000;
-  const votingPowerFactor = votingPowerCoefficient * 0.3;
-  const result = scoreFactor + votingPowerFactor;
-  return result;
+export function calculatePowerFactor({
+  pct_voting_power,
+}: PowerFactorConfig): PowerFactorResult {
+  const maxScore = 1000;
+  const decayFactor = 50;
+  // Calculate score
+  const score = maxScore * Math.exp(-decayFactor * pct_voting_power);
+  // Clamp score to allowed range and round
+  const formattedScore = Math.round(Math.min(Math.max(score, 0), maxScore));
+  return { value: formattedScore };
 }
-export type RecommendationPercentageConfig = {
-  govScore: number;
-  votingPowerCoefficient: number;
+export type PowerFactorConfig = { pct_voting_power: number };
+export type PowerFactorResult = {
+  value: number;
+  details?: {};
 };
-export type RecommendationPercentage = number;
+
+export function calculateGovScore({
+  qualityFactor,
+  powerFactor,
+}: GovScoreConfig): GovScoreResult {
+  const result = Math.floor(qualityFactor * 0.7 + powerFactor * 0.3);
+  return { value: result };
+}
+export type GovScoreConfig = {
+  qualityFactor: number;
+  powerFactor: number;
+};
+export type GovScoreResult = { value: number };

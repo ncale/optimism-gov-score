@@ -9,7 +9,11 @@ import { ScoreCard } from "./card-components";
 // Hooks
 import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
-import { formatBigNumber, formatPercentValue, Scores } from "@/lib/utils";
+import {
+  formatBigNumber,
+  formatPercentValue,
+  QualityFactorScores,
+} from "@/lib/utils";
 // Types
 import type { Column, Row } from "@tanstack/react-table";
 import { type PropsWithChildren } from "react";
@@ -46,24 +50,51 @@ export const columns = [
     cell: ({ row }) => <DelegateCell row={row} />,
     enableHiding: false,
   }),
-  columnHelper.accessor("recommendation_percentage", {
+  columnHelper.accessor("quality_factor", {
     header: ({ column }) => {
       return (
         <SortButton column={column}>
-          <div>% Recommended</div>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Activity</div>
+            <div>Factor</div>
+          </div>
         </SortButton>
       );
     },
     cell: ({ row }) => {
-      const recPct = Number(row.getValue("recommendation_percentage"));
-      const roundedRecPct = Math.round(recPct * 100);
+      const qf = row.original.quality_factor;
+      const qf_scores = row.original.metadata__quality_factor_details;
       return (
-        <div className="mx-auto w-9 rounded-md bg-primary font-bold text-primary-foreground">
-          {roundedRecPct}
-        </div>
+        <Popover>
+          <PopoverTrigger>{qf}</PopoverTrigger>
+          <PopoverContent>
+            <ScoreCard scores={qf_scores} />
+          </PopoverContent>
+        </Popover>
       );
     },
-    enableHiding: false,
+  }),
+  columnHelper.accessor("power_factor", {
+    header: ({ column }) => {
+      return (
+        <SortButton column={column}>
+          <div className="flex flex-col [&>*]:leading-[1.1]">
+            <div>Power</div>
+            <div>Factor</div>
+          </div>
+        </SortButton>
+      );
+    },
+    cell: ({ row }) => {
+      const pf = row.original.power_factor;
+      const pf_scores = row.original.metadata__power_factor_details;
+      return (
+        <Popover>
+          <PopoverTrigger>{pf}</PopoverTrigger>
+          <PopoverContent>{"[WIP]"}</PopoverContent>
+        </Popover>
+      );
+    },
   }),
   columnHelper.accessor("gov_score", {
     header: ({ column }) => {
@@ -73,8 +104,18 @@ export const columns = [
         </SortButton>
       );
     },
-    cell: ({ row }) => <GovScoreCell row={row} />,
-    size: 400,
+    cell: ({ row }) => {
+      const gs = row.original.gov_score;
+      const gs_scores = row.original.metadata__gov_score_details;
+      return (
+        <Popover>
+          <PopoverTrigger className="w-16 rounded-md bg-primary px-1 py-0.5 font-bold text-primary-foreground">
+            {gs}
+          </PopoverTrigger>
+          <PopoverContent>{"[WIP]"}</PopoverContent>
+        </Popover>
+      );
+    },
     enableHiding: false,
   }),
   columnHelper.accessor("voting_power", {
@@ -150,9 +191,12 @@ export type DelegateTableRow = {
   metadata__address: Address;
   metadata__ens_name: `${string}.eth` | null;
   metadata__ens_avatar: string | null;
-  recommendation_percentage: number;
+  quality_factor: number;
+  metadata__quality_factor_details: QualityFactorScores;
+  power_factor: number;
+  metadata__power_factor_details: any; // Type WIP
   gov_score: number;
-  metadata__scores: Scores;
+  metadata__gov_score_details: any; // Type WIP
   voting_power: number;
   pct_voting_power: number;
   recent_votes: number;
@@ -235,20 +279,5 @@ function InfoTooltipContent() {
         </Link>
       </div>
     </div>
-  );
-}
-
-function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
-  const govScore = Math.round(row.original.gov_score * 10) / 10;
-  const scores = row.original.metadata__scores;
-  return (
-    <Popover>
-      <PopoverTrigger className="w-16 px-1 py-0.5 font-bold">
-        {govScore}
-      </PopoverTrigger>
-      <PopoverContent>
-        <ScoreCard scores={scores} />
-      </PopoverContent>
-    </Popover>
   );
 }
