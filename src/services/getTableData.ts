@@ -79,7 +79,7 @@ export async function getTableData() {
       activity_factor: activityFactorResult.value,
       metadata__activity_factor_details: activityFactorResult.details,
       power_factor: powerFactorResult.value,
-      metadata__power_factor_details: null, // Data WIP
+      metadata__power_factor_details: powerFactorResult.details,
       gov_score: govScoreResult.value,
       metadata__gov_score_details: null, // Data WIP
       voting_power: votingPower_num,

@@ -5,7 +5,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import DelegateButton from "./delegate-button";
-import { ActivityScoreCard } from "./card-components";
+import { ActivityScoreCard, PowerFactorScoreCard } from "./card-components";
 // Hooks
 import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
@@ -13,6 +13,7 @@ import {
   type ActivityFactorScores,
   formatBigNumber,
   formatPercentValue,
+  PowerFactorDetails,
 } from "@/lib/utils";
 // Types
 import type { Column, Row } from "@tanstack/react-table";
@@ -87,11 +88,16 @@ export const columns = [
     },
     cell: ({ row }) => {
       const pf = row.original.power_factor;
-      const pf_scores = row.original.metadata__power_factor_details;
+      const pf_details = row.original.metadata__power_factor_details;
       return (
         <Popover>
           <PopoverTrigger>{pf}</PopoverTrigger>
-          <PopoverContent>{"[WIP]"}</PopoverContent>
+          <PopoverContent>
+            <PowerFactorScoreCard
+              powerFactorDetails={pf_details}
+              powerFactor={pf}
+            />
+          </PopoverContent>
         </Popover>
       );
     },
@@ -194,7 +200,7 @@ export type DelegateTableRow = {
   activity_factor: number;
   metadata__activity_factor_details: ActivityFactorScores;
   power_factor: number;
-  metadata__power_factor_details: any; // Type WIP
+  metadata__power_factor_details: PowerFactorDetails; // Type WIP
   gov_score: number;
   metadata__gov_score_details: any; // Type WIP
   voting_power: number;

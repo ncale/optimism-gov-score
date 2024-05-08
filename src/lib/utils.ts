@@ -78,12 +78,19 @@ export function calculatePowerFactor({
   const score = maxScore * Math.exp(-decayFactor * pct_voting_power * 100);
   // Clamp score to allowed range and round
   const formattedScore = Math.round(Math.min(Math.max(score, 0), maxScore));
-  return { value: formattedScore };
+  return {
+    value: formattedScore,
+    details: { decayFactor, pctVotingPower: pct_voting_power * 100 },
+  };
 }
 export type PowerFactorConfig = { pct_voting_power: number };
 export type PowerFactorResult = {
   value: number;
-  details?: {};
+  details: PowerFactorDetails;
+};
+export type PowerFactorDetails = {
+  decayFactor: number;
+  pctVotingPower: number;
 };
 
 export function calculateGovScore({

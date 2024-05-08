@@ -5,7 +5,10 @@ import {
 } from "@/components/icons/lucide-icons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { type DelegateTableRow } from "./columns";
-import { type ActivityFactorScores } from "@/lib/utils";
+import {
+  type PowerFactorDetails,
+  type ActivityFactorScores,
+} from "@/lib/utils";
 
 export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
   const address = delegate.metadata__address;
@@ -116,22 +119,34 @@ export function ActivityScoreCard({
   );
 }
 
-function getPctDelegationText(score: number) {
-  switch (score) {
-    case 0:
-      return "More than 1.5%";
-    case 1:
-      return "More than 1.0%";
-    case 2:
-      return "More than 0.5%";
-    case 3:
-      return "Less than 0.5%";
-  }
+export function PowerFactorScoreCard({
+  powerFactor,
+  powerFactorDetails,
+}: {
+  powerFactor: number;
+  powerFactorDetails: PowerFactorDetails;
+}) {
+  const pctVotingPower = powerFactorDetails.pctVotingPower;
+  const roundedPctVotingPower = Math.round(pctVotingPower * 1000) / 1000;
+  return (
+    <div className="flex items-center gap-1 text-sm">
+      <IconCheck />
+      <div className="h-[1.3em] w-fit rounded-full bg-gray-600 px-1 text-center text-xs font-bold text-white">
+        {powerFactor}
+      </div>
+      <span className="ml-0.5">{"formula: "}</span>
+      <pre className="text-xs">
+        {"1000*(e^"}
+        <span className="underline">-{roundedPctVotingPower}</span>
+        {")"}
+      </pre>
+    </div>
+  );
 }
 
 export function ScorePill({ score }: { score: string | number }) {
   return (
-    <div className="h-[1.3em] w-14 rounded-full bg-gray-600 text-center text-xs font-bold text-white">
+    <div className="h-[1.3em] w-fit rounded-full bg-gray-600 px-1 text-center text-xs font-bold text-white">
       {score}
     </div>
   );
