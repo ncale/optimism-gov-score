@@ -3,15 +3,15 @@ import {
   IconMinus,
   IconXMark,
 } from "@/components/icons/lucide-icons";
-import { type Scores } from "@/lib/utils";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { type DelegateTableRow } from "./columns";
+import { type ActivityFactorScores } from "@/lib/utils";
 
 export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
   const address = delegate.metadata__address;
   const ensName = delegate.metadata__ens_name;
   const ensAvatar = delegate.metadata__ens_avatar;
-  const scores = delegate.metadata__scores;
+  const scores = delegate.metadata__gov_score_details;
   const govScore = delegate.gov_score;
 
   const nameText = ensName
@@ -53,7 +53,7 @@ export function OPBalanceCard({ balance }: { balance: string | number }) {
   );
 }
 
-export function ScoreCard({ scores }: { scores: Scores }) {
+export function ScoreCard({ scores }: { scores: ActivityFactorScores }) {
   const ensScore = scores.ensName + scores.ensAvatar;
   return (
     <div className="text-sm">

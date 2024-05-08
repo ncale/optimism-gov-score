@@ -10,9 +10,9 @@ import { ScoreCard } from "./card-components";
 import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
 import {
+  type ActivityFactorScores,
   formatBigNumber,
   formatPercentValue,
-  QualityFactorScores,
 } from "@/lib/utils";
 // Types
 import type { Column, Row } from "@tanstack/react-table";
@@ -50,7 +50,7 @@ export const columns = [
     cell: ({ row }) => <DelegateCell row={row} />,
     enableHiding: false,
   }),
-  columnHelper.accessor("quality_factor", {
+  columnHelper.accessor("activity_factor", {
     header: ({ column }) => {
       return (
         <SortButton column={column}>
@@ -62,13 +62,13 @@ export const columns = [
       );
     },
     cell: ({ row }) => {
-      const qf = row.original.quality_factor;
-      const qf_scores = row.original.metadata__quality_factor_details;
+      const af = row.original.activity_factor;
+      const af_scores = row.original.metadata__activity_factor_details;
       return (
         <Popover>
-          <PopoverTrigger>{qf}</PopoverTrigger>
+          <PopoverTrigger>{af}</PopoverTrigger>
           <PopoverContent>
-            <ScoreCard scores={qf_scores} />
+            <ScoreCard scores={af_scores} />
           </PopoverContent>
         </Popover>
       );
@@ -191,8 +191,8 @@ export type DelegateTableRow = {
   metadata__address: Address;
   metadata__ens_name: `${string}.eth` | null;
   metadata__ens_avatar: string | null;
-  quality_factor: number;
-  metadata__quality_factor_details: QualityFactorScores;
+  activity_factor: number;
+  metadata__activity_factor_details: ActivityFactorScores;
   power_factor: number;
   metadata__power_factor_details: any; // Type WIP
   gov_score: number;

@@ -5,10 +5,10 @@ import { formatEther } from "viem";
 import {
   GovScoreConfig,
   PowerFactorConfig,
-  QualityFactorConfig,
+  ActivityFactorConfig,
   calculateGovScore,
   calculatePowerFactor,
-  calculateQualityFactor,
+  calculateActivityFactor,
 } from "@/lib/utils";
 
 export async function getTableData() {
@@ -48,14 +48,14 @@ export async function getTableData() {
     finalProps.forEach((val) => (val ? counter++ : counter));
     const recent_votes_with_reason = counter;
 
-    // Calculate quality factor
-    const qualityFactorConfig: QualityFactorConfig = {
+    // Calculate activity factor
+    const activityFactorConfig: ActivityFactorConfig = {
       recentParticipation: recent_votes,
       isEnsNameSet: !!delegate.ensName,
       isEnsAvatarSet: !!delegate.ensAvatar,
       recentParticipationWithReason: recent_votes_with_reason,
     };
-    const qualityFactorResult = calculateQualityFactor(qualityFactorConfig);
+    const activityFactorResult = calculateActivityFactor(activityFactorConfig);
 
     // Calculate power factor
     const powerFactorConfig: PowerFactorConfig = {
@@ -65,7 +65,7 @@ export async function getTableData() {
 
     // Calculate govscore
     const govScoreConfig: GovScoreConfig = {
-      qualityFactor: qualityFactorResult.value,
+      activityFactor: activityFactorResult.value,
       powerFactor: powerFactorResult.value,
     };
     const govScoreResult = calculateGovScore(govScoreConfig);
@@ -76,8 +76,8 @@ export async function getTableData() {
       metadata__address: delegate.address,
       metadata__ens_name: delegate.ensName,
       metadata__ens_avatar: delegate.ensAvatar,
-      quality_factor: qualityFactorResult.value,
-      metadata__quality_factor_details: qualityFactorResult.details,
+      activity_factor: activityFactorResult.value,
+      metadata__activity_factor_details: activityFactorResult.details,
       power_factor: powerFactorResult.value,
       metadata__power_factor_details: null, // Data WIP
       gov_score: govScoreResult.value,

@@ -28,14 +28,14 @@ export function formatPercentValue(num: number) {
   return formattedNum;
 }
 
-export function calculateQualityFactor({
+export function calculateActivityFactor({
   isEnsNameSet,
   isEnsAvatarSet,
   recentParticipation,
   recentParticipationWithReason,
-}: QualityFactorConfig): QualityFactorResult {
+}: ActivityFactorConfig): ActivityFactorResult {
   // init scores variable
-  const scores: QualityFactorScores = {
+  const scores: ActivityFactorScores = {
     recentParticipation: 0,
     ensName: 0,
     ensAvatar: 0,
@@ -52,17 +52,17 @@ export function calculateQualityFactor({
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
   return { details: scores, value: govScore };
 }
-export type QualityFactorConfig = {
+export type ActivityFactorConfig = {
   isEnsNameSet: boolean;
   isEnsAvatarSet: boolean;
   recentParticipation: number;
   recentParticipationWithReason: number;
 };
-export type QualityFactorResult = {
+export type ActivityFactorResult = {
   value: number;
-  details: QualityFactorScores;
+  details: ActivityFactorScores;
 };
-export type QualityFactorScores = {
+export type ActivityFactorScores = {
   recentParticipation: number;
   ensName: number;
   ensAvatar: number;
@@ -87,14 +87,14 @@ export type PowerFactorResult = {
 };
 
 export function calculateGovScore({
-  qualityFactor,
+  activityFactor,
   powerFactor,
 }: GovScoreConfig): GovScoreResult {
-  const result = Math.floor(qualityFactor * 0.7 + powerFactor * 0.3);
+  const result = Math.floor(activityFactor * 0.7 + powerFactor * 0.3);
   return { value: result };
 }
 export type GovScoreConfig = {
-  qualityFactor: number;
+  activityFactor: number;
   powerFactor: number;
 };
 export type GovScoreResult = { value: number };
