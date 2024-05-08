@@ -5,7 +5,7 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import DelegateButton from "./delegate-button";
-import { ScoreCard } from "./card-components";
+import { ActivityScoreCard } from "./card-components";
 // Hooks
 import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
@@ -68,7 +68,7 @@ export const columns = [
         <Popover>
           <PopoverTrigger>{af}</PopoverTrigger>
           <PopoverContent>
-            <ScoreCard scores={af_scores} />
+            <ActivityScoreCard scores={af_scores} />
           </PopoverContent>
         </Popover>
       );
@@ -246,38 +246,5 @@ function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
         <IconLink />
       </div>
     </a>
-  );
-}
-
-function InfoTooltipContent() {
-  return (
-    <div>
-      <div className="w-64 leading-tight md:w-72">
-        <p className="mb-1">
-          An opinionated score of how worthy a delegate is of receiving further
-          delegation.
-        </p>
-        <p className="mb-1">
-          A high govscore means a delegate{" "}
-          <span className="special">votes consistently</span>, has a{" "}
-          <span className="special">transparent onchain identity</span>, and is
-          not <span className="special">too powerful</span>.{" "}
-        </p>
-        <p className="mt-2">Ex...</p>
-        <div className="mb-2 h-fit w-fit rounded-md bg-secondary px-2 py-1 shadow-lg">
-          <ScoreCard
-            scores={{
-              recentParticipation: 3.6,
-              ensName: 1,
-              ensAvatar: 0,
-              recentParticipationWithReason: 0.6,
-            }}
-          />
-        </div>
-        <Link href="/faq" className="special link">
-          read more
-        </Link>
-      </div>
-    </div>
   );
 }

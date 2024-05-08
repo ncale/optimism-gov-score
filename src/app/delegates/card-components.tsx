@@ -11,7 +11,6 @@ export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
   const address = delegate.metadata__address;
   const ensName = delegate.metadata__ens_name;
   const ensAvatar = delegate.metadata__ens_avatar;
-  const scores = delegate.metadata__gov_score_details;
   const govScore = delegate.gov_score;
 
   const nameText = ensName
@@ -35,9 +34,7 @@ export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
         </div>
       </a>
       <hr />
-      <ScoreCard scores={scores} />
-      <hr />
-      <p className="text-xl font-bold">{govScore}/10 GovScore</p>
+      <p className="text-xl font-bold">{govScore} GovScore</p>
     </div>
   );
 }
@@ -53,7 +50,11 @@ export function OPBalanceCard({ balance }: { balance: string | number }) {
   );
 }
 
-export function ScoreCard({ scores }: { scores: ActivityFactorScores }) {
+export function ActivityScoreCard({
+  scores,
+}: {
+  scores: ActivityFactorScores;
+}) {
   const ensScore = scores.ensName + scores.ensAvatar;
   return (
     <div className="text-sm">
