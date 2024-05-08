@@ -73,9 +73,9 @@ export function calculatePowerFactor({
   pct_voting_power,
 }: PowerFactorConfig): PowerFactorResult {
   const maxScore = 1000;
-  const decayFactor = 50;
+  const decayFactor = 1;
   // Calculate score
-  const score = maxScore * Math.exp(-decayFactor * pct_voting_power);
+  const score = maxScore * Math.exp(-decayFactor * pct_voting_power * 100);
   // Clamp score to allowed range and round
   const formattedScore = Math.round(Math.min(Math.max(score, 0), maxScore));
   return { value: formattedScore };
