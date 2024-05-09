@@ -129,17 +129,34 @@ export function PowerFactorScoreCard({
   const pctVotingPower = powerFactorDetails.pctVotingPower;
   const roundedPctVotingPower = Math.round(pctVotingPower * 1000) / 1000;
   return (
-    <div className="flex items-center gap-1 text-sm">
-      <IconCheck />
-      <div className="h-[1.3em] w-fit rounded-full bg-gray-600 px-1 text-center text-xs font-bold text-white">
-        {powerFactor}
+    <div className="w-48 space-y-1 text-sm">
+      {/* Summary & Formula */}
+      <div className="flex items-center space-x-1">
+        {powerFactor > 700 ? (
+          <IconCheck />
+        ) : powerFactor > 300 ? (
+          <IconMinus />
+        ) : (
+          <IconXMark />
+        )}
+        <ScorePill score={powerFactor} />
+        <pre className="pl-0.5 text-xs">
+          {"= 1000*(e^"}
+          <span className="text-blue-600 underline">
+            -{roundedPctVotingPower}
+          </span>
+          {")"}
+        </pre>
       </div>
-      <span className="ml-0.5">{"formula: "}</span>
-      <pre className="text-xs">
-        {"1000*(e^"}
-        <span className="underline">-{roundedPctVotingPower}</span>
-        {")"}
-      </pre>
+
+      {/* Divider */}
+      <hr />
+
+      {/* Description */}
+      <div className="leading-tight">
+        Function related to a delegate's voting power %. For more info, see the
+        FAQ.
+      </div>
     </div>
   );
 }
