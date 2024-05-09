@@ -195,6 +195,73 @@ export function PowerFactorScoreCard({
   );
 }
 
+export function GovScoreScoreCard({
+  activityFactor,
+  powerFactor,
+  govScore,
+}: {
+  activityFactor: number;
+  powerFactor: number;
+  govScore: number;
+}) {
+  const af_pct = activityFactor / 10;
+  const pf_pct = powerFactor / 10;
+  return (
+    <div className="w-52 space-y-1 text-sm">
+      {/* Summary & Formula */}
+      <div className="flex space-x-1">
+        {govScore > 700 ? (
+          <IconCheck />
+        ) : govScore > 300 ? (
+          <IconMinus />
+        ) : (
+          <IconXMark />
+        )}
+        <ScorePill score={govScore} />
+        <pre className="text-xs">
+          {"= 0.7("}
+          <span className="text-blue-600 underline">{activityFactor}</span>
+          {") + 0.3("}
+          <span className="text-blue-600 underline">{powerFactor}</span>
+          {")"}
+        </pre>
+      </div>
+
+      {/* Divider */}
+      <hr />
+
+      {/* Score Breakdown */}
+      <div className="grid grid-cols-10">
+        {/* Labels */}
+        <p className="col-span-7 text-center font-medium underline">Activity</p>
+        <p className="col-span-3 text-center font-medium underline">Power</p>
+        {/* Scores */}
+        <p className="col-span-7 bg-blue-50 text-center">{activityFactor}</p>
+        <p className="col-span-3 bg-purple-50 text-center">{powerFactor}</p>
+        {/* Bars */}
+        <div className="col-span-7 h-2 bg-blue-200">
+          <div className="h-full bg-blue-500" style={{ width: `${af_pct}%` }} />
+        </div>
+        <div className="col-span-3 h-2 bg-purple-200">
+          <div
+            className="h-full bg-purple-500"
+            style={{ width: `${pf_pct}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Divider */}
+      <hr />
+
+      {/* Description */}
+      <div>
+        GovScore is a 70/30 weighed average between Activity and Power Factor
+        respectively. For more info, see the FAQ.
+      </div>
+    </div>
+  );
+}
+
 export function ScorePill({ score }: { score: string | number }) {
   return (
     <div className="h-[1.3em] w-fit rounded-full bg-gray-600 px-1 text-center text-xs font-bold text-white">

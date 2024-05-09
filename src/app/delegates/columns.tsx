@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import DelegateButton from "./delegate-button";
 import {
   ActivityFactorScoreCard,
+  GovScoreScoreCard,
   PowerFactorScoreCard,
 } from "./card-components";
 // Hooks
@@ -115,13 +116,21 @@ export const columns = [
     },
     cell: ({ row }) => {
       const gs = row.original.gov_score;
+      const af = row.original.activity_factor;
+      const pf = row.original.power_factor;
       const gs_scores = row.original.metadata__gov_score_details;
       return (
         <Popover>
           <PopoverTrigger className="w-16 rounded-md bg-primary px-1 py-0.5 font-bold text-primary-foreground">
             {gs}
           </PopoverTrigger>
-          <PopoverContent></PopoverContent>
+          <PopoverContent>
+            <GovScoreScoreCard
+              activityFactor={af}
+              powerFactor={pf}
+              govScore={gs}
+            />
+          </PopoverContent>
         </Popover>
       );
     },
