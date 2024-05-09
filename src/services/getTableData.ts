@@ -2,7 +2,14 @@ import { type DelegateTableRow } from "@/app/delegates/columns";
 import { getAllDelegates } from "./getDelegateData";
 import { QUALIFYING_PROPOSAL_IDS } from "@/config/config";
 import { formatEther } from "viem";
-import { calcGovScore, type GovScoreConfig } from "@/lib/utils";
+import {
+  GovScoreConfig,
+  PowerFactorConfig,
+  ActivityFactorConfig,
+  calculateGovScore,
+  calculatePowerFactor,
+  calculateActivityFactor,
+} from "@/lib/utils";
 
 export async function getTableData() {
   console.log("Starting getTableData...");
@@ -41,14 +48,27 @@ export async function getTableData() {
     finalProps.forEach((val) => (val ? counter++ : counter));
     const recent_votes_with_reason = counter;
 
-    const govScoreConfig: GovScoreConfig = {
+    // Calculate activity factor
+    const activityFactorConfig: ActivityFactorConfig = {
       recentParticipation: recent_votes,
-      pctDelegation: pct_voting_power,
       isEnsNameSet: !!delegate.ensName,
       isEnsAvatarSet: !!delegate.ensAvatar,
       recentParticipationWithReason: recent_votes_with_reason,
     };
-    const { govScore, scores } = calcGovScore(govScoreConfig);
+    const activityFactorResult = calculateActivityFactor(activityFactorConfig);
+
+    // Calculate power factor
+    const powerFactorConfig: PowerFactorConfig = {
+      pct_voting_power: pct_voting_power,
+    };
+    const powerFactorResult = calculatePowerFactor(powerFactorConfig);
+
+    // Calculate govscore
+    const govScoreConfig: GovScoreConfig = {
+      activityFactor: activityFactorResult.value,
+      powerFactor: powerFactorResult.value,
+    };
+    const govScoreResult = calculateGovScore(govScoreConfig);
 
     return {
       rank: i + 1,
@@ -56,8 +76,12 @@ export async function getTableData() {
       metadata__address: delegate.address,
       metadata__ens_name: delegate.ensName,
       metadata__ens_avatar: delegate.ensAvatar,
-      gov_score: govScore,
-      metadata__scores: scores,
+      activity_factor: activityFactorResult.value,
+      metadata__activity_factor_details: activityFactorResult.details,
+      power_factor: powerFactorResult.value,
+      metadata__power_factor_details: powerFactorResult.details,
+      gov_score: govScoreResult.value,
+      metadata__gov_score_details: null, // Data WIP
       voting_power: votingPower_num,
       pct_voting_power: pct_voting_power,
       recent_votes: recent_votes,

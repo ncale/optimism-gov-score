@@ -5,7 +5,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ReactNode } from "react";
-import { ScoreCard, ScorePill } from "../delegates/card-components";
+import {
+  ActivityFactorScoreCard,
+  ScorePill,
+} from "../delegates/card-components";
 
 export default function Home() {
   return (
@@ -84,17 +87,6 @@ const faqItems: Array<[question: string, response: ReactNode]> = [
           </p>
         </div>
       </div>
-      {/* <p className="mt-2">Ex...</p>
-      <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
-        <ScoreCard
-          scores={{
-            ensName: 1,
-            ensAvatar: 0,
-            recentParticipation: 4.5,
-            pctDelegation: 3,
-          }}
-        />
-      </div> */}
     </>,
   ],
   [

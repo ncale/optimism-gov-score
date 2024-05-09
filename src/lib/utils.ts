@@ -28,59 +28,80 @@ export function formatPercentValue(num: number) {
   return formattedNum;
 }
 
-export function calcGovScore({
-  recentParticipation,
-  pctDelegation,
+export function calculateActivityFactor({
   isEnsNameSet,
   isEnsAvatarSet,
+  recentParticipation,
   recentParticipationWithReason,
-}: GovScoreConfig): GovScore {
+}: ActivityFactorConfig): ActivityFactorResult {
   // init scores variable
-  const scores: Scores = {
+  const scores: ActivityFactorScores = {
     recentParticipation: 0,
-    pctDelegation: 0,
     ensName: 0,
     ensAvatar: 0,
     recentParticipationWithReason: 0,
   };
   // add consistency criteria
-  const recentParticipationScore = recentParticipation * 0.4;
-  scores.recentParticipation = Math.round(recentParticipationScore * 10) / 10;
-  // add power balance criteria
-  if (pctDelegation < 0.005) {
-    scores.pctDelegation = 3;
-  } else if (pctDelegation < 0.01) {
-    scores.pctDelegation = 2;
-  } else if (pctDelegation < 0.015) {
-    scores.pctDelegation = 1;
-  }
+  scores.recentParticipation = recentParticipation * 60;
   // add transparency criteria
-  if (isEnsNameSet) scores.ensName = 1;
-  if (isEnsAvatarSet) scores.ensAvatar = 1;
+  if (isEnsNameSet) scores.ensName = 100;
+  if (isEnsAvatarSet) scores.ensAvatar = 100;
   // add voting with reason criteria
-  const recentParticipationWithReasonScore =
-    recentParticipationWithReason * 0.1;
-  scores.recentParticipationWithReason =
-    Math.round(recentParticipationWithReasonScore * 10) / 10;
+  scores.recentParticipationWithReason = recentParticipationWithReason * 20;
   // sum and return
   const govScore = Object.values(scores).reduce((a, b) => a + b, 0);
-  return { scores, govScore };
+  return { details: scores, value: govScore };
 }
-export type GovScoreConfig = {
-  recentParticipation: number;
-  pctDelegation: number;
+export type ActivityFactorConfig = {
   isEnsNameSet: boolean;
   isEnsAvatarSet: boolean;
+  recentParticipation: number;
   recentParticipationWithReason: number;
 };
-export type GovScore = {
-  scores: Scores;
-  govScore: number;
+export type ActivityFactorResult = {
+  value: number;
+  details: ActivityFactorScores;
 };
-export type Scores = {
+export type ActivityFactorScores = {
   recentParticipation: number;
-  pctDelegation: number;
   ensName: number;
   ensAvatar: number;
   recentParticipationWithReason: number;
 };
+
+export function calculatePowerFactor({
+  pct_voting_power,
+}: PowerFactorConfig): PowerFactorResult {
+  const maxScore = 1000;
+  const decayFactor = 1;
+  // Calculate score
+  const score = maxScore * Math.exp(-decayFactor * pct_voting_power * 100);
+  // Clamp score to allowed range and round
+  const formattedScore = Math.round(Math.min(Math.max(score, 0), maxScore));
+  return {
+    value: formattedScore,
+    details: { decayFactor, pctVotingPower: pct_voting_power * 100 },
+  };
+}
+export type PowerFactorConfig = { pct_voting_power: number };
+export type PowerFactorResult = {
+  value: number;
+  details: PowerFactorDetails;
+};
+export type PowerFactorDetails = {
+  decayFactor: number;
+  pctVotingPower: number;
+};
+
+export function calculateGovScore({
+  activityFactor,
+  powerFactor,
+}: GovScoreConfig): GovScoreResult {
+  const result = Math.floor(activityFactor * 0.7 + powerFactor * 0.3);
+  return { value: result };
+}
+export type GovScoreConfig = {
+  activityFactor: number;
+  powerFactor: number;
+};
+export type GovScoreResult = { value: number };
