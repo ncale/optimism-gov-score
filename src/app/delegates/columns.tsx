@@ -5,7 +5,10 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import DelegateButton from "./delegate-button";
-import { ActivityScoreCard, PowerFactorScoreCard } from "./card-components";
+import {
+  ActivityFactorScoreCard,
+  PowerFactorScoreCard,
+} from "./card-components";
 // Hooks
 import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
@@ -69,7 +72,7 @@ export const columns = [
         <Popover>
           <PopoverTrigger>{af}</PopoverTrigger>
           <PopoverContent>
-            <ActivityScoreCard scores={af_scores} />
+            <ActivityFactorScoreCard activityFactor={af} scores={af_scores} />
           </PopoverContent>
         </Popover>
       );
@@ -118,7 +121,7 @@ export const columns = [
           <PopoverTrigger className="w-16 rounded-md bg-primary px-1 py-0.5 font-bold text-primary-foreground">
             {gs}
           </PopoverTrigger>
-          <PopoverContent>{"[WIP]"}</PopoverContent>
+          <PopoverContent></PopoverContent>
         </Popover>
       );
     },

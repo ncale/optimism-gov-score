@@ -53,67 +53,101 @@ export function OPBalanceCard({ balance }: { balance: string | number }) {
   );
 }
 
-export function ActivityScoreCard({
+export function ActivityFactorScoreCard({
+  activityFactor,
   scores,
 }: {
+  activityFactor: number;
   scores: ActivityFactorScores;
 }) {
   const ensScore = scores.ensName + scores.ensAvatar;
+  const votes = scores.recentParticipation / 60;
+  const votesWithReason = scores.recentParticipationWithReason / 20;
   return (
-    <div className="text-sm">
-      {/* Recent Voting Score */}
-      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {scores.recentParticipation > 420 ? (
+    <div className="space-y-1 text-sm">
+      {/* Summary & Formula */}
+      <div className="flex items-center space-x-1">
+        {activityFactor > 700 ? (
           <IconCheck />
-        ) : scores.recentParticipation > 180 ? (
+        ) : activityFactor > 300 ? (
           <IconMinus />
         ) : (
           <IconXMark />
         )}
-        <ScorePill score={`${scores.recentParticipation}/600`} />
-        <span>
-          Voted in{" "}
-          <span className="special">{scores.recentParticipation / 60}</span> of
-          last <span className="special">10</span> onchain props
-        </span>
+        <ScorePill score={activityFactor} />
+        <pre className="text-xs">
+          {"= 60("}
+          <span className="text-blue-600 underline">{votes}</span>
+          {") + 100("}
+          <span className="text-blue-600 underline">
+            {scores.ensName ? 1 : 0}
+          </span>
+          {") + 100("}
+          <span className="text-blue-600 underline">
+            {scores.ensAvatar ? 1 : 0}
+          </span>
+          {") + 20("}
+          <span className="text-blue-600 underline">{votesWithReason}</span>
+          {")"}
+        </pre>
       </div>
 
-      {/* Ens Score */}
-      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {ensScore === 200 ? (
-          <IconCheck />
-        ) : ensScore === 100 ? (
-          <IconMinus />
-        ) : (
-          <IconXMark />
-        )}
-        <ScorePill score={`${ensScore}/200`} />
-        <span>
-          {ensScore === 200
-            ? "ENS primary name and avatar set"
-            : ensScore === 100
-              ? "ENS primary name set, no avatar"
-              : "No ENS primary name or avatar set"}
-        </span>
-      </div>
+      {/* Divider */}
+      <hr />
 
-      {/* Recent Voting With Reason Score */}
-      <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
-        {scores.recentParticipationWithReason > 140 ? (
-          <IconCheck />
-        ) : scores.recentParticipationWithReason > 60 ? (
-          <IconMinus />
-        ) : (
-          <IconXMark />
-        )}
-        <ScorePill score={`${scores.recentParticipationWithReason}/200`} />
-        <span>
-          Voted with reason in{" "}
-          <span className="special">
-            {scores.recentParticipationWithReason / 20}
-          </span>{" "}
-          of last <span className="special">10</span> props
-        </span>
+      {/* Scores */}
+      <div>
+        {/* Recent Votes */}
+        <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
+          {scores.recentParticipation > 420 ? (
+            <IconCheck />
+          ) : scores.recentParticipation > 180 ? (
+            <IconMinus />
+          ) : (
+            <IconXMark />
+          )}
+          <ScorePill score={`${scores.recentParticipation}/600`} />
+          <span>
+            Voted in <span className="special">{votes}</span> of last{" "}
+            <span className="special">10</span> onchain props
+          </span>
+        </div>
+
+        {/* ENS */}
+        <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
+          {ensScore === 200 ? (
+            <IconCheck />
+          ) : ensScore === 100 ? (
+            <IconMinus />
+          ) : (
+            <IconXMark />
+          )}
+          <ScorePill score={`${ensScore}/200`} />
+          <span>
+            {ensScore === 200
+              ? "ENS primary name and avatar set"
+              : ensScore === 100
+                ? "ENS primary name set, no avatar"
+                : "No ENS primary name or avatar set"}
+          </span>
+        </div>
+
+        {/* Recent Voting With Reason */}
+        <div className="flex items-center gap-1 overflow-hidden [&>*]:shrink-0">
+          {scores.recentParticipationWithReason > 140 ? (
+            <IconCheck />
+          ) : scores.recentParticipationWithReason > 60 ? (
+            <IconMinus />
+          ) : (
+            <IconXMark />
+          )}
+          <ScorePill score={`${scores.recentParticipationWithReason}/200`} />
+          <span>
+            Voted with reason in{" "}
+            <span className="special">{votesWithReason}</span> of last{" "}
+            <span className="special">10</span> props
+          </span>
+        </div>
       </div>
     </div>
   );
