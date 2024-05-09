@@ -5,7 +5,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ReactNode } from "react";
-import { ActivityScoreCard, ScorePill } from "../delegates/card-components";
+import {
+  ActivityFactorScoreCard,
+  ScorePill,
+} from "../delegates/card-components";
 
 export default function Home() {
   return (
