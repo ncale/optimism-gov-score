@@ -9,6 +9,7 @@ import {
   type PowerFactorDetails,
   type ActivityFactorScores,
 } from "@/lib/utils";
+import Link from "next/link";
 
 export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
   const address = delegate.metadata__address;
@@ -163,7 +164,7 @@ export function PowerFactorScoreCard({
   const pctVotingPower = powerFactorDetails.pctVotingPower;
   const roundedPctVotingPower = Math.round(pctVotingPower * 1000) / 1000;
   return (
-    <div className="w-48 space-y-1 text-sm">
+    <div className="w-52 space-y-1 text-sm">
       {/* Summary & Formula */}
       <div className="flex items-center space-x-1">
         {powerFactor > 700 ? (
@@ -188,8 +189,16 @@ export function PowerFactorScoreCard({
 
       {/* Description */}
       <div className="leading-tight">
-        Function related to a delegate's voting power %. For more info, see the
-        FAQ.
+        {
+          "Function related to a delegate's voting power %. For more info, see the "
+        }
+        <Link
+          href={"/faq"}
+          className="font-medium text-blue-500 underline hover:text-blue-400 active:text-blue-600"
+        >
+          FAQ
+        </Link>
+        .
       </div>
     </div>
   );
@@ -256,7 +265,14 @@ export function GovScoreScoreCard({
       {/* Description */}
       <div>
         GovScore is a 70/30 weighed average between Activity and Power Factor
-        respectively. For more info, see the FAQ.
+        respectively. For more info, see the{" "}
+        <Link
+          href={"/faq"}
+          className="font-medium text-blue-500 underline hover:text-blue-400 active:text-blue-600"
+        >
+          FAQ
+        </Link>
+        .
       </div>
     </div>
   );
