@@ -80,7 +80,7 @@ export default function Message({
           <></>
         )}
       </div>
-      <div className="gap-1.5 rounded-md border px-4 py-2">
+      <div className="gap-1.5 rounded-md border px-4 py-4">
         {delegate ? <DelegateCard delegate={delegate} /> : <></>}
       </div>
     </div>

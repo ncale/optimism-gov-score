@@ -10,6 +10,7 @@ import {
   type ActivityFactorScores,
 } from "@/lib/utils";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 
 export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
   const address = delegate.metadata__address;
@@ -22,23 +23,25 @@ export function DelegateCard({ delegate }: { delegate: DelegateTableRow }) {
     : `${address.slice(0, 5)}...${address.slice(-4)}`;
 
   return (
-    <div className="items-left flex w-full flex-col gap-1.5">
+    <div className="w-full space-y-1.5">
       <div>Your delegate is...</div>
-      <a
-        href={`https://vote.optimism.io/delegates/${address}`}
-        target="_blank"
-        className="flex items-center text-lg font-bold md:text-2xl"
-      >
-        <Avatar className="h-14 w-14">
-          {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
-          <AvatarFallback className="bg-ens-grad" />
-        </Avatar>
-        <div className="ml-2">
-          <h3 className="">{nameText}</h3>
-        </div>
-      </a>
-      <hr />
-      <p className="text-xl font-bold">{govScore} GovScore</p>
+      <div className="flex items-center justify-between">
+        <a
+          href={`https://vote.optimism.io/delegates/${address}`}
+          target="_blank"
+          className="flex items-center space-x-2 text-lg font-bold md:text-2xl"
+        >
+          <Avatar className="h-14 w-14">
+            {ensAvatar ? <AvatarImage src={ensAvatar} /> : null}
+            <AvatarFallback className="bg-ens-grad" />
+          </Avatar>
+          <div>
+            <h3>{nameText}</h3>
+          </div>
+          <ExternalLink size={16} strokeWidth={2.5} />
+        </a>
+        <p className="text-xl font-bold">{govScore} GovScore</p>
+      </div>
     </div>
   );
 }
