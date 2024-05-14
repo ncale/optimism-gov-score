@@ -1,6 +1,6 @@
 {
-  "name": "gov-score",
-  "version": "0.1.0",
+  "name": "optimism-gov-score",
+  "version": "1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
