@@ -5,20 +5,11 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import DelegateButton from "./delegate-button";
-import {
-  ActivityFactorScoreCard,
-  GovScoreScoreCard,
-  PowerFactorScoreCard,
-} from "./card-components";
+import { ScoreCard } from "./card-components";
 // Hooks
 import { useMediaQuery } from "@/hooks/use-media-query";
 // Helper functions
-import {
-  type ActivityFactorScores,
-  formatBigNumber,
-  formatPercentValue,
-  PowerFactorDetails,
-} from "@/lib/utils";
+import { formatBigNumber, formatPercentValue, Scores } from "@/lib/utils";
 // Types
 import type { Column, Row } from "@tanstack/react-table";
 import { type PropsWithChildren } from "react";
@@ -55,57 +46,6 @@ export const columns = [
     cell: ({ row }) => <DelegateCell row={row} />,
     enableHiding: false,
   }),
-  columnHelper.accessor("activity_factor", {
-    header: ({ column }) => {
-      return (
-        <SortButton column={column}>
-          <div className="flex flex-col [&>*]:leading-[1.1]">
-            <div>Activity</div>
-            <div>Factor</div>
-          </div>
-        </SortButton>
-      );
-    },
-    cell: ({ row }) => {
-      const af = row.original.activity_factor;
-      const af_scores = row.original.metadata__activity_factor_details;
-      return (
-        <Popover>
-          <PopoverTrigger>{af}</PopoverTrigger>
-          <PopoverContent>
-            <ActivityFactorScoreCard activityFactor={af} scores={af_scores} />
-          </PopoverContent>
-        </Popover>
-      );
-    },
-  }),
-  columnHelper.accessor("power_factor", {
-    header: ({ column }) => {
-      return (
-        <SortButton column={column}>
-          <div className="flex flex-col [&>*]:leading-[1.1]">
-            <div>Power</div>
-            <div>Factor</div>
-          </div>
-        </SortButton>
-      );
-    },
-    cell: ({ row }) => {
-      const pf = row.original.power_factor;
-      const pf_details = row.original.metadata__power_factor_details;
-      return (
-        <Popover>
-          <PopoverTrigger>{pf}</PopoverTrigger>
-          <PopoverContent>
-            <PowerFactorScoreCard
-              powerFactorDetails={pf_details}
-              powerFactor={pf}
-            />
-          </PopoverContent>
-        </Popover>
-      );
-    },
-  }),
   columnHelper.accessor("gov_score", {
     header: ({ column }) => {
       return (
@@ -114,26 +54,8 @@ export const columns = [
         </SortButton>
       );
     },
-    cell: ({ row }) => {
-      const gs = row.original.gov_score;
-      const af = row.original.activity_factor;
-      const pf = row.original.power_factor;
-      const gs_scores = row.original.metadata__gov_score_details;
-      return (
-        <Popover>
-          <PopoverTrigger className="w-16 rounded-md bg-primary px-1 py-0.5 font-bold text-primary-foreground">
-            {gs}
-          </PopoverTrigger>
-          <PopoverContent>
-            <GovScoreScoreCard
-              activityFactor={af}
-              powerFactor={pf}
-              govScore={gs}
-            />
-          </PopoverContent>
-        </Popover>
-      );
-    },
+    cell: ({ row }) => <GovScoreCell row={row} />,
+    size: 400,
     enableHiding: false,
   }),
   columnHelper.accessor("voting_power", {
@@ -209,12 +131,8 @@ export type DelegateTableRow = {
   metadata__address: Address;
   metadata__ens_name: `${string}.eth` | null;
   metadata__ens_avatar: string | null;
-  activity_factor: number;
-  metadata__activity_factor_details: ActivityFactorScores;
-  power_factor: number;
-  metadata__power_factor_details: PowerFactorDetails; // Type WIP
   gov_score: number;
-  metadata__gov_score_details: any; // Type WIP
+  metadata__scores: Scores;
   voting_power: number;
   pct_voting_power: number;
   recent_votes: number;
@@ -264,5 +182,52 @@ function DelegateCell({ row }: { row: Row<DelegateTableRow> }) {
         <IconLink />
       </div>
     </a>
+  );
+}
+
+function InfoTooltipContent() {
+  return (
+    <div>
+      <div className="w-64 leading-tight md:w-72">
+        <p className="mb-1">
+          An opinionated score of how worthy a delegate is of receiving further
+          delegation.
+        </p>
+        <p className="mb-1">
+          A high govscore means a delegate{" "}
+          <span className="special">votes consistently</span>, has a{" "}
+          <span className="special">transparent onchain identity</span>, and is
+          not <span className="special">too powerful</span>.{" "}
+        </p>
+        <p className="mt-2">Ex...</p>
+        <div className="mb-2 h-fit w-fit rounded-md bg-secondary px-2 py-1 shadow-lg">
+          <ScoreCard
+            scores={{
+              recentParticipation: 3.6,
+              pctDelegation: 3,
+              ensName: 1,
+              ensAvatar: 0,
+              recentParticipationWithReason: 0.6,
+            }}
+          />
+        </div>
+        <Link href="/faq" className="special link">
+          read more
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function GovScoreCell({ row }: { row: Row<DelegateTableRow> }) {
+  const govScore = Math.round(row.original.gov_score * 10) / 10;
+  const scores = row.original.metadata__scores;
+  return (
+    <Popover>
+      <PopoverTrigger className="w-16 rounded-md bg-blue-600 px-1 py-0.5 font-bold text-primary-foreground">{`${govScore}/10`}</PopoverTrigger>
+      <PopoverContent>
+        <ScoreCard scores={scores} />
+      </PopoverContent>
+    </Popover>
   );
 }
