@@ -45,10 +45,7 @@ export function DataTable<TData, TValue>({
     { id: "gov_score", desc: true },
   ]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
-    voting_power: false,
     pct_voting_power: false,
-    recent_votes: false,
-    recent_votes_with_reason: false,
   });
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
