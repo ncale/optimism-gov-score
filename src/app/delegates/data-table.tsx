@@ -85,7 +85,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="mx-auto md:w-min">
       {/* Search & Filters */}
-      <div className="flex items-center space-x-4 pb-4">
+      <div className="flex flex-wrap items-center gap-4 pb-4">
         <Input
           placeholder="Filter delegates..."
           type="search"
