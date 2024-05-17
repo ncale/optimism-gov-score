@@ -31,6 +31,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useAccount, useReadContract } from "wagmi";
+import { OP_TOKEN_ADDRESS } from "@/config/config";
+import { opTokenAbi } from "@/config/op-token-abi";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,9 +49,11 @@ export function DataTable<TData, TValue>({
     { id: "gov_score", desc: true },
   ]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    metadata__address: false,
     pct_voting_power: false,
   });
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [filterCheck, setFilterCheck] = useState(false);
 
   const table = useReactTable({
     data,
@@ -67,10 +73,19 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const { isConnected, address } = useAccount();
+  const { data: delegateAddress } = useReadContract({
+    address: OP_TOKEN_ADDRESS,
+    abi: opTokenAbi,
+    functionName: "delegates",
+    args: [address ?? "0x"],
+    chainId: 10,
+  });
+
   return (
     <div className="mx-auto md:w-min">
       {/* Search & Filters */}
-      <div className="flex items-center space-x-2 pb-4">
+      <div className="flex items-center space-x-4 pb-4">
         <Input
           placeholder="Filter delegates..."
           type="search"
@@ -104,12 +119,32 @@ export function DataTable<TData, TValue>({
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id.replaceAll("_", " ")}
+                    {column.id.replaceAll("_", " ").replaceAll("metadata", "")}
                   </DropdownMenuCheckboxItem>
                 );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="delegate_filter"
+            disabled={!isConnected && filterCheck}
+            // checked={filterCheck}
+            onCheckedChange={(val) => {
+              setFilterCheck(!val);
+              table
+                .getColumn("metadata__address")
+                ?.setFilterValue(val ? delegateAddress : "");
+            }}
+          />
+          <label
+            htmlFor="delegate_filter"
+            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:line-through peer-disabled:opacity-50"
+          >
+            {"My Delegate(s)"}
+          </label>
+        </div>
       </div>
 
       {/* Table */}

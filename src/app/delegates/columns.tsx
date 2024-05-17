@@ -44,7 +44,12 @@ export const columns = [
   columnHelper.accessor("delegate", {
     header: "Delegate",
     cell: ({ row }) => <DelegateCell row={row} />,
+    filterFn: "includesString",
     enableHiding: false,
+  }),
+  columnHelper.accessor("metadata__address", {
+    header: "Address",
+    filterFn: "equalsString",
   }),
   columnHelper.accessor("gov_score", {
     header: ({ column }) => {
