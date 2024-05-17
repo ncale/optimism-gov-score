@@ -6,6 +6,7 @@ import { OP_TOKEN_ADDRESS } from "@/config/config";
 import { DelegateTableRow } from "./columns";
 import { OPBalanceCard, DelegateCard } from "./card-components";
 import { formatEther } from "viem";
+import posthog from "posthog-js";
 
 export default function Message({
   delegateData,
@@ -31,6 +32,8 @@ export default function Message({
     args: [address ?? "0x"],
     chainId: 10,
   });
+
+  posthog.capture("Load Message Page", { property: address });
 
   if (!address) {
     return <></>;

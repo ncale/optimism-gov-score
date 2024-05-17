@@ -3,6 +3,10 @@ export const WC_PROJECT_ID = process.env.WC_PROJECT_ID || "PROJECT_ID";
 export const OPTIMISM_RPC_URL = process.env.OPTIMISM_RPC_URL || "";
 export const MAINNET_RPC_URL = process.env.MAINNET_RPC_URL || "";
 export const PONDER_API_URL = process.env.PONDER_API_URL || "";
+export const NEXT_PUBLIC_POSTHOG_KEY =
+  process.env.NEXT_PUBLIC_POSTHOG_KEY || "";
+export const NEXT_PUBLIC_POSTHOG_HOST =
+  process.env.NEXT_PUBLIC_POSTHOG_HOST || "";
 
 // configure global variables
 export const OP_TOKEN_ADDRESS = "0x4200000000000000000000000000000000000042";
