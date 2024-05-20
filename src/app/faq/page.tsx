@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ReactNode } from "react";
-import { ScoreCard, ScorePill } from "../delegates/card-components";
+import { ScorePill } from "../delegates/card-components";
 
 export default function Home() {
   return (
@@ -47,59 +47,29 @@ function FaqAccordion({
 
 const faqItems: Array<[question: string, response: ReactNode]> = [
   [
-    "How is the score calculated?",
-    <>
-      <p className="mb-2">
-        GovScore ranks OP delegates on 3 key metrics:{" "}
-        <span className="font-bold underline">transparency</span>,{" "}
-        <span className="font-bold underline">consistency</span>, and{" "}
-        <span className="font-bold underline">voting power</span>.
+    "What is GovScore?",
+    <div className="space-y-2">
+      <p>
+        <span className="mb-1 block font-medium underline">Short answer:</span>{" "}
+        GovScore is a platform for ranking and discovering Optimism DAO
+        delegates.
       </p>
-      <p className="mb-2">
-        The ideal candidate has a transparent onchain identity as identified
-        using ENS, a consistent and proven recent voting history, and relatively
-        low voting power.
+      <p>
+        <span className="mb-1 block font-medium underline">Long answer:</span>{" "}
+        In the world of DAO governance and leadership, we see two core concerns
+        among those in the space. First, the slow but consistent consolidation
+        of power, and second, the concern of waning engagement among delegates.
+        We believe strongly in the potential of decentralized governance, but to
+        protect that potential, we need to start with systems that prevent
+        consolidation and hold delegates accountable.
       </p>
-      <div className="mt-2 h-fit w-fit space-y-2 rounded-md bg-secondary p-2 shadow-lg">
-        <div className="flex items-center gap-1 [&>div]:shrink-0">
-          <ScorePill score={"2 pts"} />
-          <p>1 point each for setting a primary ENS name and avatar</p>
-        </div>
-        <hr />
-        <div className="flex items-center gap-1 [&>div]:shrink-0">
-          <ScorePill score={"5 pts"} />
-          <p>
-            0.5 points for each vote casted on the 10 most recent onchain OP
-            proposals
-          </p>
-        </div>
-        <hr />
-        <div className="flex items-center gap-1 [&>div]:shrink-0">
-          <ScorePill score={"3 pts"} />
-          <p>
-            3 points for having less than 0.5% of the total voting pool
-            <br />
-            2 points for having less than 1%
-            <br />1 point for having less than 1.5%
-          </p>
-        </div>
-      </div>
-      {/* <p className="mt-2">Ex...</p>
-      <div className="bg-secondary w-fit h-fit px-2 py-1 rounded-md mb-2 shadow-lg">
-        <ScoreCard
-          scores={{
-            ensName: 1,
-            ensAvatar: 0,
-            recentParticipation: 4.5,
-            pctDelegation: 3,
-          }}
-        />
-      </div> */}
-    </>,
-  ],
-  [
-    "Why GovScore?",
-    "In the world of DAO governance and leadership, we see two core concerns among those in the space: first, the slow but consistent consolidation of power, and second, the concern of waning engagement among delegates. We believe strongly in the potential of decentralized governance, but to unlock that potential, we need to start with systems that hold delegates accountable. Enter GovScore: what we see as the first step in ensuring that those who decide the future of	DAOs are consistently the best for the job.",
+      <p>
+        This is where we see GovScore enter the equation. In the constantly
+        changing space of DAO governance, this is a step in the direction of
+        trying to ensure those who decide the future of DAOs are consistently
+        the best for the job.
+      </p>
+    </div>,
   ],
   [
     "How do I set my ENS domain and avatar?",
