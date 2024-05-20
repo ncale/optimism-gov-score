@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
     pct_voting_power: false,
   });
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [filterCheck, setFilterCheck] = useState(false);
+  const [filterCheck, setFilterCheck] = useState(true);
 
   const table = useReactTable({
     data,
@@ -130,7 +130,6 @@ export function DataTable<TData, TValue>({
           <Checkbox
             id="delegate_filter"
             disabled={!isConnected && filterCheck}
-            // checked={filterCheck}
             onCheckedChange={(val) => {
               setFilterCheck(!val);
               table
@@ -142,7 +141,7 @@ export function DataTable<TData, TValue>({
             htmlFor="delegate_filter"
             className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:line-through peer-disabled:opacity-50"
           >
-            {"My Delegate(s)"}
+            {"My Delegate"}
           </label>
         </div>
       </div>
