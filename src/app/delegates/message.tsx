@@ -1,91 +1,54 @@
-"use client";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-import { useAccount, useEnsName, useReadContract } from "wagmi";
-import { opTokenAbi } from "@/config/op-token-abi";
-import { OP_TOKEN_ADDRESS } from "@/config/config";
-import { DelegateTableRow } from "./columns";
-import { OPBalanceCard, DelegateCard } from "./card-components";
-import { formatEther } from "viem";
-import posthog from "posthog-js";
-
-export default function Message({
-  delegateData,
-}: {
-  delegateData: DelegateTableRow[] | undefined;
-}) {
-  const { address } = useAccount();
-  const { data: ensName } = useEnsName({
-    address,
-    chainId: 1,
-  });
-  const { data: delegateAddress } = useReadContract({
-    address: OP_TOKEN_ADDRESS,
-    abi: opTokenAbi,
-    functionName: "delegates",
-    args: [address ?? "0x"],
-    chainId: 10,
-  });
-  const { data: opBalance } = useReadContract({
-    address: OP_TOKEN_ADDRESS,
-    abi: opTokenAbi,
-    functionName: "balanceOf",
-    args: [address ?? "0x"],
-    chainId: 10,
-  });
-
-  posthog.capture("Load Message Page", { property: address });
-
-  if (!address) {
-    return <></>;
-  }
-
-  if (!delegateAddress || new RegExp("0x000000000000").test(delegateAddress)) {
-    return (
-      <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-md border bg-muted p-4 text-center md:w-1/2">
-        You haven&apos;t delegated OP
-      </div>
-    );
-  }
-
-  if (!delegateData) return <pre>Error... Missing Data</pre>;
-
-  const delegate = delegateData.find(
-    (delegate) =>
-      delegate.metadata__address.toLowerCase() ===
-      delegateAddress.toLowerCase(),
-  );
-
-  if (!delegate)
-    return (
-      <div className="mx-auto flex w-11/12 flex-col items-center justify-center rounded-md border bg-muted p-4 text-center md:w-1/2">
-        Error - Your delegate isn&apos;t in our list. We apologize for the
-        inconvenience and are working on a solution
-      </div>
-    );
-
-  const formattedOpBalance = opBalance ? formatEther(opBalance) : null;
-
+export default function Message() {
   return (
-    <div className="mx-auto w-11/12 space-y-2 md:w-[36rem]">
-      <div className="flex space-x-2">
-        {ensName ? (
-          <div className="rounded-xl border px-4 py-2 font-medium">
-            {ensName}
-          </div>
-        ) : (
-          <></>
-        )}
-        {formattedOpBalance ? (
-          <div className="rounded-xl border px-4 py-2">
-            <OPBalanceCard balance={formattedOpBalance} />
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
-      <div className="gap-1.5 rounded-md border px-4 py-2">
-        {delegate ? <DelegateCard delegate={delegate} /> : <></>}
-      </div>
+    <div className="mx-auto w-[996px] rounded-md border px-4 py-2 leading-relaxed">
+      <p>
+        {
+          "GovScore is a platform for discovering quality underrepresented Optimism delegates. The factors that determine GovScore are "
+        }
+        <Popover>
+          <PopoverTrigger className="inline-block rounded-sm  bg-cyan-50 px-1 text-cyan-800 underline hover:text-cyan-500 active:text-cyan-800">
+            voting history (with and without reason)
+          </PopoverTrigger>
+          <PopoverContent className="w-60 text-sm">
+            Voting History: 0.4 points are assigned to each vote a delegate
+            participates in within the past 10 votes and 0.1 points are assigned
+            to each vote when the delegate votes with reason onchain
+          </PopoverContent>
+        </Popover>
+        {", "}
+        <Popover>
+          <PopoverTrigger className="inline-block rounded-sm  bg-emerald-50 px-1 text-emerald-800 underline hover:text-emerald-500 active:text-emerald-800">
+            voting power
+          </PopoverTrigger>
+          <PopoverContent className="w-60 text-sm">
+            Voting Power: 3 points are given to each delegate under 0.5% of the
+            voting power, 2 points to delegates with less than 1%, and 1 point
+            given to those with less than 1.5%
+          </PopoverContent>
+        </Popover>
+        {", and "}
+        <Popover>
+          <PopoverTrigger className="inline-block rounded-sm  bg-violet-50 px-1 text-violet-800 underline hover:text-violet-400 active:text-violet-800">
+            decentralized identity
+          </PopoverTrigger>
+          <PopoverContent className="w-60 text-sm">
+            Decentralized Identity: 1 point is given to delegates who use an ENS
+            primary name and 1 additional point for having an ENS avatar
+          </PopoverContent>
+        </Popover>
+        {"."}
+      </p>
     </div>
   );
 }
+
+// Many people put a significant amount of time and effort into
+//         their contributions to the OP community with hardly any recognition. We
+//         want to be able to say thanks to these delegates and help them get their
+//         voices heard.
