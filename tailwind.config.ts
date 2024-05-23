@@ -21,6 +21,9 @@ const config = {
       spacing: {
         readWidth: "40em",
       },
+      boxShadow: {
+        rainbow: "0 4px 12px 0px rgba(0, 0, 0, 0.1)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

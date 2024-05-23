@@ -6,6 +6,10 @@ import Link from "next/link";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Drawer, DrawerContent, DrawerTrigger } from "./ui/drawer";
 import { IconHamburger } from "./icons/lucide-icons";
+import { useAccount, useReadContract } from "wagmi";
+import { OP_TOKEN_ADDRESS } from "@/config/config";
+import { opTokenAbi } from "@/config/op-token-abi";
+import { formatEther } from "viem";
 
 export function NavLinks() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -40,9 +44,27 @@ export function NavLinks() {
 export function NavConnectButton() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const currentPath = usePathname();
+
+  const { address } = useAccount();
+  const { data: opBalance } = useReadContract({
+    address: OP_TOKEN_ADDRESS,
+    abi: opTokenAbi,
+    functionName: "balanceOf",
+    args: [address ?? "0x"],
+    chainId: 10,
+  });
+  const formattedOpBalance = opBalance
+    ? Math.round(Number(formatEther(opBalance)))
+    : null;
+
   return (
     <div className="flex items-center justify-end space-x-2">
-      <div>
+      <div className="flex h-10 items-center space-x-2">
+        {formattedOpBalance ? (
+          <div className="shadow-rainbow hidden rounded-xl bg-secondary px-2 py-1 font-bold text-secondary-foreground md:block">
+            You have: {formattedOpBalance} OP
+          </div>
+        ) : null}
         <ConnectButton
           chainStatus="none"
           showBalance={false}
