@@ -121,7 +121,7 @@ export function ScoreCard({ scores }: { scores: Scores }) {
         )}
         <ScorePill score={`${scores.recentParticipationWithReason}/1`} />
         <span>
-          Voted with reason in{" "}
+          Voted with reason *onchain* in{" "}
           <span className="special">
             {Math.round(scores.recentParticipationWithReason / 0.1)}
           </span>{" "}
