@@ -10,6 +10,7 @@ import { useAccount, useReadContract } from "wagmi";
 import { OP_TOKEN_ADDRESS } from "@/config/config";
 import { opTokenAbi } from "@/config/op-token-abi";
 import { formatEther } from "viem";
+import posthog from "posthog-js";
 
 export function NavLinks() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -57,11 +58,14 @@ export function NavConnectButton() {
     ? Math.round(Number(formatEther(opBalance)))
     : null;
 
+  if (address)
+    posthog.capture("Page loaded w/connected address", { property: address });
+
   return (
     <div className="flex items-center justify-end space-x-2">
       <div className="flex h-10 items-center space-x-2">
         {formattedOpBalance ? (
-          <div className="shadow-rainbow hidden rounded-xl bg-secondary px-2 py-1 font-bold text-secondary-foreground md:block">
+          <div className="hidden rounded-xl bg-secondary px-2 py-1 font-bold text-secondary-foreground shadow-rainbow md:block">
             You have: {formattedOpBalance} OP
           </div>
         ) : null}
